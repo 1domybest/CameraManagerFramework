@@ -1,0 +1,191 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.0 effective-5.10 (swiftlang-6.0.0.9.10 clang-1600.0.26.2)
+// swift-module-flags: -target arm64-apple-ios14.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name CameraManagerFrameWork
+import AVFoundation
+@_exported import CameraManagerFrameWork
+import CoreMedia
+import CoreVideo
+import Foundation
+import MetalKit
+import QuartzCore
+import Swift
+import SwiftUI
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+import simd
+extension CameraManagerFrameWork.CameraManager {
+  public func setAppendQueueCallback(appendQueueCallback: any CameraManagerFrameWork.CameraManagerFrameWorkDelegate)
+  public func setFrameRate(desiredFrameRate: Swift.Double, for camera: AVFoundation.AVCaptureDevice)
+  public func setPosition(_ position: AVFoundation.AVCaptureDevice.Position)
+  public func switchMainCamera(mainCameraPostion: AVFoundation.AVCaptureDevice.Position)
+  public func setMirrorMode(isMirrorMode: Swift.Bool)
+  public func setVideoOrientation(_ videoOrientation: AVFoundation.AVCaptureVideoOrientation)
+  @objc dynamic public func handlePinchCamera(_ scale: CoreFoundation.CGFloat)
+  public func setZoom(position: AVFoundation.AVCaptureDevice.Position, zoomFactor: CoreFoundation.CGFloat)
+  public func changeDeviceFocusPointOfInterest(to pointOfInterest: CoreFoundation.CGPoint) -> Swift.Bool
+  public func changeDeviceExposurePointOfInterest(to pointOfInterest: CoreFoundation.CGPoint) -> Swift.Bool
+  public func setCameraViewMode(cameraViewMode: CameraManagerFrameWork.CameraViewMode)
+  public func toggleTorch(onTorch: Swift.Bool)
+  public func doseHaseTorch() -> Swift.Bool
+}
+extension CameraManagerFrameWork.CameraManager {
+  public func setupGestureRecognizers()
+  public func setupPanGesture()
+  public func createImage(from view: UIKit.UIView) -> UIKit.UIImage?
+  public func doubleScreenCameraModeRender(sampleBuffer: CoreMedia.CMSampleBuffer, pixelBuffer: CoreVideo.CVPixelBuffer, time: CoreMedia.CMTime, sourceDevicePosition: AVFoundation.AVCaptureDevice.Position)
+  public func singleCameraModeRender(sampleBuffer: CoreMedia.CMSampleBuffer, pixelBuffer: CoreVideo.CVPixelBuffer, time: CoreMedia.CMTime, sourceDevicePosition: AVFoundation.AVCaptureDevice.Position)
+}
+extension CameraManagerFrameWork.CameraManager : UIKit.UIGestureRecognizerDelegate {
+  @_Concurrency.MainActor @preconcurrency @objc dynamic open func gestureRecognizer(_ gestureRecognizer: UIKit.UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIKit.UIGestureRecognizer) -> Swift.Bool
+}
+@objc public protocol CameraManagerFrameWorkDelegate {
+  @objc optional func videoCaptureOutput(pixelBuffer: CoreVideo.CVPixelBuffer, time: CoreMedia.CMTime, position: AVFoundation.AVCaptureDevice.Position)
+  @objc optional func videoCaptureOutput(sampleBuffer: CoreMedia.CMSampleBuffer, position: AVFoundation.AVCaptureDevice.Position)
+  @objc optional func videoOffscreenRenderCaptureOutput(pixelBuffer: CoreVideo.CVPixelBuffer, time: CoreMedia.CMTime, position: AVFoundation.AVCaptureDevice.Position)
+  @objc optional func videoOffscreenRenderCaptureOutput(CMSampleBuffer: CoreMedia.CMSampleBuffer, position: AVFoundation.AVCaptureDevice.Position)
+  @objc optional func videoChangeAbleCaptureOutput(pixelBuffer: CoreVideo.CVPixelBuffer, time: CoreMedia.CMTime, position: AVFoundation.AVCaptureDevice.Position) -> CoreVideo.CVPixelBuffer?
+  @objc optional func videoChangeAbleCaptureOutput(CMSampleBuffer: CoreMedia.CMSampleBuffer, position: AVFoundation.AVCaptureDevice.Position) -> CoreMedia.CMSampleBuffer?
+}
+extension CameraManagerFrameWork.CameraManager {
+  public func setupCaptureSessions()
+  public func setupMultiCaptureSessions()
+  public func setupInput(for session: AVFoundation.AVCaptureSession, position: AVFoundation.AVCaptureDevice.Position, isMultiSession: Swift.Bool = false)
+  public func setupOutput(for session: AVFoundation.AVCaptureSession, position: AVFoundation.AVCaptureDevice.Position, isMultiSession: Swift.Bool = false)
+  public func findDevice(withPosition position: AVFoundation.AVCaptureDevice.Position) -> AVFoundation.AVCaptureDevice?
+  public func findDeviceForMultiSession(withPosition position: AVFoundation.AVCaptureDevice.Position) -> AVFoundation.AVCaptureDevice?
+  public func startCamera()
+  public func startCameraInternal()
+  public func stopCamera()
+  public func stopCameraInternal(isPause: Swift.Bool = false)
+  public func startDisplayLink()
+  @objc dynamic public func handleDisplayLink(_ displayLink: QuartzCore.CADisplayLink)
+  public func setPreset(_ preset: AVFoundation.AVCaptureSession.Preset)
+  public func switchPreset()
+}
+extension CameraManagerFrameWork.CameraManager : CameraManagerFrameWork.CameraManagerFrameWorkDelegate {
+  @objc dynamic public func videoCaptureOutput(pixelBuffer: CoreVideo.CVPixelBuffer, time: CoreMedia.CMTime, position: AVFoundation.AVCaptureDevice.Position)
+}
+extension CameraManagerFrameWork.CameraManager : AVFoundation.AVCaptureVideoDataOutputSampleBufferDelegate {
+  @objc dynamic open func captureOutput(_: AVFoundation.AVCaptureOutput, didOutput sampleBuffer: CoreMedia.CMSampleBuffer, from connection: AVFoundation.AVCaptureConnection)
+}
+public enum CameraRenderingMode {
+  case normal
+  case offScreen
+  public static func == (a: CameraManagerFrameWork.CameraRenderingMode, b: CameraManagerFrameWork.CameraRenderingMode) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum CameraViewMode {
+  case singleScreen
+  case doubleScreen
+  public static func == (a: CameraManagerFrameWork.CameraViewMode, b: CameraManagerFrameWork.CameraViewMode) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum CameraSessionMode {
+  case singleSession
+  case multiSession
+  public static func == (a: CameraManagerFrameWork.CameraSessionMode, b: CameraManagerFrameWork.CameraSessionMode) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @_Concurrency.MainActor @preconcurrency public class MultiCameraView : UIKit.UIView, UIKit.UIGestureRecognizerDelegate {
+  @_Concurrency.MainActor @preconcurrency public var smallCameraView: CameraManagerFrameWork.CameraMetalView?
+  @_Concurrency.MainActor @preconcurrency public var mainCameraView: CameraManagerFrameWork.CameraMetalView?
+  @objc deinit
+  @_Concurrency.MainActor @preconcurrency public func unreference()
+  @_Concurrency.MainActor @preconcurrency public func updateSmallCameraBuffer(sampleBuffer: CoreMedia.CMSampleBuffer, pixelBuffer: CoreVideo.CVPixelBuffer, time: CoreMedia.CMTime, sourceDevicePosition: AVFoundation.AVCaptureDevice.Position)
+  @_Concurrency.MainActor @preconcurrency public func updateMainCameraBuffer(sampleBuffer: CoreMedia.CMSampleBuffer, pixelBuffer: CoreVideo.CVPixelBuffer, time: CoreMedia.CMTime, sourceDevicePosition: AVFoundation.AVCaptureDevice.Position)
+  @_Concurrency.MainActor @preconcurrency @objc open func gestureRecognizer(_ gestureRecognizer: UIKit.UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIKit.UIGestureRecognizer) -> Swift.Bool
+}
+extension CameraManagerFrameWork.MultiCameraView : CameraManagerFrameWork.CameraManagerFrameWorkDelegate {
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func videoCaptureOutput(pixelBuffer: CoreVideo.CVPixelBuffer, time: CoreMedia.CMTime, position: AVFoundation.AVCaptureDevice.Position)
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func videoCaptureOutput(sampleBuffer: CoreMedia.CMSampleBuffer, position: AVFoundation.AVCaptureDevice.Position)
+  @_Concurrency.MainActor @preconcurrency public func appendAudioQueue(sampleBuffer: CoreMedia.CMSampleBuffer)
+}
+@objc @_hasMissingDesignatedInitializers @_Concurrency.MainActor @preconcurrency public class CameraMetalView : MetalKit.MTKView {
+  @_Concurrency.MainActor @preconcurrency public var sampleBuffer: CoreMedia.CMSampleBuffer?
+  @_Concurrency.MainActor @preconcurrency public var pixelBuffer: CoreVideo.CVPixelBuffer?
+  @_Concurrency.MainActor @preconcurrency public var position: AVFoundation.AVCaptureDevice.Position?
+  @_Concurrency.MainActor @preconcurrency public var time: CoreMedia.CMTime?
+  @_Concurrency.MainActor @preconcurrency public var isCameraOn: Swift.Bool
+  @_Concurrency.MainActor @preconcurrency public var isMirrorMode: Swift.Bool
+  @objc deinit
+  @_Concurrency.MainActor @preconcurrency @objc required dynamic public init(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor @preconcurrency public func unreference()
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic open func awakeFromNib()
+  @_Concurrency.MainActor @preconcurrency public func update(sampleBuffer: CoreMedia.CMSampleBuffer, pixelBuffer: CoreVideo.CVPixelBuffer, time: CoreMedia.CMTime, position: AVFoundation.AVCaptureDevice.Position)
+}
+extension CameraManagerFrameWork.CameraMetalView : MetalKit.MTKViewDelegate {
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func mtkView(_: MetalKit.MTKView, drawableSizeWillChange _: CoreFoundation.CGSize)
+  @_Concurrency.MainActor @preconcurrency @objc dynamic public func draw(in view: MetalKit.MTKView)
+}
+@objc public class CameraManager : ObjectiveC.NSObject {
+  public var singleCameraView: CameraManagerFrameWork.CameraMetalView?
+  public var multiCameraView: CameraManagerFrameWork.MultiCameraView?
+  public var cameraViewMode: CameraManagerFrameWork.CameraViewMode
+  public var cameraSessionMode: CameraManagerFrameWork.CameraSessionMode
+  public var cameraRenderingMode: CameraManagerFrameWork.CameraRenderingMode
+  public var cameraManagerFrameWorkDelegate: (any CameraManagerFrameWork.CameraManagerFrameWorkDelegate)?
+  public var previousImageBuffer: CoreVideo.CVPixelBuffer?
+  public var previousTimeStamp: CoreMedia.CMTime?
+  public var isMultiCamSupported: Swift.Bool
+  public var isUltraWideCamera: Swift.Bool
+  public var backCamera: AVFoundation.AVCaptureDevice?
+  public var frontCamera: AVFoundation.AVCaptureDevice?
+  public var dualVideoSession: AVFoundation.AVCaptureSession?
+  public var multiCameraCaptureInput: AVFoundation.AVCaptureDeviceInput?
+  public var multiBackCameraConnection: AVFoundation.AVCaptureConnection?
+  public var multiFrontCameraConnection: AVFoundation.AVCaptureConnection?
+  public var multiBackCameraCaptureInput: AVFoundation.AVCaptureDeviceInput?
+  public var multiFrontCameraCaptureInput: AVFoundation.AVCaptureDeviceInput?
+  public var multiBackCameravideoOutput: AVFoundation.AVCaptureVideoDataOutput?
+  public var multiFrontCameravideoOutput: AVFoundation.AVCaptureVideoDataOutput?
+  public var backCaptureSession: AVFoundation.AVCaptureSession?
+  public var frontCaptureSession: AVFoundation.AVCaptureSession?
+  public var backCameraConnection: AVFoundation.AVCaptureConnection?
+  public var frontCameraConnection: AVFoundation.AVCaptureConnection?
+  public var backCameraCaptureInput: AVFoundation.AVCaptureDeviceInput?
+  public var frontCameraCaptureInput: AVFoundation.AVCaptureDeviceInput?
+  public var backCameravideoOutput: AVFoundation.AVCaptureVideoDataOutput?
+  public var frontCameravideoOutput: AVFoundation.AVCaptureVideoDataOutput?
+  public var mainCameraPostion: AVFoundation.AVCaptureDevice.Position
+  public var mirrorBackCamera: Swift.Bool
+  public var mirrorFrontCamera: Swift.Bool
+  public var position: AVFoundation.AVCaptureDevice.Position
+  public var preset: AVFoundation.AVCaptureSession.Preset
+  public var videoOrientation: AVFoundation.AVCaptureVideoOrientation
+  public var mirrorCamera: Swift.Bool
+  public var sessionQueue: Dispatch.DispatchQueue?
+  public var videoDataOutputQueue: Dispatch.DispatchQueue?
+  public var hasCameraPermission: Swift.Bool
+  public var backCameraCurrentZoomFactor: CoreFoundation.CGFloat
+  public var backCameraDefaultZoomFactor: CoreFoundation.CGFloat
+  public var backCameraMinimumZoonFactor: CoreFoundation.CGFloat
+  public var backCameraMaximumZoonFactor: CoreFoundation.CGFloat
+  public var frontCameraCurrentZoomFactor: CoreFoundation.CGFloat
+  public var frontCameraDefaultZoomFactor: CoreFoundation.CGFloat
+  public var frontCameraMinimumZoonFactor: CoreFoundation.CGFloat
+  public var frontCameraMaximumZoonFactor: CoreFoundation.CGFloat
+  public var frameRate: Swift.Double
+  public var thumbnail: CoreVideo.CVPixelBuffer?
+  public var displayLink: QuartzCore.CADisplayLink?
+  public init(cameraSessionMode: CameraManagerFrameWork.CameraSessionMode = .multiSession, cameraViewMode: CameraManagerFrameWork.CameraViewMode = .singleScreen, cameraRenderingMode: CameraManagerFrameWork.CameraRenderingMode = .normal)
+  @objc deinit
+  public func unreference()
+  public func checkCameraPermission()
+}
+extension CameraManagerFrameWork.CameraRenderingMode : Swift.Equatable {}
+extension CameraManagerFrameWork.CameraRenderingMode : Swift.Hashable {}
+extension CameraManagerFrameWork.CameraViewMode : Swift.Equatable {}
+extension CameraManagerFrameWork.CameraViewMode : Swift.Hashable {}
+extension CameraManagerFrameWork.CameraSessionMode : Swift.Equatable {}
+extension CameraManagerFrameWork.CameraSessionMode : Swift.Hashable {}
