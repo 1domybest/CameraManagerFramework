@@ -106,123 +106,12 @@ extension CameraManager {
         }
     }
 
-    
-
-  //    func createThumbnailImage () {
-  //        // SwiftUI 뷰의 인스턴스 생성
-  //        let swiftUIView = LiveStreamingThumbnailImage()
-  //
-  //        // SwiftUI 뷰를 UIHostingController에 래핑
-  //        let hostingController = UIHostingController(rootView: swiftUIView)
-  //
-  //        // 뷰 크기 조정
-  //        hostingController.view.frame = CGRect(x: 0, y: 0, width: ScreenSize.shader.screenWidthSize, height: (ScreenSize.shader.screenWidthSize / 9) * 16)
-  //
-  //        // 뷰가 업데이트되었는지 확인
-  //        hostingController.view.backgroundColor = .clear
-  //
-  //        // UIImage 생성
-  //        if let uiImage = createImage(from: hostingController.view) {
-  //            // 여기에서 uiImage를 사용할 수 있습니다.
-  //
-  //            // CIImage로 변환할 경우
-  //            if let ciImage = CIImage(image: uiImage) {
-  //                self.thumbnail = toPixelBuffer(image: ciImage)
-  //            }
-  //        }
-  //    }
-      
-      // 이미지로 변환하는 함수
-      public func createImage(from view: UIView) -> UIImage? {
-          let renderer = UIGraphicsImageRenderer(size: view.bounds.size)
-          return renderer.image { context in
-              view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
-          }
-      }
-      
-    func pixelBufferFromImage(cgImage: CGImage) -> CVPixelBuffer? {
-        let width = cgImage.width
-        let height = cgImage.height
-        
-        var pixelBuffer: CVPixelBuffer? = nil
-        
-        // Pixel buffer attributes
-        let options: [String: Any] = [
-            kCVPixelBufferCGImageCompatibilityKey as String: true,
-            kCVPixelBufferCGBitmapContextCompatibilityKey as String: true
-        ]
-        
-        // Create pixel buffer
-        let status = CVPixelBufferCreate(
-            kCFAllocatorDefault,
-            width,
-            height,
-            kCVPixelFormatType_32BGRA,  // 32BGRA 포맷 사용
-            options as CFDictionary,
-            &pixelBuffer
-        )
-        
-        guard status == kCVReturnSuccess, let buffer = pixelBuffer else {
-            return nil
+    // 이미지로 변환하는 함수
+    public func createUIImageFromUIView(from view: UIView) -> UIImage? {
+        let renderer = UIGraphicsImageRenderer(size: view.bounds.size)
+        return renderer.image { context in
+            view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
         }
-        
-        // Lock the pixel buffer memory for writing
-        CVPixelBufferLockBaseAddress(buffer, [])
-        
-        // Get the pixel buffer's base address
-        let pixelData = CVPixelBufferGetBaseAddress(buffer)
-        
-        let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
-        
-        // Create a context to draw the image into the pixel buffer
-        let context = CGContext(
-            data: pixelData,
-            width: width,
-            height: height,
-            bitsPerComponent: 8,
-            bytesPerRow: CVPixelBufferGetBytesPerRow(buffer),
-            space: rgbColorSpace,
-            bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue // 올바른 비트맵 설정
-        )
-        
-        context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
-        
-        // Unlock the pixel buffer memory
-        CVPixelBufferUnlockBaseAddress(buffer, [])
-        
-        return buffer
-    }
-
-    
-    private func toPixelBuffer(ciImage: CIImage) -> CVPixelBuffer? {
-        let attrs = [
-            kCVPixelBufferCGImageCompatibilityKey: kCFBooleanTrue,
-            kCVPixelBufferCGBitmapContextCompatibilityKey: kCFBooleanTrue
-        ] as CFDictionary
-        
-        var pixelBuffer: CVPixelBuffer?
-        
-        // kCVPixelFormatType_32BGRA 로 변경
-        let status = CVPixelBufferCreate(
-            kCFAllocatorDefault,
-            Int(ciImage.extent.width),
-            Int(ciImage.extent.height),
-            kCVPixelFormatType_32BGRA, // 여기를 BGRA로 변경
-            attrs,
-            &pixelBuffer
-        )
-        
-        guard status == kCVReturnSuccess, let pixelBuffer = pixelBuffer else {
-            return nil
-        }
-        
-        // CVPixelBuffer에 CIImage의 내용을 쓰기
-        CVPixelBufferLockBaseAddress(pixelBuffer, [])
-        let ciContext = CIContext()
-        ciContext.render(ciImage, to: pixelBuffer, bounds: ciImage.extent, colorSpace: CGColorSpaceCreateDeviceRGB())
-        CVPixelBufferUnlockBaseAddress(pixelBuffer, [])
-        
-        return pixelBuffer
     }
       
     public func doubleScreenCameraModeRender (sampleBuffer: CMSampleBuffer?, pixelBuffer: CVPixelBuffer, time: CMTime, sourceDevicePosition: AVCaptureDevice.Position) {
