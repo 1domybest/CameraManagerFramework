@@ -19,6 +19,10 @@ struct ContentView: View {
                     VStack {
                         Spacer()
                         
+                        Slider(value: $vm.brightness, in: -8...8, step: 0.1)
+                        
+                        Spacer().frame(height: 20)
+                        
                         Button(action: {
                             self.vm.toggleCamera()
                         }, label: {
@@ -35,6 +39,9 @@ struct ContentView: View {
                         Spacer().frame(height: 10)
                     }
                 )
+                .onChange(of: vm.brightness) { value in
+                    self.vm.changeExposure()
+                }
         }
     }
 }

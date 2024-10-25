@@ -27,6 +27,7 @@
 		D101D88D2CCA19C600D4DDF6 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D101D88C2CCA19C600D4DDF6 /* ContentViewModel.swift */; };
 		D101D88F2CCA19D700D4DDF6 /* UIKitViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D101D88E2CCA19D700D4DDF6 /* UIKitViewRepresentable.swift */; };
 		D101D89F2CCA1EFC00D4DDF6 /* CameraMetalShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = D101D89E2CCA1EFC00D4DDF6 /* CameraMetalShader.metal */; };
+		D1241A1B2CCB8B7000812E45 /* CameraOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1241A1A2CCB8B7000812E45 /* CameraOptions.swift */; };
 		D1E69F072CCA34D000F01132 /* CameraMetalShader.metallib in Resources */ = {isa = PBXBuildFile; fileRef = D1E69F062CCA34D000F01132 /* CameraMetalShader.metallib */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +76,7 @@
 		D101D88C2CCA19C600D4DDF6 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		D101D88E2CCA19D700D4DDF6 /* UIKitViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitViewRepresentable.swift; sourceTree = "<group>"; };
 		D101D89E2CCA1EFC00D4DDF6 /* CameraMetalShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CameraMetalShader.metal; sourceTree = "<group>"; };
+		D1241A1A2CCB8B7000812E45 /* CameraOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOptions.swift; sourceTree = "<group>"; };
 		D1E69F062CCA34D000F01132 /* CameraMetalShader.metallib */ = {isa = PBXFileReference; lastKnownFileType = "archive.metal-library"; path = CameraMetalShader.metallib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -164,6 +166,7 @@
 				D101D85D2CC9E89400D4DDF6 /* CameraInterFace.swift */,
 				D101D8612CC9E91A00D4DDF6 /* CameraDevice.swift */,
 				D101D85F2CC9E90700D4DDF6 /* CameraRendering.swift */,
+				D1241A1A2CCB8B7000812E45 /* CameraOptions.swift */,
 			);
 			path = CameraMananger;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 				D101D85E2CC9E89400D4DDF6 /* CameraInterFace.swift in Sources */,
 				D101D8602CC9E90700D4DDF6 /* CameraRendering.swift in Sources */,
 				D101D8472CC9DC2A00D4DDF6 /* CameraManagerFrameWorkDelegate.swift in Sources */,
+				D1241A1B2CCB8B7000812E45 /* CameraOptions.swift in Sources */,
 				D101D8622CC9E91A00D4DDF6 /* CameraDevice.swift in Sources */,
 				D101D84A2CC9DC2A00D4DDF6 /* CameraModeEnum.swift in Sources */,
 				D101D8532CC9DD4E00D4DDF6 /* MultiCameraView.swift in Sources */,

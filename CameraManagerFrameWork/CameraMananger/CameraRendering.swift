@@ -18,8 +18,17 @@ extension CameraManager {
     ///
     public func setupGestureRecognizers() {
         // 단일 카메라 뷰에 핀치 제스처 추가
-        let singleCameraPinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(singleViewHandlePinchGesture(_:)))
-        singleCameraView?.addGestureRecognizer(singleCameraPinchGesture)
+        if cameraOptions?.enAblePinchZoom ?? false {
+            let singleCameraPinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(singleViewHandlePinchGesture(_:)))
+            singleCameraView?.addGestureRecognizer(singleCameraPinchGesture)
+        }
+        
+        
+        if cameraOptions?.autoFocusAndExposure ?? false {
+            let singleCameraTapGesture = UITapGestureRecognizer(target: self, action: #selector(singleCameraHandleTapGesture(_:)))
+            singleCameraTapGesture.delegate = self // delegate 설정 (필요한 경우)
+            singleCameraView?.addGestureRecognizer(singleCameraTapGesture)
+        }
     }
     
     
@@ -74,7 +83,7 @@ extension CameraManager {
     ///
     @objc func singleViewHandlePinchGesture(_ gesture: UIPinchGestureRecognizer) {
         guard gesture.view != nil else { return }
-        if self.cameraSessionMode == .multiSession && self.position == .front { return }
+        if self.cameraOptions?.cameraSessionMode == .multiSession && self.position == .front { return }
         if gesture.state == .changed {
 
             let scale = Double(gesture.scale)
@@ -96,6 +105,31 @@ extension CameraManager {
             
             // 스케일 값 초기화
             gesture.scale = 1.0
+        }
+    }
+    
+    @objc private func singleCameraHandleTapGesture(_ gesture: UITapGestureRecognizer) {
+        // 현재 탭 위치를 superview 좌표계에서 얻기
+        let location = gesture.location(in: gesture.view)
+        
+        // 터치 좌표를 0~1 범위로 정규화 (카메라 노출용 좌표로 변환)
+        if let view = gesture.view {
+            let normalizedPoint = CGPoint(
+                x: location.x / view.bounds.width,
+                y: location.y / view.bounds.height
+            )
+            print("노출 조절 \(normalizedPoint)")
+            // 노출, 포커스 조절 함수 호출
+            let resultOfExposure:Bool = self.changeDeviceExposurePointOfInterest(to: normalizedPoint)
+            let resultOfFocus:Bool = self.changeDeviceFocusPointOfInterest(to: normalizedPoint)
+            
+            if resultOfExposure || resultOfFocus {
+                // 문양 포시
+                if cameraOptions?.showAutoFocusAndExposureRoundedRectangle ?? false {
+                    self.singleCameraView?.showFocusBorder(at: normalizedPoint)
+                }
+            }
+            
         }
     }
 
@@ -169,7 +203,7 @@ extension CameraManager {
         self.previousImageBuffer = pixelBuffer
         self.previousTimeStamp = timestamp
         
-        if self.cameraRenderingMode == .offScreen {
+        if self.cameraOptions?.cameraRenderingMode == .offScreen {
             
             self.cameraManagerFrameWorkDelegate?.videoOffscreenRenderCaptureOutput?(pixelBuffer: pixelBuffer, time: timestamp, position: sourcePostion)
             self.cameraManagerFrameWorkDelegate?.videoOffscreenRenderCaptureOutput?(CMSampleBuffer: sampleBuffer, position: sourcePostion)

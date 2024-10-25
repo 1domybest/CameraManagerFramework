@@ -13,8 +13,9 @@ class ContentViewModel:ObservableObject {
     @Published var cameraMananger: CameraManager?
     @Published var isShowThumnnail: Bool = false
     @Published var isCameraOn: Bool = true
+    @Published var brightness:Float = 0.0
     init () {
-        self.cameraMananger = CameraManager(cameraSessionMode: .multiSession, cameraViewMode: .doubleScreen, cameraRenderingMode: .normal)
+        self.cameraMananger = CameraManager(cameraOptions: CameraOptions())
         self.cameraMananger?.setThumbnail(image: UIImage(named: "testThumbnail")!)
     }
     
@@ -38,5 +39,9 @@ class ContentViewModel:ObservableObject {
             self.isShowThumnnail = true
             self.cameraMananger?.setShowThumbnail(isShow: true)
         }
+    }
+    
+    func changeExposure() {
+        self.cameraMananger?.changeExposureBias(to: self.brightness)
     }
 }

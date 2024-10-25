@@ -60,14 +60,24 @@ public class MultiCameraView: UIView, UIGestureRecognizerDelegate {
         }
         
         // 메인 카메라 뷰에 핀치 제스처 추가
-        let mainCameraPinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(multiViewHandlePinchGesture(_:)))
-        mainCameraView?.addGestureRecognizer(mainCameraPinchGesture)
+        if self.parent?.cameraOptions?.enAblePinchZoom {
+            let mainCameraPinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(multiViewHandlePinchGesture(_:)))
+            mainCameraView?.addGestureRecognizer(mainCameraPinchGesture)
+        }
+        
+        if self.parent?.cameraOptions?.autoFocusAndExposure {
+            let mainCameraTapGesture = UITapGestureRecognizer(target: self, action: #selector(mainCameraHandleTapGesture(_:)))
+            mainCameraTapGesture.delegate = self // delegate 설정 (필요한 경우)
+            mainCameraView?.addGestureRecognizer(mainCameraTapGesture)
+        }
         
 
         // 작은 카메라 뷰 설정
         smallCameraView = CameraMetalView(cameraManagerFrameWorkDelegate: self) // 원하는 크기로 설정
         smallCameraView?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width/4, height: ((UIScreen.main.bounds.width / 4) / 9)  * 16 )
-
+        smallCameraView?.layer.cornerRadius = 5 // 원하는 반지름 크기로 설정
+        smallCameraView?.clipsToBounds = true // 둥근 모서리의 효과가 나타나도록 설정
+        
         if let smallCameraView = smallCameraView {
             self.addSubview(smallCameraView)
         }
@@ -82,6 +92,34 @@ public class MultiCameraView: UIView, UIGestureRecognizerDelegate {
         tapGesture.delegate = self // delegate 설정 (필요한 경우)
         smallCameraView?.addGestureRecognizer(tapGesture)
     }
+    
+    @objc private func mainCameraHandleTapGesture(_ gesture: UITapGestureRecognizer) {
+        // 현재 탭 위치를 superview 좌표계에서 얻기
+        let location = gesture.location(in: gesture.view)
+        
+        // 터치 좌표를 0~1 범위로 정규화 (카메라 노출용 좌표로 변환)
+        if let view = gesture.view {
+            let normalizedPoint = CGPoint(
+                x: location.x / view.bounds.width,
+                y: location.y / view.bounds.height
+            )
+            print("노출 조절 \(normalizedPoint)")
+            // 노출 조절 함수 호출
+
+            let resultOfExposure:Bool = (self.parent?.changeDeviceExposurePointOfInterest(to: normalizedPoint) ?? false)
+            let resultOfFocus:Bool = (self.parent?.changeDeviceFocusPointOfInterest(to: normalizedPoint) ?? false)
+            
+            if resultOfExposure || resultOfFocus {
+                // 문양 포시
+                self.parent?.cameraOptions?.showAutoFocusAndExposureRoundedRectangle ?? false {
+                    self.mainCameraView?.showFocusBorder(at: normalizedPoint)
+                }
+                
+            }
+        }
+    }
+
+
     
     @objc func handleTapGesture(_ gesture: UITapGestureRecognizer) {
         print("smallCameraView 탭됨")

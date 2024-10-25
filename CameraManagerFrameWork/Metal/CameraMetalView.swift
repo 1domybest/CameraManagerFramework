@@ -36,7 +36,7 @@ public class CameraMetalView: MTKView {
     var cameraManagerFrameWorkDelegate: CameraManagerFrameWorkDelegate?
     var showThumbnail: Bool = false
     var thumbnail:MTLTexture?
-    
+    private var borderView: UIView?
     init(cameraManagerFrameWorkDelegate: CameraManagerFrameWorkDelegate) {
         super.init(frame: .zero, device: MTLCreateSystemDefaultDevice())
         if let metalDevice = MTLCreateSystemDefaultDevice() {
@@ -77,6 +77,46 @@ public class CameraMetalView: MTKView {
         // setNeedsDisplay를 호출하여 화면을 갱신합니다.
         self.setNeedsDisplay()
     }
+    
+    // 사각형 보더라인을 보여주는 메서드
+    public func showFocusBorder(at point: CGPoint) {
+           // 이전 borderView가 존재하면 제거
+           borderView?.removeFromSuperview()
+
+           // 새로운 borderView 생성
+           let borderSize: CGFloat = 100 // 사각형의 크기 (원하는 크기로 조절)
+        
+           borderView = UIView(frame: CGRect(
+               x: (self.bounds.width * point.x) - borderSize / 2,
+               y: (self.bounds.height * point.y) - borderSize / 2,
+               width: borderSize,
+               height: borderSize
+           ))
+           
+           // 보더라인 스타일 설정
+           borderView?.layer.borderColor = UIColor.yellow.cgColor // 원하는 색상으로 설정
+           borderView?.layer.borderWidth = 1.0 // 보더 두께 설정
+           borderView?.layer.cornerRadius = 5 // 모서리 둥글게 설정 (선택사항)
+           borderView?.alpha = 1.0 // 시작할 때 완전히 보이도록 설정
+
+           // singleCameraView에 추가
+           if let borderView = borderView {
+               self.addSubview(borderView)
+
+               // 애니메이션 추가
+               UIView.animate(withDuration: 0.3, animations: {
+                   borderView.alpha = 1.0
+               }) { _ in
+                   // 애니메이션이 끝난 후 사라지게
+                   UIView.animate(withDuration: 0.3, delay: 0.3, options: [], animations: {
+                       borderView.alpha = 0.0
+                   }) { _ in
+                       // 최종적으로 borderView 제거
+                       borderView.removeFromSuperview()
+                   }
+               }
+           }
+       }
     
     public func update(sampleBuffer: CMSampleBuffer? ,pixelBuffer: CVPixelBuffer, time: CMTime, position: AVCaptureDevice.Position) {
         if Thread.isMainThread {

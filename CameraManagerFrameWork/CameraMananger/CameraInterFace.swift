@@ -92,7 +92,7 @@ extension CameraManager {
             self.position = position
             self.mainCameraPostion = position
             
-            if self.isMultiCamSupported && self.cameraViewMode == .doubleScreen {
+            if self.isMultiCamSupported && self.cameraOptions?.cameraViewMode == .doubleScreen {
                 self.setMirrorMode(isMirrorMode: position == .front)
             } else {
                 if position == .back {
@@ -229,46 +229,107 @@ extension CameraManager {
             return false
         }
         
-        if let captureDevice = backCamera, captureDevice.isFocusModeSupported(.continuousAutoFocus),
-           captureDevice.isFocusPointOfInterestSupported
-        {
-            do {
-                try captureDevice.lockForConfiguration()
-                captureDevice.focusPointOfInterest = pointOfInterest
-                captureDevice.focusMode = .continuousAutoFocus
-                captureDevice.unlockForConfiguration()
-                return true
-            } catch {
-                return false
-            }
+        guard pointOfInterest.x <= 1, pointOfInterest.y <= 1, pointOfInterest.x >= 0, pointOfInterest.y >= 0
+        else {
+            return false
         }
-        return false
+        
+        var device = backCamera
+        
+        if self.mainCameraPostion == .front || self.position == .front {
+            device = frontCamera
+        }
+        
+        guard let captureDevice = device, captureDevice.isFocusPointOfInterestSupported else {
+            return false
+        } 
+        
+        do {
+            try captureDevice.lockForConfiguration()
+            captureDevice.focusPointOfInterest = pointOfInterest
+            captureDevice.focusMode = .continuousAutoFocus
+            captureDevice.unlockForConfiguration()
+            return true
+        } catch {
+            print("Error locking configuration: \(error)")
+            return false
+        }
     }
     
     ///
-    /// 카메라 노출조절 함수
+    /// 터치영역으로 카메라 노출조절 함수
     ///
     /// - Parameters:
     ///    - pointOfInterest ( CGPoint ) : 노출정도
     /// - Returns: Bool
     ///
     public func changeDeviceExposurePointOfInterest(to pointOfInterest: CGPoint) -> Bool {
-        guard pointOfInterest.x <= 1, pointOfInterest.y <= 1, pointOfInterest.x >= 0, pointOfInterest.y >= 0,
-              let captureDevice = backCamera,
-              captureDevice.isExposureModeSupported(.continuousAutoExposure),
-              captureDevice.isExposurePointOfInterestSupported
+        guard pointOfInterest.x <= 1, pointOfInterest.y <= 1, pointOfInterest.x >= 0, pointOfInterest.y >= 0
         else {
+            return false
+        }
+        
+        var device = backCamera
+        
+        if self.mainCameraPostion == .front || self.position == .front {
+            device = frontCamera
+        }
+        
+        guard let captureDevice = device, captureDevice.isExposurePointOfInterestSupported else {
             return false
         }
         
         do {
             try captureDevice.lockForConfiguration()
+            
+            // 지원되는 노출 모드를 확인하여 설정
+            if captureDevice.isExposureModeSupported(.autoExpose) {
+                captureDevice.exposureMode = .autoExpose
+            } else if captureDevice.isExposureModeSupported(.continuousAutoExposure) {
+                captureDevice.exposureMode = .continuousAutoExposure
+            } else {
+                return false // 노출 모드가 지원되지 않음
+            }
+            
             captureDevice.exposurePointOfInterest = pointOfInterest
-            captureDevice.exposureMode = .continuousAutoExposure
             captureDevice.unlockForConfiguration()
             return true
         } catch {
             return false
+        }
+    }
+    
+    ///
+    /// 노출 양 직접 조절
+    ///
+    /// - Parameters:
+    ///    - pointOfInterest ( CGPoint ) : 노출정도
+    /// - Returns: Bool
+    ///
+    public func changeExposureBias(to bias: Float) {
+        
+        var device = backCamera
+        
+        if self.mainCameraPostion == .front || self.position == .front {
+            device = frontCamera
+        }
+        
+        guard let captureDevice = device, captureDevice.isExposureModeSupported(.continuousAutoExposure) else { return }
+        
+        
+        do {
+            try captureDevice.lockForConfiguration()
+            
+            // 노출 모드를 자동으로 설정하고 보정값을 조절
+            captureDevice.exposureMode = .continuousAutoExposure
+            captureDevice.setExposureTargetBias(bias) { (time) in
+                print("노출 보정 적용 시간: \(time.seconds)초")
+            }
+            
+            captureDevice.unlockForConfiguration()
+            return
+        } catch {
+            return
         }
     }
     
@@ -290,7 +351,7 @@ extension CameraManager {
             self.setPosition(self.mainCameraPostion)
         }
         
-        self.cameraViewMode = cameraViewMode
+        self.cameraOptions?.cameraViewMode = cameraViewMode
     }
     
     ///

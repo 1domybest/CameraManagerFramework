@@ -16,13 +16,7 @@ public class CameraManager: NSObject {
     
     public var multiCameraView: MultiCameraView? // 멀티 카메라뷰
         
-    // 화면 모드
-    public var cameraViewMode: CameraViewMode = .doubleScreen
-    // 세션 모드
-    public var cameraSessionMode: CameraSessionMode = .multiSession
-    // 렌더링 모드
-    public var cameraRenderingMode: CameraRenderingMode = .normal
-    
+    public var cameraOptions: CameraOptions?
     
     public var cameraManagerFrameWorkDelegate: CameraManagerFrameWorkDelegate? // 렌더링후 실행하는 콜백
     
@@ -75,7 +69,6 @@ public class CameraManager: NSObject {
     // 단일 디바이스 상태 변수
     public var position: AVCaptureDevice.Position = .back // 카메라 포지션
     
-    
     public var preset: AVCaptureSession.Preset = .hd1280x720 // 화면 비율
     public var videoOrientation: AVCaptureVideoOrientation = .portrait // 카메라 가로 세로 모드
     public var mirrorCamera = true // 미러모드 유무
@@ -107,15 +100,17 @@ public class CameraManager: NSObject {
     
     public var displayLink: CADisplayLink? // 카메라 종료시 반복문으로 돌릴 링크
     
-    public init(cameraSessionMode: CameraSessionMode = .multiSession, cameraViewMode: CameraViewMode = .singleScreen, cameraRenderingMode: CameraRenderingMode = .normal) {
+    public init(cameraOptions: CameraOptions) {
+        self.cameraOptions = cameraOptions
+        
         self.isMultiCamSupported = AVCaptureMultiCamSession.isMultiCamSupported
         
-        self.cameraViewMode = cameraViewMode
-        self.cameraSessionMode = cameraSessionMode
-        self.cameraRenderingMode = cameraRenderingMode
         
-        if cameraSessionMode == .singleSession || !self.isMultiCamSupported {
-            self.cameraViewMode = .singleScreen
+        self.position = cameraOptions.startPostion
+        self.mainCameraPostion = cameraOptions.startPostion
+        
+        if cameraOptions.cameraSessionMode == .singleSession || !self.isMultiCamSupported {
+            self.cameraOptions?.cameraViewMode = .singleScreen
         }
         
         super.init()
@@ -126,20 +121,22 @@ public class CameraManager: NSObject {
         videoDataOutputQueue = DispatchQueue(label: "camera.single.videoDataOutputQueue")
 
       
-        self.singleCameraView = CameraMetalView(cameraManagerFrameWorkDelegate: self)
         
-        if self.cameraSessionMode == .multiSession {
+        
+        if self.cameraOptions?.cameraSessionMode == .multiSession {
             self.multiCameraView = MultiCameraView(parent: self, appendQueueCallback: self)
             self.setupMultiCaptureSessions()
-            if cameraViewMode == .singleScreen {
+            if self.cameraOptions?.cameraViewMode == .singleScreen {
                 self.multiCameraView?.smallCameraView?.isHidden = true
             }
         } else {
+            self.singleCameraView = CameraMetalView(cameraManagerFrameWorkDelegate: self)
             self.maximumFrameRate = 60.0
             self.setupCaptureSessions()
+            self.setupGestureRecognizers()
         }
         
-        self.setupGestureRecognizers()
+        
     }
     
     ///
@@ -166,6 +163,7 @@ public class CameraManager: NSObject {
         self.sessionQueue = nil
         self.videoDataOutputQueue = nil
         self.cameraManagerFrameWorkDelegate = nil
+        self.cameraOptions = nil
     }
 
     
