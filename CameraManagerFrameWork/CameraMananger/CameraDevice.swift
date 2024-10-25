@@ -472,7 +472,7 @@ extension CameraManager {
                         self.multiCameraView?.mainCameraView?.setThumbnail(cgImage: thumbnail)
                     }
                     
-                    self.multiCameraView?.smallCameraView?.isHidden = true
+                    self.setCameraScreenMode(cameraScreenMode: .singleScreen)
                     self.multiCameraView?.mainCameraView?.showThumbnail = true
                 } else {
                     
@@ -488,7 +488,7 @@ extension CameraManager {
                 if self.displayLink != nil {
                     
                     if self.dualVideoSession != nil {
-                        self.multiCameraView?.smallCameraView?.isHidden = false
+                        self.setCameraScreenMode(cameraScreenMode: .doubleScreen)
                         self.multiCameraView?.mainCameraView?.showThumbnail = false
                     } else {
                         self.singleCameraView?.showThumbnail = false

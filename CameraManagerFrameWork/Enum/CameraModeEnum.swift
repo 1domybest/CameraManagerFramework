@@ -12,7 +12,7 @@ public enum CameraRenderingMode {
     case offScreen
 }
 
-public enum CameraViewMode {
+public enum CameraScreenMode {
     case singleScreen
     case doubleScreen
 }

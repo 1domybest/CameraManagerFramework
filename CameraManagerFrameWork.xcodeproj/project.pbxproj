@@ -30,6 +30,8 @@
 		D1A085F52CCB954D00490B95 /* SingleCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A085F42CCB954D00490B95 /* SingleCameraView.swift */; };
 		D1A085F72CCB955B00490B95 /* SingleCameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A085F62CCB955B00490B95 /* SingleCameraViewModel.swift */; };
 		D1A085F92CCB9A6C00490B95 /* LazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A085F82CCB9A6C00490B95 /* LazyView.swift */; };
+		D1A085FD2CCBA46800490B95 /* MultiCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A085FC2CCBA46800490B95 /* MultiCameraView.swift */; };
+		D1A085FF2CCBA46D00490B95 /* MultiCameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A085FE2CCBA46D00490B95 /* MultiCameraViewModel.swift */; };
 		D1E69F072CCA34D000F01132 /* CameraMetalShader.metallib in Resources */ = {isa = PBXBuildFile; fileRef = D1E69F062CCA34D000F01132 /* CameraMetalShader.metallib */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +83,8 @@
 		D1A085F42CCB954D00490B95 /* SingleCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCameraView.swift; sourceTree = "<group>"; };
 		D1A085F62CCB955B00490B95 /* SingleCameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCameraViewModel.swift; sourceTree = "<group>"; };
 		D1A085F82CCB9A6C00490B95 /* LazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyView.swift; sourceTree = "<group>"; };
+		D1A085FC2CCBA46800490B95 /* MultiCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiCameraView.swift; sourceTree = "<group>"; };
+		D1A085FE2CCBA46D00490B95 /* MultiCameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiCameraViewModel.swift; sourceTree = "<group>"; };
 		D1E69F062CCA34D000F01132 /* CameraMetalShader.metallib */ = {isa = PBXFileReference; lastKnownFileType = "archive.metal-library"; path = CameraMetalShader.metallib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -217,6 +221,8 @@
 		D1A085F12CCB952A00490B95 /* MultiCamera */ = {
 			isa = PBXGroup;
 			children = (
+				D1A085FA2CCBA44600490B95 /* View */,
+				D1A085FB2CCBA44B00490B95 /* ViewModel */,
 			);
 			path = MultiCamera;
 			sourceTree = "<group>";
@@ -233,6 +239,22 @@
 			isa = PBXGroup;
 			children = (
 				D1A085F62CCB955B00490B95 /* SingleCameraViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D1A085FA2CCBA44600490B95 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D1A085FC2CCBA46800490B95 /* MultiCameraView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D1A085FB2CCBA44B00490B95 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D1A085FE2CCBA46D00490B95 /* MultiCameraViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -376,9 +398,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1A085F92CCB9A6C00490B95 /* LazyView.swift in Sources */,
+				D1A085FD2CCBA46800490B95 /* MultiCameraView.swift in Sources */,
 				D101D88F2CCA19D700D4DDF6 /* UIKitViewRepresentable.swift in Sources */,
 				D1A085F72CCB955B00490B95 /* SingleCameraViewModel.swift in Sources */,
 				D101D87F2CCA0D3900D4DDF6 /* ContentView.swift in Sources */,
+				D1A085FF2CCBA46D00490B95 /* MultiCameraViewModel.swift in Sources */,
 				D1A085F52CCB954D00490B95 /* SingleCameraView.swift in Sources */,
 				D101D8802CCA0D3900D4DDF6 /* ExampleApp.swift in Sources */,
 			);

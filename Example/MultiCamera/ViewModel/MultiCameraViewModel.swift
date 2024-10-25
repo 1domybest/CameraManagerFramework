@@ -1,5 +1,5 @@
 //
-//  SingleCameraViewModel.swift
+//  MultiCameraViewModel.swift
 //  Example
 //
 //  Created by 온석태 on 10/25/24.
@@ -9,32 +9,43 @@ import Foundation
 import CameraManagerFrameWork
 import UIKit
 
-class SingleCameraViewModel:ObservableObject {
+class MultiCameraViewModel:ObservableObject {
     
     @Published var cameraMananger: CameraManager?
     @Published var isShowThumnnail: Bool = false
     @Published var isCameraOn: Bool = true
     @Published var brightness:Float = 0.0
     
-    @Published var isFront:Bool = false
+    @Published var isFrontMainCamera:Bool = false
     @Published var isTorchOn:Bool = false
+    
+    @Published var currentScreenMode: CameraScreenMode = .doubleScreen
     
     init () {
         var cameraOption = CameraOptions()
-        cameraOption.cameraSessionMode = .singleSession
-        cameraOption.cameraScreenMode = .singleScreen
+        cameraOption.cameraSessionMode = .multiSession
+        cameraOption.cameraScreenMode = .doubleScreen
         cameraOption.enAblePinchZoom = true
         cameraOption.cameraRenderingMode = .normal
         cameraOption.tapAutoFocusAndExposure = true
         cameraOption.showTapAutoFocusAndExposureRoundedRectangle = true
         cameraOption.startPostion = .back
         
+        cameraOption.onChangeMainScreenPostion = { currentPosition in
+            self.isFrontMainCamera = currentPosition == .front ? true : false
+        }
+        
+        cameraOption.onChangeScreenMode = { currentScreenMode in
+            guard let currentScreenMode = currentScreenMode else { return }
+            self.currentScreenMode = currentScreenMode
+        }
+        
         self.cameraMananger = CameraManager(cameraOptions: cameraOption)
         self.cameraMananger?.setThumbnail(image: UIImage(named: "testThumbnail")!)
     }
     
     deinit {
-        print("SingleCameraViewModel deinit")
+        print("MultiCameraViewModel deinit")
     }
     
     func unrference () {
@@ -42,15 +53,15 @@ class SingleCameraViewModel:ObservableObject {
         self.cameraMananger = nil
     }
     
-    func toggleTorch() {
-        if isTorchOn {
-            self.isTorchOn = false
-        } else {
-            if !self.isFront {
-                self.isTorchOn = true
-            }
-        }
+    func toggleCameraScreenMode () {
         
+        if !self.isCameraOn { return }
+        self.currentScreenMode = currentScreenMode == .doubleScreen ? .singleScreen : .doubleScreen
+        self.cameraMananger?.setCameraScreenMode(cameraScreenMode: self.currentScreenMode)
+    }
+    
+    func toggleTorch() {
+        self.isTorchOn = self.isTorchOn ? false : true
         self.cameraMananger?.setTorch(onTorch: self.isTorchOn)
     }
     
@@ -76,18 +87,20 @@ class SingleCameraViewModel:ObservableObject {
         }
     }
     
+    func toggleMainCameraPosition() {
+        if !self.isCameraOn { return }
+        self.isFrontMainCamera = isFrontMainCamera ? false : true
+        self.cameraMananger?.setMainCameraPostion(mainCameraPostion: self.isFrontMainCamera ? .front : .back)
+        
+        if self.isFrontMainCamera {
+            self.isTorchOn = false
+        }
+    }
+    
     func changeExposure() {
         if !self.isCameraOn { return }
         self.cameraMananger?.changeExposureBias(to: self.brightness)
     }
     
-    func changePosition() {
-        if !self.isCameraOn { return }
-        self.isFront = isFront ? false : true
-        self.cameraMananger?.setPosition(self.isFront ? .front : .back)
-        
-        if self.isFront {
-            self.isTorchOn = false
-        }
-    }
+    
 }

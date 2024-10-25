@@ -126,7 +126,7 @@ public class MultiCameraView: UIView, UIGestureRecognizerDelegate {
         // 탭 제스처 처리 로직을 여기에 추가
         guard let parent = self.parent else { return }
         let postion:AVCaptureDevice.Position = parent.mainCameraPostion == .front ? .back : .front
-        parent.switchMainCamera(mainCameraPostion: postion)
+        parent.setMainCameraPostion(mainCameraPostion: postion)
     }
 
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {

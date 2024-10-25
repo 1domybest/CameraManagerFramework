@@ -110,7 +110,7 @@ public class CameraManager: NSObject {
         self.mainCameraPostion = cameraOptions.startPostion
         
         if cameraOptions.cameraSessionMode == .singleSession || !self.isMultiCamSupported {
-            self.cameraOptions?.cameraViewMode = .singleScreen
+            self.cameraOptions?.cameraScreenMode = .singleScreen
         }
         
         super.init()
@@ -123,7 +123,7 @@ public class CameraManager: NSObject {
         if self.cameraOptions?.cameraSessionMode == .multiSession {
             self.multiCameraView = MultiCameraView(parent: self, appendQueueCallback: self)
             self.setupMultiCaptureSessions()
-            if self.cameraOptions?.cameraViewMode == .singleScreen {
+            if self.cameraOptions?.cameraScreenMode == .singleScreen {
                 self.multiCameraView?.smallCameraView?.isHidden = true
             }
         } else {

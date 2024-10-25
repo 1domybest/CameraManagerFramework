@@ -29,7 +29,7 @@ struct ContentView: View {
                     
                     Spacer().frame(height: 30)
                     
-                    NavigationLink(destination: Text("Detail View")) {
+                    NavigationLink(destination: LazyView(MultiCameraView())) {
                         RoundedRectangle(cornerRadius: 20)
                             .foregroundColor(.red)
                             .frame(width: 200, height: 100)

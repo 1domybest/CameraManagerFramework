@@ -91,8 +91,9 @@ extension CameraManager {
         DispatchQueue.main.async {
             self.position = position
             self.mainCameraPostion = position
+            self.setMainCameraPostion(mainCameraPostion: self.mainCameraPostion)
             
-            if self.isMultiCamSupported && self.cameraOptions?.cameraViewMode == .doubleScreen {
+            if self.isMultiCamSupported && self.cameraOptions?.cameraScreenMode == .doubleScreen {
                 self.setMirrorMode(isMirrorMode: position == .front)
             } else {
                 self.sessionQueue?.async {
@@ -119,8 +120,9 @@ extension CameraManager {
     ///     - position ( AVCaptureDevice ) : 카메라 방향
     /// - Returns:
     ///
-    public func switchMainCamera (mainCameraPostion: AVCaptureDevice.Position) {
+    public func setMainCameraPostion (mainCameraPostion: AVCaptureDevice.Position) {
         self.mainCameraPostion = mainCameraPostion
+        self.cameraOptions?.onChangeMainScreenPostion?(self.mainCameraPostion)
     }
     
     ///
@@ -342,18 +344,16 @@ extension CameraManager {
     ///    - onTorch ( Bool ) : 장치 켜짐 유무
     /// - Returns:
     ///
-    public func setCameraViewMode (cameraViewMode: CameraViewMode) {
+    public func setCameraScreenMode (cameraScreenMode: CameraScreenMode) {
         if self.dualVideoSession?.isRunning ?? false {
-            if cameraViewMode == .singleScreen {
+            if cameraScreenMode == .singleScreen {
                 self.multiCameraView?.smallCameraView?.isHidden = true
             } else {
                 self.multiCameraView?.smallCameraView?.isHidden = false
             }
-        } else {
-            self.setPosition(self.mainCameraPostion)
         }
-        
-        self.cameraOptions?.cameraViewMode = cameraViewMode
+        self.cameraOptions?.cameraScreenMode = cameraScreenMode
+        self.cameraOptions?.onChangeScreenMode?(self.cameraOptions?.cameraScreenMode)
     }
     
     ///
