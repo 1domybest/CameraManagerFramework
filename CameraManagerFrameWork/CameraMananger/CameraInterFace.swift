@@ -9,6 +9,20 @@ import Foundation
 import AVFoundation
 
 extension CameraManager {
+    
+    ///
+    /// 썸네일 등록
+    ///
+    /// - Parameters:
+    /// - Returns:
+    ///
+    public func setThumbnail(image: UIImage) {
+        guard let cgImage = image.cgImage else {
+            return
+        }
+        self.thumbnail = cgImage
+    }
+    
     ///
     /// output 용 콜백등록
     ///

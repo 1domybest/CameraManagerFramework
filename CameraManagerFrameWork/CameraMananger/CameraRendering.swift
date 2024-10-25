@@ -10,13 +10,6 @@ import UIKit
 import AVFoundation
 
 extension CameraManager {
-    
-    public func setThumbnail(image: UIImage) {
-        guard let cgImage = image.cgImage else {
-            return
-        }
-        self.thumbnail = cgImage
-    }
     ///
     /// 줌을 위한 핀치 제스처 등록
     ///
@@ -155,5 +148,75 @@ extension CameraManager {
 extension CameraManager: UIGestureRecognizerDelegate {
     open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
+    }
+}
+
+
+extension CameraManager {
+    
+    func renderingCameraFrame(
+        sampleBuffer: CMSampleBuffer,
+        connection: AVCaptureConnection
+    ) {
+        guard var pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+              return
+          }
+        guard var sourcePostion: AVCaptureDevice.Position = connection.inputPorts.first?.sourceDevicePosition else { return }
+          // 타임스탬프 추출
+        var timestamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
+        
+        
+        self.previousImageBuffer = pixelBuffer
+        self.previousTimeStamp = timestamp
+        
+        if self.cameraRenderingMode == .offScreen {
+            
+            self.cameraManagerFrameWorkDelegate?.videoOffscreenRenderCaptureOutput?(pixelBuffer: pixelBuffer, time: timestamp, position: sourcePostion)
+            self.cameraManagerFrameWorkDelegate?.videoOffscreenRenderCaptureOutput?(CMSampleBuffer: sampleBuffer, position: sourcePostion)
+            
+        } else {
+            
+            var newPixelBuffer:CVPixelBuffer? = self.cameraManagerFrameWorkDelegate?.videoChangeAbleCaptureOutput?(pixelBuffer: pixelBuffer, time: timestamp, position: sourcePostion)
+            
+            var newCMSampleBuffer:CMSampleBuffer? = self.cameraManagerFrameWorkDelegate?.videoChangeAbleCaptureOutput?(CMSampleBuffer: sampleBuffer, position: sourcePostion)
+            
+            if let newPixelBuffer = newPixelBuffer {
+                pixelBuffer = newPixelBuffer
+            } else if let newCMSampleBuffer =  newCMSampleBuffer {
+                if let newPixelBuffer = CMSampleBufferGetImageBuffer(newCMSampleBuffer) {
+                    pixelBuffer = newPixelBuffer
+                  }
+            }
+           
+            if self.dualVideoSession?.isRunning ?? false {
+                self.doubleScreenCameraModeRender(sampleBuffer: sampleBuffer, pixelBuffer: pixelBuffer, time: timestamp, sourceDevicePosition: sourcePostion)
+            } else {
+                self.singleCameraModeRender(sampleBuffer: sampleBuffer, pixelBuffer: pixelBuffer, time: timestamp, sourceDevicePosition: sourcePostion)
+            }
+        }
+    }
+    
+    func renderingThumbnailFrame(
+        pixelBuffer: CVPixelBuffer,
+        sourcePostion: AVCaptureDevice.Position
+    ) {
+        self.previousImageBuffer = pixelBuffer
+        let frameDuration = CMTimeMakeWithSeconds(1.0 / self.frameRate, preferredTimescale: 600) // 1/30초를 CMTime으로 변환 (600은 일반적인 timescale)
+        
+        if let previousTime = previousTimeStamp {
+            previousTimeStamp = CMTimeAdd(previousTime, frameDuration) // 이전 시간에 프레임 시간을 추가
+        } else {
+            previousTimeStamp = frameDuration // 이전 시간이 없으면 그냥 1/30초로 초기화
+        }
+        
+        // 타임스탬프 추출
+        guard let timestamp = self.previousTimeStamp else { return }
+    
+        
+        if self.dualVideoSession != nil {
+            self.doubleScreenCameraModeRender(sampleBuffer: nil, pixelBuffer: pixelBuffer, time: timestamp, sourceDevicePosition: sourcePostion)
+        } else {
+            self.singleCameraModeRender(sampleBuffer: nil, pixelBuffer: pixelBuffer, time: timestamp, sourceDevicePosition: sourcePostion)
+        }
     }
 }
