@@ -111,7 +111,7 @@ public class MultiCameraView: UIView, UIGestureRecognizerDelegate {
             
             if resultOfExposure || resultOfFocus {
                 // 문양 포시
-                self.parent?.cameraOptions?.showAutoFocusAndExposureRoundedRectangle ?? false {
+                self.parent?.cameraOptions?.showTapAutoFocusAndExposureRoundedRectangle ?? false {
                     self.mainCameraView?.showFocusBorder(at: normalizedPoint)
                 }
                 

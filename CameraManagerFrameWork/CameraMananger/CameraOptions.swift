@@ -17,9 +17,9 @@ public struct CameraOptions {
     // 렌더링 모드
     public var cameraRenderingMode: CameraRenderingMode
     
-    public var autoFocusAndExposure: Bool
+    public var tapAutoFocusAndExposure: Bool
     
-    public var showAutoFocusAndExposureRoundedRectangle: Bool
+    public var showTapAutoFocusAndExposureRoundedRectangle: Bool
     
     public var enAblePinchZoom: Bool
     
@@ -35,8 +35,8 @@ public struct CameraOptions {
         self.cameraViewMode = cameraViewMode
         self.cameraSessionMode = cameraSessionMode
         self.cameraRenderingMode = cameraRenderingMode
-        self.autoFocusAndExposure = autoFocusAndExposure
-        self.showAutoFocusAndExposureRoundedRectangle = showAutoFocusAndExposureRoundedRectangle
+        self.tapAutoFocusAndExposure = autoFocusAndExposure
+        self.showTapAutoFocusAndExposureRoundedRectangle = showAutoFocusAndExposureRoundedRectangle
         self.enAblePinchZoom = enAblePinchZoom
     }
 }

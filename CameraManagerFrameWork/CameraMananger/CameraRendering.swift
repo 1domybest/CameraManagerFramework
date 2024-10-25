@@ -24,7 +24,7 @@ extension CameraManager {
         }
         
         
-        if cameraOptions?.autoFocusAndExposure ?? false {
+        if cameraOptions?.tapAutoFocusAndExposure ?? false {
             let singleCameraTapGesture = UITapGestureRecognizer(target: self, action: #selector(singleCameraHandleTapGesture(_:)))
             singleCameraTapGesture.delegate = self // delegate 설정 (필요한 경우)
             singleCameraView?.addGestureRecognizer(singleCameraTapGesture)
@@ -125,7 +125,7 @@ extension CameraManager {
             
             if resultOfExposure || resultOfFocus {
                 // 문양 포시
-                if cameraOptions?.showAutoFocusAndExposureRoundedRectangle ?? false {
+                if cameraOptions?.showTapAutoFocusAndExposureRoundedRectangle ?? false {
                     self.singleCameraView?.showFocusBorder(at: normalizedPoint)
                 }
             }
