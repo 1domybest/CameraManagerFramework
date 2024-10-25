@@ -181,8 +181,8 @@
 			children = (
 				D101D8782CCA0D3900D4DDF6 /* Preview Content */,
 				D101D8792CCA0D3900D4DDF6 /* Assets.xcassets */,
-				D101D87A2CCA0D3900D4DDF6 /* ContentView.swift */,
 				D101D87B2CCA0D3900D4DDF6 /* ExampleApp.swift */,
+				D101D87A2CCA0D3900D4DDF6 /* ContentView.swift */,
 				D101D88C2CCA19C600D4DDF6 /* ContentViewModel.swift */,
 				D101D88E2CCA19D700D4DDF6 /* UIKitViewRepresentable.swift */,
 			);

@@ -26,7 +26,7 @@ public class CameraMetalView: MTKView {
     var pipelineState: MTLRenderPipelineState!
     var textureCache: CVMetalTextureCache!
     var samplerState: MTLSamplerState?
-
+    var textureLoader:MTKTextureLoader?
     public var isCameraOn: Bool = true
     public var isMirrorMode: Bool = false
     var isRecording: Bool = false
@@ -34,11 +34,14 @@ public class CameraMetalView: MTKView {
     var currentOrientation: Int = 1
     
     var cameraManagerFrameWorkDelegate: CameraManagerFrameWorkDelegate?
+    var showThumbnail: Bool = false
+    var thumbnail:MTLTexture?
     
     init(cameraManagerFrameWorkDelegate: CameraManagerFrameWorkDelegate) {
         super.init(frame: .zero, device: MTLCreateSystemDefaultDevice())
         if let metalDevice = MTLCreateSystemDefaultDevice() {
             self.metalDevice = metalDevice
+            self.textureLoader = MTKTextureLoader(device: metalDevice)
             self.metalCommandQueue = metalDevice.makeCommandQueue()
             self.createTextureCache()
             self.setupSampler()
@@ -75,7 +78,7 @@ public class CameraMetalView: MTKView {
         self.setNeedsDisplay()
     }
     
-    public func update(sampleBuffer: CMSampleBuffer ,pixelBuffer: CVPixelBuffer, time: CMTime, position: AVCaptureDevice.Position) {
+    public func update(sampleBuffer: CMSampleBuffer? ,pixelBuffer: CVPixelBuffer, time: CMTime, position: AVCaptureDevice.Position) {
         if Thread.isMainThread {
             self.position = position
             self.time = time
@@ -123,6 +126,20 @@ public class CameraMetalView: MTKView {
         }
     }
     
+    func setThumbnail(cgImage: CGImage) {
+        do {
+            let options: [MTKTextureLoader.Option: Any] = [
+                .origin: MTKTextureLoader.Origin.topLeft, // 기본 설정으로 변경
+                .SRGB: false
+            ]
+
+            let texture = try textureLoader?.newTexture(cgImage: cgImage, options: options)
+            self.thumbnail = texture
+        } catch {
+            
+        }
+    }
+    
     func texture(from pixelBuffer: CVPixelBuffer) -> MTLTexture? {
 
         let width = CVPixelBufferGetWidth(pixelBuffer)
@@ -139,6 +156,7 @@ public class CameraMetalView: MTKView {
                                                                 0,
                                                                 &imageTexture)
 
+
         guard status == kCVReturnSuccess, let unwrappedImageTexture = imageTexture else { return nil }
 
         return CVMetalTextureGetTexture(unwrappedImageTexture)
@@ -151,13 +169,25 @@ extension CameraMetalView: MTKViewDelegate {
     public func mtkView(_: MTKView, drawableSizeWillChange _: CGSize) {}
     
     public func draw(in view: MTKView) {
+
         guard let drawable = view.currentDrawable,
               let commandBuffer = metalCommandQueue.makeCommandBuffer(),
               let renderPassDescriptor = view.currentRenderPassDescriptor,
-              let sampleBuffer = self.sampleBuffer,
               let pixelBuffer = self.pixelBuffer,
-              let position = self.position,
-              let texture = texture(from: pixelBuffer) else {
+              let position = self.position else {
+            return
+        }
+        
+        var texture:MTLTexture?
+        
+        if self.showThumbnail {
+            texture = self.thumbnail
+        } else {
+            texture = self.texture(from: pixelBuffer)
+        }
+        
+        guard let texture = texture else {
+            print("no texture")
             return
         }
         
@@ -236,7 +266,11 @@ extension CameraMetalView: MTKViewDelegate {
             }
             
             cameraManagerFrameWorkDelegate?.videoCaptureOutput?(pixelBuffer: image!, time: time!, position: position)
-            cameraManagerFrameWorkDelegate?.videoCaptureOutput?(sampleBuffer: sampleBuffer, position: position)
+            
+            if let sampleBuffer = sampleBuffer {
+                cameraManagerFrameWorkDelegate?.videoCaptureOutput?(sampleBuffer: sampleBuffer, position: position)
+            }
+            
             
           } catch let error {
               print("Failed to create pipeline state, error: \(error)")

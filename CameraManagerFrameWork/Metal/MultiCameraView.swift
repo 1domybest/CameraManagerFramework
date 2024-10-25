@@ -153,11 +153,11 @@ public class MultiCameraView: UIView, UIGestureRecognizerDelegate {
     }
     
     
-    public func updateSmallCameraBuffer(sampleBuffer: CMSampleBuffer, pixelBuffer: CVPixelBuffer, time: CMTime, sourceDevicePosition: AVCaptureDevice.Position) {
+    public func updateSmallCameraBuffer(sampleBuffer: CMSampleBuffer?, pixelBuffer: CVPixelBuffer, time: CMTime, sourceDevicePosition: AVCaptureDevice.Position) {
         self.smallCameraView?.update(sampleBuffer: sampleBuffer, pixelBuffer: pixelBuffer, time: time, position: sourceDevicePosition)
     }
     
-    public func updateMainCameraBuffer(sampleBuffer: CMSampleBuffer, pixelBuffer: CVPixelBuffer, time: CMTime, sourceDevicePosition: AVCaptureDevice.Position) {
+    public func updateMainCameraBuffer(sampleBuffer: CMSampleBuffer?, pixelBuffer: CVPixelBuffer, time: CMTime, sourceDevicePosition: AVCaptureDevice.Position) {
         self.mainCameraView?.update(sampleBuffer: sampleBuffer, pixelBuffer: pixelBuffer, time: time, position: sourceDevicePosition)
     }
     

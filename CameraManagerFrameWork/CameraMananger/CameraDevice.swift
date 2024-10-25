@@ -397,19 +397,6 @@ extension CameraManager {
         
         return AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: position)
     }
-    
-    ///
-    /// 카메라 기기 시작함수 단 퍼미션확인후 상수에 등록
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
-    public func startCamera() {
-        checkCameraPermission()
-        sessionQueue?.async { [weak self] in
-            self?.startCameraInternal()
-        }
-    }
 
     
     ///
@@ -418,16 +405,19 @@ extension CameraManager {
     /// - Parameters:
     /// - Returns:
     ///
-    public func startCameraInternal() {
-        if displayLink != nil {
-            displayLink?.invalidate() // DisplayLink를 중지
-            displayLink = nil
-        }
-        
-        if self.position == .front {
-            self.frontCaptureSession?.startRunning()
-        } else {
-            self.backCaptureSession?.startRunning()
+    public func startCamera() {
+        sessionQueue?.async { [weak self] in
+            guard let self = self else { return }
+            if self.dualVideoSession != nil {
+                self.dualVideoSession?.startRunning()
+            } else {
+                if self.position == .front {
+                    self.frontCaptureSession?.startRunning()
+                } else {
+                    self.backCaptureSession?.startRunning()
+                }
+            }
+            self.setShowThumbnail(isShow: false)
         }
     }
     
@@ -438,26 +428,76 @@ extension CameraManager {
     /// - Returns:
     ///
     public func stopCamera() {
-//        sessionQueue?.async { [weak self] in
-//            self?.stopCameraInternal()
-//        }
+        sessionQueue?.async { [weak self] in
+            guard let self = self else { return }
+            
+            if displayLink != nil {
+                displayLink?.invalidate() // DisplayLink를 중지
+                displayLink = nil
+                self.multiCameraView?.mainCameraView?.showThumbnail = false
+                self.singleCameraView?.showThumbnail = false
+            }
+            
+            self.frontCaptureSession?.stopRunning()
+            self.backCaptureSession?.stopRunning()
+            self.dualVideoSession?.stopRunning()
+        }
     }
     
     ///
-    /// 카메라 세션 정지함수
+    /// 카메라 세션 일시정지 함수
     ///
     /// - Parameters:
     /// - Returns:
     ///
-    public func stopCameraInternal(isPause: Bool = false) {
-        if self.position == .front {
+    public func pauseCamera(showThumbnail: Bool) {
+        sessionQueue?.async { [weak self] in
+            guard let self = self else { return }
+            
             self.frontCaptureSession?.stopRunning()
-        } else {
             self.backCaptureSession?.stopRunning()
+            self.dualVideoSession?.stopRunning()
+            
+            if showThumbnail {
+                self.setShowThumbnail(isShow: showThumbnail)
+            }
         }
-        
-        if isPause {
-            startDisplayLink()
+    }
+    
+    public func setShowThumbnail(isShow: Bool) {
+        DispatchQueue.main.async {
+            if isShow {
+                if self.dualVideoSession != nil {
+                    if let thumbnail = self.thumbnail {
+                        self.multiCameraView?.mainCameraView?.setThumbnail(cgImage: thumbnail)
+                    }
+                    
+                    self.multiCameraView?.smallCameraView?.isHidden = true
+                    self.multiCameraView?.mainCameraView?.showThumbnail = true
+                } else {
+                    
+                    if let thumbnail = self.thumbnail {
+                        self.singleCameraView?.setThumbnail(cgImage: thumbnail)
+                    }
+                    
+                    self.singleCameraView?.showThumbnail = true
+                }
+                
+                self.startDisplayLink()
+            } else {
+                if self.displayLink != nil {
+                    
+                    if self.dualVideoSession != nil {
+                        self.multiCameraView?.smallCameraView?.isHidden = false
+                        self.multiCameraView?.mainCameraView?.showThumbnail = false
+                        self.singleCameraView?.showThumbnail = false
+                    }
+                    
+                    self.stopDisplayLink()
+                }
+            }
+           
+            
         }
     }
     
@@ -467,12 +507,25 @@ extension CameraManager {
          displayLink?.preferredFramesPerSecond = Int(self.frameRate) // 초당 30프레임
         
          displayLink?.add(to: .main, forMode: .common)
-     }
+    }
+    
+    public func stopDisplayLink() {
+        self.displayLink?.invalidate() // DisplayLink를 중지
+        self.displayLink = nil
+    }
     
     
     @objc public func handleDisplayLink(_ displayLink: CADisplayLink) {
         // 여기에서 프레임 처리 로직을 실행
-        if let captureSession = self.backCaptureSession, !captureSession.isRunning {
+        if !(self.frontCaptureSession?.isRunning ?? false && self.backCaptureSession?.isRunning ?? false && self.dualVideoSession?.isRunning ?? false) {
+//            guard let thumbnail = self.thumbnail else { return }
+//            
+//            self.renderingThumbnailFrame(pixelBuffer: thumbnail, sourcePostion: self.mainCameraPostion)
+            if self.dualVideoSession != nil {
+                self.multiCameraView?.mainCameraView?.setNeedsDisplay()
+            } else {
+                self.singleCameraView?.setNeedsDisplay()
+            }
         }
     }
     
@@ -543,6 +596,13 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
         didOutput sampleBuffer: CMSampleBuffer,
         from connection: AVCaptureConnection
     ) {
+        self.renderingCameraFrame(sampleBuffer: sampleBuffer, connection: connection)
+    }
+    
+    func renderingCameraFrame(
+        sampleBuffer: CMSampleBuffer,
+        connection: AVCaptureConnection
+    ) {
         guard var pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
               return
           }
@@ -573,11 +633,35 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
                   }
             }
            
-            if self.cameraViewMode == .singleScreen {
-                self.singleCameraModeRender(sampleBuffer: sampleBuffer, pixelBuffer: pixelBuffer, time: timestamp, sourceDevicePosition: sourcePostion)
-            } else if self.cameraViewMode == .doubleScreen {
+            if self.dualVideoSession?.isRunning ?? false {
                 self.doubleScreenCameraModeRender(sampleBuffer: sampleBuffer, pixelBuffer: pixelBuffer, time: timestamp, sourceDevicePosition: sourcePostion)
+            } else {
+                self.singleCameraModeRender(sampleBuffer: sampleBuffer, pixelBuffer: pixelBuffer, time: timestamp, sourceDevicePosition: sourcePostion)
             }
+        }
+    }
+    
+    func renderingThumbnailFrame(
+        pixelBuffer: CVPixelBuffer,
+        sourcePostion: AVCaptureDevice.Position
+    ) {
+        self.previousImageBuffer = pixelBuffer
+        let frameDuration = CMTimeMakeWithSeconds(1.0 / self.frameRate, preferredTimescale: 600) // 1/30초를 CMTime으로 변환 (600은 일반적인 timescale)
+        
+        if let previousTime = previousTimeStamp {
+            previousTimeStamp = CMTimeAdd(previousTime, frameDuration) // 이전 시간에 프레임 시간을 추가
+        } else {
+            previousTimeStamp = frameDuration // 이전 시간이 없으면 그냥 1/30초로 초기화
+        }
+        
+        // 타임스탬프 추출
+        guard let timestamp = self.previousTimeStamp else { return }
+    
+        
+        if self.dualVideoSession != nil {
+            self.doubleScreenCameraModeRender(sampleBuffer: nil, pixelBuffer: pixelBuffer, time: timestamp, sourceDevicePosition: sourcePostion)
+        } else {
+            self.singleCameraModeRender(sampleBuffer: nil, pixelBuffer: pixelBuffer, time: timestamp, sourceDevicePosition: sourcePostion)
         }
     }
 }

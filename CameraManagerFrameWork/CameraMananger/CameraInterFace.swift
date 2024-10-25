@@ -75,6 +75,7 @@ extension CameraManager {
     public func setPosition(_ position: AVCaptureDevice.Position) {
         DispatchQueue.main.async {
             self.position = position
+            self.mainCameraPostion = position
             
             if self.isMultiCamSupported && self.cameraViewMode == .doubleScreen {
                 self.setMirrorMode(isMirrorMode: position == .front)
@@ -91,7 +92,6 @@ extension CameraManager {
                     self.setMirrorMode(isMirrorMode: true)
                 }
             }
-           
         }
     }
     
@@ -115,27 +115,15 @@ extension CameraManager {
     ///
     public func setMirrorMode (isMirrorMode: Bool) {
         
-        if self.isMultiCamSupported {
-            if self.cameraViewMode == .singleScreen {
-                
-                self.mirrorCamera = isMirrorMode
-                
-                if self.position == .back {
-                    self.multiBackCameraConnection?.isVideoMirrored = self.mirrorCamera
-                } else {
-                    self.multiFrontCameraConnection?.isVideoMirrored = self.mirrorCamera
-                }
+        if self.dualVideoSession?.isRunning ?? false {
+            if self.mainCameraPostion == .back {
+                self.mirrorBackCamera = isMirrorMode
+                self.multiBackCameraConnection?.isVideoMirrored = self.mirrorBackCamera
             } else {
-                if self.position == .back {
-                    self.mirrorBackCamera = isMirrorMode
-                    self.multiBackCameraConnection?.isVideoMirrored = self.mirrorBackCamera
-                } else {
-                    self.mirrorFrontCamera = isMirrorMode
-                    self.multiFrontCameraConnection?.isVideoMirrored = self.mirrorFrontCamera
-                }
+                self.mirrorFrontCamera = isMirrorMode
+                self.multiFrontCameraConnection?.isVideoMirrored = self.mirrorFrontCamera
             }
         } else {
-            
             self.mirrorCamera = isMirrorMode
             
             if self.position == .back {
@@ -277,12 +265,16 @@ extension CameraManager {
     /// - Returns:
     ///
     public func setCameraViewMode (cameraViewMode: CameraViewMode) {
-        
-        if cameraViewMode == .singleScreen {
-            self.setPosition(self.mainCameraPostion)
+        if self.dualVideoSession?.isRunning ?? false {
+            if cameraViewMode == .singleScreen {
+                self.multiCameraView?.smallCameraView?.isHidden = true
+            } else {
+                self.multiCameraView?.smallCameraView?.isHidden = false
+            }
         } else {
-            self.mainCameraPostion = self.position
+            self.setPosition(self.mainCameraPostion)
         }
+        
         self.cameraViewMode = cameraViewMode
     }
     

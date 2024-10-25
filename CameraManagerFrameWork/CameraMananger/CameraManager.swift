@@ -75,6 +75,7 @@ public class CameraManager: NSObject {
     // 단일 디바이스 상태 변수
     public var position: AVCaptureDevice.Position = .back // 카메라 포지션
     
+    
     public var preset: AVCaptureSession.Preset = .hd1280x720 // 화면 비율
     public var videoOrientation: AVCaptureVideoOrientation = .portrait // 카메라 가로 세로 모드
     public var mirrorCamera = true // 미러모드 유무
@@ -101,7 +102,7 @@ public class CameraManager: NSObject {
     
     public var frameRate:Double = 30.0 // 초당 프레임
     
-    public var thumbnail: CVPixelBuffer? // 썸네일
+    public var thumbnail: CGImage? // 썸네일
     
     public var displayLink: CADisplayLink? // 카메라 종료시 반복문으로 돌릴 링크
     
@@ -129,6 +130,9 @@ public class CameraManager: NSObject {
         if self.cameraSessionMode == .multiSession {
             self.multiCameraView = MultiCameraView(parent: self, appendQueueCallback: self)
             self.setupMultiCaptureSessions()
+            if cameraViewMode == .singleScreen {
+                self.multiCameraView?.smallCameraView?.isHidden = true
+            }
         } else {
             self.setupCaptureSessions()
         }

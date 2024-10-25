@@ -15,6 +15,26 @@ struct ContentView: View {
         ZStack {
             UIKitViewRepresentable(view: vm.cameraMananger?.multiCameraView)
                 .frame(height: (UIScreen.main.bounds.width / 9)  * 16 )
+                .overlay(
+                    VStack {
+                        Spacer()
+                        
+                        Button(action: {
+                            self.vm.toggleCamera()
+                        }, label: {
+                            Text("카메라")
+                        })
+                        
+                        Spacer().frame(height: 20)
+                        
+                        Button(action: {
+                            self.vm.toggleThumbnail()
+                        }, label: {
+                            Text("썸네일")
+                        })
+                        Spacer().frame(height: 10)
+                    }
+                )
         }
     }
 }
