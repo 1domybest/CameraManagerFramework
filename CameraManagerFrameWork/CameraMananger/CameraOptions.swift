@@ -24,8 +24,8 @@ public struct CameraOptions {
     public var enAblePinchZoom: Bool
     
     public init(startPostion: AVCaptureDevice.Position = .back,
-                cameraViewMode: CameraViewMode = .doubleScreen,
-                cameraSessionMode: CameraSessionMode = .multiSession,
+                cameraViewMode: CameraViewMode = .singleScreen,
+                cameraSessionMode: CameraSessionMode = .singleSession,
                 cameraRenderingMode: CameraRenderingMode = .normal,
                 autoFocusAndExposure: Bool = true,
                 showAutoFocusAndExposureRoundedRectangle: Bool = true,

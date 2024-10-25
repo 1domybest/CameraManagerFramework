@@ -60,12 +60,12 @@ public class MultiCameraView: UIView, UIGestureRecognizerDelegate {
         }
         
         // 메인 카메라 뷰에 핀치 제스처 추가
-        if self.parent?.cameraOptions?.enAblePinchZoom {
+        if self.parent?.cameraOptions?.enAblePinchZoom ?? false {
             let mainCameraPinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(multiViewHandlePinchGesture(_:)))
             mainCameraView?.addGestureRecognizer(mainCameraPinchGesture)
         }
         
-        if self.parent?.cameraOptions?.autoFocusAndExposure {
+        if self.parent?.cameraOptions?.tapAutoFocusAndExposure ?? false {
             let mainCameraTapGesture = UITapGestureRecognizer(target: self, action: #selector(mainCameraHandleTapGesture(_:)))
             mainCameraTapGesture.delegate = self // delegate 설정 (필요한 경우)
             mainCameraView?.addGestureRecognizer(mainCameraTapGesture)
@@ -111,7 +111,7 @@ public class MultiCameraView: UIView, UIGestureRecognizerDelegate {
             
             if resultOfExposure || resultOfFocus {
                 // 문양 포시
-                self.parent?.cameraOptions?.showTapAutoFocusAndExposureRoundedRectangle ?? false {
+                if self.parent?.cameraOptions?.showTapAutoFocusAndExposureRoundedRectangle ?? false {
                     self.mainCameraView?.showFocusBorder(at: normalizedPoint)
                 }
                 

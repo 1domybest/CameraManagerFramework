@@ -119,9 +119,6 @@ public class CameraManager: NSObject {
         let attr = DispatchQueue.Attributes()
         sessionQueue = DispatchQueue(label: "camera.single.sessionqueue", attributes: attr)
         videoDataOutputQueue = DispatchQueue(label: "camera.single.videoDataOutputQueue")
-
-      
-        
         
         if self.cameraOptions?.cameraSessionMode == .multiSession {
             self.multiCameraView = MultiCameraView(parent: self, appendQueueCallback: self)
@@ -135,7 +132,6 @@ public class CameraManager: NSObject {
             self.setupCaptureSessions()
             self.setupGestureRecognizers()
         }
-        
         
     }
     
@@ -157,13 +153,42 @@ public class CameraManager: NSObject {
     /// - Returns:
     ///
     public func unreference() {
+        self.cameraManagerFrameWorkDelegate = nil
+        
         self.multiCameraView?.unreference()
         self.multiCameraView = nil
+        self.singleCameraView?.unreference()
         self.singleCameraView = nil
+        
         self.sessionQueue = nil
         self.videoDataOutputQueue = nil
         self.cameraManagerFrameWorkDelegate = nil
         self.cameraOptions = nil
+        self.thumbnail = nil
+        
+        self.stopCamera()
+        
+        self.dualVideoSession = nil
+        
+        self.backCaptureSession = nil
+        self.backCameraConnection = nil
+        self.backCameraCaptureInput = nil
+        self.backCameravideoOutput = nil
+        
+        self.frontCaptureSession = nil
+        self.frontCameraConnection = nil
+        self.frontCameraCaptureInput = nil
+        self.frontCameravideoOutput = nil
+        
+        self.multiFrontCameraConnection = nil
+        self.multiBackCameraConnection = nil
+        self.multiBackCameraCaptureInput = nil
+        self.multiBackCameravideoOutput = nil
+        self.multiFrontCameravideoOutput = nil
+        
+        self.backCamera = nil
+        self.frontCamera = nil
+        
     }
 
     

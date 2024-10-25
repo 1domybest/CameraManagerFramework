@@ -95,16 +95,18 @@ extension CameraManager {
             if self.isMultiCamSupported && self.cameraOptions?.cameraViewMode == .doubleScreen {
                 self.setMirrorMode(isMirrorMode: position == .front)
             } else {
-                if position == .back {
-                    self.frontCaptureSession?.stopRunning()
-                    self.backCaptureSession?.startRunning()
-                    self.setZoom(position: .back, zoomFactor: self.backCameraDefaultZoomFactor)
-                    self.setMirrorMode(isMirrorMode: false)
-                } else {
-                    self.backCaptureSession?.stopRunning()
-                    self.frontCaptureSession?.startRunning()
-                    self.setZoom(position: .front, zoomFactor: self.frontCameraCurrentZoomFactor)
-                    self.setMirrorMode(isMirrorMode: true)
+                self.sessionQueue?.async {
+                    if position == .back {
+                        self.frontCaptureSession?.stopRunning()
+                        self.backCaptureSession?.startRunning()
+                        self.setZoom(position: .back, zoomFactor: self.backCameraDefaultZoomFactor)
+                        self.setMirrorMode(isMirrorMode: false)
+                    } else {
+                        self.backCaptureSession?.stopRunning()
+                        self.frontCaptureSession?.startRunning()
+                        self.setZoom(position: .front, zoomFactor: self.frontCameraCurrentZoomFactor)
+                        self.setMirrorMode(isMirrorMode: true)
+                    }
                 }
             }
         }
@@ -361,7 +363,7 @@ extension CameraManager {
     ///    - onTorch ( Bool ) : 장치 켜짐 유무
     /// - Returns:
     ///
-    public func toggleTorch(onTorch: Bool) {
+    public func setTorch(onTorch: Bool) {
         guard let device = backCamera, device.hasTorch else {
             return
         }

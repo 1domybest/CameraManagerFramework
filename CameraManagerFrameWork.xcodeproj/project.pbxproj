@@ -24,10 +24,12 @@
 		D101D8802CCA0D3900D4DDF6 /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D101D87B2CCA0D3900D4DDF6 /* ExampleApp.swift */; };
 		D101D8872CCA122000D4DDF6 /* CameraManagerFrameWork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D101D82D2CC9DBE200D4DDF6 /* CameraManagerFrameWork.framework */; };
 		D101D8882CCA122000D4DDF6 /* CameraManagerFrameWork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D101D82D2CC9DBE200D4DDF6 /* CameraManagerFrameWork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D101D88D2CCA19C600D4DDF6 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D101D88C2CCA19C600D4DDF6 /* ContentViewModel.swift */; };
 		D101D88F2CCA19D700D4DDF6 /* UIKitViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D101D88E2CCA19D700D4DDF6 /* UIKitViewRepresentable.swift */; };
 		D101D89F2CCA1EFC00D4DDF6 /* CameraMetalShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = D101D89E2CCA1EFC00D4DDF6 /* CameraMetalShader.metal */; };
 		D1241A1B2CCB8B7000812E45 /* CameraOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1241A1A2CCB8B7000812E45 /* CameraOptions.swift */; };
+		D1A085F52CCB954D00490B95 /* SingleCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A085F42CCB954D00490B95 /* SingleCameraView.swift */; };
+		D1A085F72CCB955B00490B95 /* SingleCameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A085F62CCB955B00490B95 /* SingleCameraViewModel.swift */; };
+		D1A085F92CCB9A6C00490B95 /* LazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A085F82CCB9A6C00490B95 /* LazyView.swift */; };
 		D1E69F072CCA34D000F01132 /* CameraMetalShader.metallib in Resources */ = {isa = PBXBuildFile; fileRef = D1E69F062CCA34D000F01132 /* CameraMetalShader.metallib */; };
 /* End PBXBuildFile section */
 
@@ -73,10 +75,12 @@
 		D101D8792CCA0D3900D4DDF6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D101D87A2CCA0D3900D4DDF6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D101D87B2CCA0D3900D4DDF6 /* ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
-		D101D88C2CCA19C600D4DDF6 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		D101D88E2CCA19D700D4DDF6 /* UIKitViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitViewRepresentable.swift; sourceTree = "<group>"; };
 		D101D89E2CCA1EFC00D4DDF6 /* CameraMetalShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CameraMetalShader.metal; sourceTree = "<group>"; };
 		D1241A1A2CCB8B7000812E45 /* CameraOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOptions.swift; sourceTree = "<group>"; };
+		D1A085F42CCB954D00490B95 /* SingleCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCameraView.swift; sourceTree = "<group>"; };
+		D1A085F62CCB955B00490B95 /* SingleCameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCameraViewModel.swift; sourceTree = "<group>"; };
+		D1A085F82CCB9A6C00490B95 /* LazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyView.swift; sourceTree = "<group>"; };
 		D1E69F062CCA34D000F01132 /* CameraMetalShader.metallib */ = {isa = PBXFileReference; lastKnownFileType = "archive.metal-library"; path = CameraMetalShader.metallib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -182,12 +186,14 @@
 		D101D87C2CCA0D3900D4DDF6 /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				D101D8782CCA0D3900D4DDF6 /* Preview Content */,
-				D101D8792CCA0D3900D4DDF6 /* Assets.xcassets */,
 				D101D87B2CCA0D3900D4DDF6 /* ExampleApp.swift */,
 				D101D87A2CCA0D3900D4DDF6 /* ContentView.swift */,
-				D101D88C2CCA19C600D4DDF6 /* ContentViewModel.swift */,
 				D101D88E2CCA19D700D4DDF6 /* UIKitViewRepresentable.swift */,
+				D1A085F82CCB9A6C00490B95 /* LazyView.swift */,
+				D1A085F02CCB952100490B95 /* SingleCamera */,
+				D1A085F12CCB952A00490B95 /* MultiCamera */,
+				D101D8782CCA0D3900D4DDF6 /* Preview Content */,
+				D101D8792CCA0D3900D4DDF6 /* Assets.xcassets */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -197,6 +203,38 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D1A085F02CCB952100490B95 /* SingleCamera */ = {
+			isa = PBXGroup;
+			children = (
+				D1A085F22CCB953C00490B95 /* View */,
+				D1A085F32CCB954000490B95 /* ViewModel */,
+			);
+			path = SingleCamera;
+			sourceTree = "<group>";
+		};
+		D1A085F12CCB952A00490B95 /* MultiCamera */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MultiCamera;
+			sourceTree = "<group>";
+		};
+		D1A085F22CCB953C00490B95 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D1A085F42CCB954D00490B95 /* SingleCameraView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D1A085F32CCB954000490B95 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D1A085F62CCB955B00490B95 /* SingleCameraViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -337,10 +375,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1A085F92CCB9A6C00490B95 /* LazyView.swift in Sources */,
 				D101D88F2CCA19D700D4DDF6 /* UIKitViewRepresentable.swift in Sources */,
+				D1A085F72CCB955B00490B95 /* SingleCameraViewModel.swift in Sources */,
 				D101D87F2CCA0D3900D4DDF6 /* ContentView.swift in Sources */,
+				D1A085F52CCB954D00490B95 /* SingleCameraView.swift in Sources */,
 				D101D8802CCA0D3900D4DDF6 /* ExampleApp.swift in Sources */,
-				D101D88D2CCA19C600D4DDF6 /* ContentViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

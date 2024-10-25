@@ -490,6 +490,7 @@ extension CameraManager {
                     if self.dualVideoSession != nil {
                         self.multiCameraView?.smallCameraView?.isHidden = false
                         self.multiCameraView?.mainCameraView?.showThumbnail = false
+                    } else {
                         self.singleCameraView?.showThumbnail = false
                     }
                     
