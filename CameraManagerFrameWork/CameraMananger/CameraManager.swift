@@ -101,6 +101,7 @@ public class CameraManager: NSObject {
     
     
     public var frameRate:Double = 30.0 // 초당 프레임
+    public var maximumFrameRate:Double = 30.0 // 초당 프레임
     
     public var thumbnail: CGImage? // 썸네일
     
@@ -134,6 +135,7 @@ public class CameraManager: NSObject {
                 self.multiCameraView?.smallCameraView?.isHidden = true
             }
         } else {
+            self.maximumFrameRate = 60.0
             self.setupCaptureSessions()
         }
         

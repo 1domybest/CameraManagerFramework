@@ -106,7 +106,7 @@ extension CameraManager {
         }
     }
 
-    // 이미지로 변환하는 함수
+    // UIView -> UIImage
     public func createUIImageFromUIView(from view: UIView) -> UIImage? {
         let renderer = UIGraphicsImageRenderer(size: view.bounds.size)
         return renderer.image { context in
