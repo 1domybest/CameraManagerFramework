@@ -23,6 +23,13 @@
       },
       {
         "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "CameraManagerFrameWork"
+      },
+      {
+        "kind": "Import",
         "name": "Foundation",
         "printedName": "Foundation",
         "declKind": "Import",
@@ -378,6 +385,1099 @@
       },
       {
         "kind": "Import",
+        "name": "AVFoundation",
+        "printedName": "AVFoundation",
+        "declKind": "Import",
+        "moduleName": "CameraManagerFrameWork"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "CameraOptions",
+        "printedName": "CameraOptions",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "startPostion",
+            "printedName": "startPostion",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Position",
+                "printedName": "AVFoundation.AVCaptureDevice.Position",
+                "usr": "c:@E@AVCaptureDevicePosition"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:22CameraManagerFrameWork0A7OptionsV12startPostionSo23AVCaptureDevicePositionVvp",
+            "mangledName": "$s22CameraManagerFrameWork0A7OptionsV12startPostionSo23AVCaptureDevicePositionVvp",
+            "moduleName": "CameraManagerFrameWork",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Position",
+                    "printedName": "AVFoundation.AVCaptureDevice.Position",
+                    "usr": "c:@E@AVCaptureDevicePosition"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV12startPostionSo23AVCaptureDevicePositionVvg",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV12startPostionSo23AVCaptureDevicePositionVvg",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Position",
+                    "printedName": "AVFoundation.AVCaptureDevice.Position",
+                    "usr": "c:@E@AVCaptureDevicePosition"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV12startPostionSo23AVCaptureDevicePositionVvs",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV12startPostionSo23AVCaptureDevicePositionVvs",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV12startPostionSo23AVCaptureDevicePositionVvM",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV12startPostionSo23AVCaptureDevicePositionVvM",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "cameraScreenMode",
+            "printedName": "cameraScreenMode",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "CameraScreenMode",
+                "printedName": "CameraManagerFrameWork.CameraScreenMode",
+                "usr": "s:22CameraManagerFrameWork0A10ScreenModeO"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:22CameraManagerFrameWork0A7OptionsV16cameraScreenModeAA0agH0Ovp",
+            "mangledName": "$s22CameraManagerFrameWork0A7OptionsV16cameraScreenModeAA0agH0Ovp",
+            "moduleName": "CameraManagerFrameWork",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "CameraScreenMode",
+                    "printedName": "CameraManagerFrameWork.CameraScreenMode",
+                    "usr": "s:22CameraManagerFrameWork0A10ScreenModeO"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV16cameraScreenModeAA0agH0Ovg",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV16cameraScreenModeAA0agH0Ovg",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "CameraScreenMode",
+                    "printedName": "CameraManagerFrameWork.CameraScreenMode",
+                    "usr": "s:22CameraManagerFrameWork0A10ScreenModeO"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV16cameraScreenModeAA0agH0Ovs",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV16cameraScreenModeAA0agH0Ovs",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV16cameraScreenModeAA0agH0OvM",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV16cameraScreenModeAA0agH0OvM",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "cameraSessionMode",
+            "printedName": "cameraSessionMode",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "CameraSessionMode",
+                "printedName": "CameraManagerFrameWork.CameraSessionMode",
+                "usr": "s:22CameraManagerFrameWork0A11SessionModeO"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:22CameraManagerFrameWork0A7OptionsV17cameraSessionModeAA0agH0Ovp",
+            "mangledName": "$s22CameraManagerFrameWork0A7OptionsV17cameraSessionModeAA0agH0Ovp",
+            "moduleName": "CameraManagerFrameWork",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "CameraSessionMode",
+                    "printedName": "CameraManagerFrameWork.CameraSessionMode",
+                    "usr": "s:22CameraManagerFrameWork0A11SessionModeO"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV17cameraSessionModeAA0agH0Ovg",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV17cameraSessionModeAA0agH0Ovg",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "CameraSessionMode",
+                    "printedName": "CameraManagerFrameWork.CameraSessionMode",
+                    "usr": "s:22CameraManagerFrameWork0A11SessionModeO"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV17cameraSessionModeAA0agH0Ovs",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV17cameraSessionModeAA0agH0Ovs",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV17cameraSessionModeAA0agH0OvM",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV17cameraSessionModeAA0agH0OvM",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "cameraRenderingMode",
+            "printedName": "cameraRenderingMode",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "CameraRenderingMode",
+                "printedName": "CameraManagerFrameWork.CameraRenderingMode",
+                "usr": "s:22CameraManagerFrameWork0A13RenderingModeO"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:22CameraManagerFrameWork0A7OptionsV19cameraRenderingModeAA0agH0Ovp",
+            "mangledName": "$s22CameraManagerFrameWork0A7OptionsV19cameraRenderingModeAA0agH0Ovp",
+            "moduleName": "CameraManagerFrameWork",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "CameraRenderingMode",
+                    "printedName": "CameraManagerFrameWork.CameraRenderingMode",
+                    "usr": "s:22CameraManagerFrameWork0A13RenderingModeO"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV19cameraRenderingModeAA0agH0Ovg",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV19cameraRenderingModeAA0agH0Ovg",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "CameraRenderingMode",
+                    "printedName": "CameraManagerFrameWork.CameraRenderingMode",
+                    "usr": "s:22CameraManagerFrameWork0A13RenderingModeO"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV19cameraRenderingModeAA0agH0Ovs",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV19cameraRenderingModeAA0agH0Ovs",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV19cameraRenderingModeAA0agH0OvM",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV19cameraRenderingModeAA0agH0OvM",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "tapAutoFocusAndExposure",
+            "printedName": "tapAutoFocusAndExposure",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:22CameraManagerFrameWork0A7OptionsV23tapAutoFocusAndExposureSbvp",
+            "mangledName": "$s22CameraManagerFrameWork0A7OptionsV23tapAutoFocusAndExposureSbvp",
+            "moduleName": "CameraManagerFrameWork",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV23tapAutoFocusAndExposureSbvg",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV23tapAutoFocusAndExposureSbvg",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV23tapAutoFocusAndExposureSbvs",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV23tapAutoFocusAndExposureSbvs",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV23tapAutoFocusAndExposureSbvM",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV23tapAutoFocusAndExposureSbvM",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "showTapAutoFocusAndExposureRoundedRectangle",
+            "printedName": "showTapAutoFocusAndExposureRoundedRectangle",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:22CameraManagerFrameWork0A7OptionsV43showTapAutoFocusAndExposureRoundedRectangleSbvp",
+            "mangledName": "$s22CameraManagerFrameWork0A7OptionsV43showTapAutoFocusAndExposureRoundedRectangleSbvp",
+            "moduleName": "CameraManagerFrameWork",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV43showTapAutoFocusAndExposureRoundedRectangleSbvg",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV43showTapAutoFocusAndExposureRoundedRectangleSbvg",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV43showTapAutoFocusAndExposureRoundedRectangleSbvs",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV43showTapAutoFocusAndExposureRoundedRectangleSbvs",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV43showTapAutoFocusAndExposureRoundedRectangleSbvM",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV43showTapAutoFocusAndExposureRoundedRectangleSbvM",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "enAblePinchZoom",
+            "printedName": "enAblePinchZoom",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:22CameraManagerFrameWork0A7OptionsV15enAblePinchZoomSbvp",
+            "mangledName": "$s22CameraManagerFrameWork0A7OptionsV15enAblePinchZoomSbvp",
+            "moduleName": "CameraManagerFrameWork",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV15enAblePinchZoomSbvg",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV15enAblePinchZoomSbvg",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV15enAblePinchZoomSbvs",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV15enAblePinchZoomSbvs",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV15enAblePinchZoomSbvM",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV15enAblePinchZoomSbvM",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "onChangeMainScreenPostion",
+            "printedName": "onChangeMainScreenPostion",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "((AVFoundation.AVCaptureDevice.Position) -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(AVFoundation.AVCaptureDevice.Position) -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Position",
+                        "printedName": "AVFoundation.AVCaptureDevice.Position",
+                        "usr": "c:@E@AVCaptureDevicePosition"
+                      }
+                    ]
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:22CameraManagerFrameWork0A7OptionsV25onChangeMainScreenPostionySo23AVCaptureDevicePositionVcSgvp",
+            "mangledName": "$s22CameraManagerFrameWork0A7OptionsV25onChangeMainScreenPostionySo23AVCaptureDevicePositionVcSgvp",
+            "moduleName": "CameraManagerFrameWork",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "((AVFoundation.AVCaptureDevice.Position) -> ())?",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "(AVFoundation.AVCaptureDevice.Position) -> ()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Position",
+                            "printedName": "AVFoundation.AVCaptureDevice.Position",
+                            "usr": "c:@E@AVCaptureDevicePosition"
+                          }
+                        ]
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV25onChangeMainScreenPostionySo23AVCaptureDevicePositionVcSgvg",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV25onChangeMainScreenPostionySo23AVCaptureDevicePositionVcSgvg",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "((AVFoundation.AVCaptureDevice.Position) -> ())?",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "(AVFoundation.AVCaptureDevice.Position) -> ()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Position",
+                            "printedName": "AVFoundation.AVCaptureDevice.Position",
+                            "usr": "c:@E@AVCaptureDevicePosition"
+                          }
+                        ]
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV25onChangeMainScreenPostionySo23AVCaptureDevicePositionVcSgvs",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV25onChangeMainScreenPostionySo23AVCaptureDevicePositionVcSgvs",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV25onChangeMainScreenPostionySo23AVCaptureDevicePositionVcSgvM",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV25onChangeMainScreenPostionySo23AVCaptureDevicePositionVcSgvM",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "onChangeScreenMode",
+            "printedName": "onChangeScreenMode",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "((CameraManagerFrameWork.CameraScreenMode?) -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(CameraManagerFrameWork.CameraScreenMode?) -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Optional",
+                        "printedName": "CameraManagerFrameWork.CameraScreenMode?",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "CameraScreenMode",
+                            "printedName": "CameraManagerFrameWork.CameraScreenMode",
+                            "usr": "s:22CameraManagerFrameWork0A10ScreenModeO"
+                          }
+                        ],
+                        "usr": "s:Sq"
+                      }
+                    ]
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:22CameraManagerFrameWork0A7OptionsV18onChangeScreenModeyAA0ahI0OSgcSgvp",
+            "mangledName": "$s22CameraManagerFrameWork0A7OptionsV18onChangeScreenModeyAA0ahI0OSgcSgvp",
+            "moduleName": "CameraManagerFrameWork",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "((CameraManagerFrameWork.CameraScreenMode?) -> ())?",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "(CameraManagerFrameWork.CameraScreenMode?) -> ()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Optional",
+                            "printedName": "CameraManagerFrameWork.CameraScreenMode?",
+                            "children": [
+                              {
+                                "kind": "TypeNominal",
+                                "name": "CameraScreenMode",
+                                "printedName": "CameraManagerFrameWork.CameraScreenMode",
+                                "usr": "s:22CameraManagerFrameWork0A10ScreenModeO"
+                              }
+                            ],
+                            "usr": "s:Sq"
+                          }
+                        ]
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV18onChangeScreenModeyAA0ahI0OSgcSgvg",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV18onChangeScreenModeyAA0ahI0OSgcSgvg",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "((CameraManagerFrameWork.CameraScreenMode?) -> ())?",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "(CameraManagerFrameWork.CameraScreenMode?) -> ()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Optional",
+                            "printedName": "CameraManagerFrameWork.CameraScreenMode?",
+                            "children": [
+                              {
+                                "kind": "TypeNominal",
+                                "name": "CameraScreenMode",
+                                "printedName": "CameraManagerFrameWork.CameraScreenMode",
+                                "usr": "s:22CameraManagerFrameWork0A10ScreenModeO"
+                              }
+                            ],
+                            "usr": "s:Sq"
+                          }
+                        ]
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV18onChangeScreenModeyAA0ahI0OSgcSgvs",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV18onChangeScreenModeyAA0ahI0OSgcSgvs",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV18onChangeScreenModeyAA0ahI0OSgcSgvM",
+                "mangledName": "$s22CameraManagerFrameWork0A7OptionsV18onChangeScreenModeyAA0ahI0OSgcSgvM",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(startPostion:cameraScreenMode:cameraSessionMode:cameraRenderingMode:autoFocusAndExposure:showAutoFocusAndExposureRoundedRectangle:enAblePinchZoom:onChangeMainScreenPostion:onChangeScreenMode:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "CameraOptions",
+                "printedName": "CameraManagerFrameWork.CameraOptions",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Position",
+                "printedName": "AVFoundation.AVCaptureDevice.Position",
+                "hasDefaultArg": true,
+                "usr": "c:@E@AVCaptureDevicePosition"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CameraScreenMode",
+                "printedName": "CameraManagerFrameWork.CameraScreenMode",
+                "hasDefaultArg": true,
+                "usr": "s:22CameraManagerFrameWork0A10ScreenModeO"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CameraSessionMode",
+                "printedName": "CameraManagerFrameWork.CameraSessionMode",
+                "hasDefaultArg": true,
+                "usr": "s:22CameraManagerFrameWork0A11SessionModeO"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CameraRenderingMode",
+                "printedName": "CameraManagerFrameWork.CameraRenderingMode",
+                "hasDefaultArg": true,
+                "usr": "s:22CameraManagerFrameWork0A13RenderingModeO"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "hasDefaultArg": true,
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "hasDefaultArg": true,
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "hasDefaultArg": true,
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "((AVFoundation.AVCaptureDevice.Position) -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(AVFoundation.AVCaptureDevice.Position) -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Position",
+                        "printedName": "AVFoundation.AVCaptureDevice.Position",
+                        "usr": "c:@E@AVCaptureDevicePosition"
+                      }
+                    ]
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "((CameraManagerFrameWork.CameraScreenMode?) -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(CameraManagerFrameWork.CameraScreenMode?) -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Optional",
+                        "printedName": "CameraManagerFrameWork.CameraScreenMode?",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "CameraScreenMode",
+                            "printedName": "CameraManagerFrameWork.CameraScreenMode",
+                            "usr": "s:22CameraManagerFrameWork0A10ScreenModeO"
+                          }
+                        ],
+                        "usr": "s:Sq"
+                      }
+                    ]
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:22CameraManagerFrameWork0A7OptionsV12startPostion16cameraScreenMode0h7SessionJ00h9RenderingJ020autoFocusAndExposure08showAutonoP16RoundedRectangle15enAblePinchZoom012onChangeMainiG00yziJ0ACSo23AVCaptureDevicePositionV_AA0aiJ0OAA0akJ0OAA0alJ0OS3byANcSgyAPSgcSgtcfc",
+            "mangledName": "$s22CameraManagerFrameWork0A7OptionsV12startPostion16cameraScreenMode0h7SessionJ00h9RenderingJ020autoFocusAndExposure08showAutonoP16RoundedRectangle15enAblePinchZoom012onChangeMainiG00yziJ0ACSo23AVCaptureDevicePositionV_AA0aiJ0OAA0akJ0OAA0alJ0OS3byANcSgyAPSgcSgtcfc",
+            "moduleName": "CameraManagerFrameWork",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:22CameraManagerFrameWork0A7OptionsV",
+        "mangledName": "$s22CameraManagerFrameWork0A7OptionsV",
+        "moduleName": "CameraManagerFrameWork",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "CameraManagerFrameWork",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
         "name": "QuartzCore",
         "printedName": "QuartzCore",
         "declKind": "Import",
@@ -616,8 +1716,8 @@
       },
       {
         "kind": "TypeDecl",
-        "name": "CameraViewMode",
-        "printedName": "CameraViewMode",
+        "name": "CameraScreenMode",
+        "printedName": "CameraScreenMode",
         "children": [
           {
             "kind": "Var",
@@ -627,24 +1727,24 @@
               {
                 "kind": "TypeFunc",
                 "name": "Function",
-                "printedName": "(CameraManagerFrameWork.CameraViewMode.Type) -> CameraManagerFrameWork.CameraViewMode",
+                "printedName": "(CameraManagerFrameWork.CameraScreenMode.Type) -> CameraManagerFrameWork.CameraScreenMode",
                 "children": [
                   {
                     "kind": "TypeNominal",
-                    "name": "CameraViewMode",
-                    "printedName": "CameraManagerFrameWork.CameraViewMode",
-                    "usr": "s:22CameraManagerFrameWork0A8ViewModeO"
+                    "name": "CameraScreenMode",
+                    "printedName": "CameraManagerFrameWork.CameraScreenMode",
+                    "usr": "s:22CameraManagerFrameWork0A10ScreenModeO"
                   },
                   {
                     "kind": "TypeNominal",
                     "name": "Metatype",
-                    "printedName": "CameraManagerFrameWork.CameraViewMode.Type",
+                    "printedName": "CameraManagerFrameWork.CameraScreenMode.Type",
                     "children": [
                       {
                         "kind": "TypeNominal",
-                        "name": "CameraViewMode",
-                        "printedName": "CameraManagerFrameWork.CameraViewMode",
-                        "usr": "s:22CameraManagerFrameWork0A8ViewModeO"
+                        "name": "CameraScreenMode",
+                        "printedName": "CameraManagerFrameWork.CameraScreenMode",
+                        "usr": "s:22CameraManagerFrameWork0A10ScreenModeO"
                       }
                     ]
                   }
@@ -652,8 +1752,8 @@
               }
             ],
             "declKind": "EnumElement",
-            "usr": "s:22CameraManagerFrameWork0A8ViewModeO12singleScreenyA2CmF",
-            "mangledName": "$s22CameraManagerFrameWork0A8ViewModeO12singleScreenyA2CmF",
+            "usr": "s:22CameraManagerFrameWork0A10ScreenModeO06singleE0yA2CmF",
+            "mangledName": "$s22CameraManagerFrameWork0A10ScreenModeO06singleE0yA2CmF",
             "moduleName": "CameraManagerFrameWork"
           },
           {
@@ -664,24 +1764,24 @@
               {
                 "kind": "TypeFunc",
                 "name": "Function",
-                "printedName": "(CameraManagerFrameWork.CameraViewMode.Type) -> CameraManagerFrameWork.CameraViewMode",
+                "printedName": "(CameraManagerFrameWork.CameraScreenMode.Type) -> CameraManagerFrameWork.CameraScreenMode",
                 "children": [
                   {
                     "kind": "TypeNominal",
-                    "name": "CameraViewMode",
-                    "printedName": "CameraManagerFrameWork.CameraViewMode",
-                    "usr": "s:22CameraManagerFrameWork0A8ViewModeO"
+                    "name": "CameraScreenMode",
+                    "printedName": "CameraManagerFrameWork.CameraScreenMode",
+                    "usr": "s:22CameraManagerFrameWork0A10ScreenModeO"
                   },
                   {
                     "kind": "TypeNominal",
                     "name": "Metatype",
-                    "printedName": "CameraManagerFrameWork.CameraViewMode.Type",
+                    "printedName": "CameraManagerFrameWork.CameraScreenMode.Type",
                     "children": [
                       {
                         "kind": "TypeNominal",
-                        "name": "CameraViewMode",
-                        "printedName": "CameraManagerFrameWork.CameraViewMode",
-                        "usr": "s:22CameraManagerFrameWork0A8ViewModeO"
+                        "name": "CameraScreenMode",
+                        "printedName": "CameraManagerFrameWork.CameraScreenMode",
+                        "usr": "s:22CameraManagerFrameWork0A10ScreenModeO"
                       }
                     ]
                   }
@@ -689,8 +1789,8 @@
               }
             ],
             "declKind": "EnumElement",
-            "usr": "s:22CameraManagerFrameWork0A8ViewModeO12doubleScreenyA2CmF",
-            "mangledName": "$s22CameraManagerFrameWork0A8ViewModeO12doubleScreenyA2CmF",
+            "usr": "s:22CameraManagerFrameWork0A10ScreenModeO06doubleE0yA2CmF",
+            "mangledName": "$s22CameraManagerFrameWork0A10ScreenModeO06doubleE0yA2CmF",
             "moduleName": "CameraManagerFrameWork"
           },
           {
@@ -706,20 +1806,20 @@
               },
               {
                 "kind": "TypeNominal",
-                "name": "CameraViewMode",
-                "printedName": "CameraManagerFrameWork.CameraViewMode",
-                "usr": "s:22CameraManagerFrameWork0A8ViewModeO"
+                "name": "CameraScreenMode",
+                "printedName": "CameraManagerFrameWork.CameraScreenMode",
+                "usr": "s:22CameraManagerFrameWork0A10ScreenModeO"
               },
               {
                 "kind": "TypeNominal",
-                "name": "CameraViewMode",
-                "printedName": "CameraManagerFrameWork.CameraViewMode",
-                "usr": "s:22CameraManagerFrameWork0A8ViewModeO"
+                "name": "CameraScreenMode",
+                "printedName": "CameraManagerFrameWork.CameraScreenMode",
+                "usr": "s:22CameraManagerFrameWork0A10ScreenModeO"
               }
             ],
             "declKind": "Func",
-            "usr": "s:22CameraManagerFrameWork0A8ViewModeO2eeoiySbAC_ACtFZ",
-            "mangledName": "$s22CameraManagerFrameWork0A8ViewModeO2eeoiySbAC_ACtFZ",
+            "usr": "s:22CameraManagerFrameWork0A10ScreenModeO2eeoiySbAC_ACtFZ",
+            "mangledName": "$s22CameraManagerFrameWork0A10ScreenModeO2eeoiySbAC_ACtFZ",
             "moduleName": "CameraManagerFrameWork",
             "static": true,
             "implicit": true,
@@ -738,8 +1838,8 @@
               }
             ],
             "declKind": "Var",
-            "usr": "s:22CameraManagerFrameWork0A8ViewModeO9hashValueSivp",
-            "mangledName": "$s22CameraManagerFrameWork0A8ViewModeO9hashValueSivp",
+            "usr": "s:22CameraManagerFrameWork0A10ScreenModeO9hashValueSivp",
+            "mangledName": "$s22CameraManagerFrameWork0A10ScreenModeO9hashValueSivp",
             "moduleName": "CameraManagerFrameWork",
             "implicit": true,
             "accessors": [
@@ -756,8 +1856,8 @@
                   }
                 ],
                 "declKind": "Accessor",
-                "usr": "s:22CameraManagerFrameWork0A8ViewModeO9hashValueSivg",
-                "mangledName": "$s22CameraManagerFrameWork0A8ViewModeO9hashValueSivg",
+                "usr": "s:22CameraManagerFrameWork0A10ScreenModeO9hashValueSivg",
+                "mangledName": "$s22CameraManagerFrameWork0A10ScreenModeO9hashValueSivg",
                 "moduleName": "CameraManagerFrameWork",
                 "implicit": true,
                 "accessorKind": "get"
@@ -783,16 +1883,16 @@
               }
             ],
             "declKind": "Func",
-            "usr": "s:22CameraManagerFrameWork0A8ViewModeO4hash4intoys6HasherVz_tF",
-            "mangledName": "$s22CameraManagerFrameWork0A8ViewModeO4hash4intoys6HasherVz_tF",
+            "usr": "s:22CameraManagerFrameWork0A10ScreenModeO4hash4intoys6HasherVz_tF",
+            "mangledName": "$s22CameraManagerFrameWork0A10ScreenModeO4hash4intoys6HasherVz_tF",
             "moduleName": "CameraManagerFrameWork",
             "implicit": true,
             "funcSelfKind": "NonMutating"
           }
         ],
         "declKind": "Enum",
-        "usr": "s:22CameraManagerFrameWork0A8ViewModeO",
-        "mangledName": "$s22CameraManagerFrameWork0A8ViewModeO",
+        "usr": "s:22CameraManagerFrameWork0A10ScreenModeO",
+        "mangledName": "$s22CameraManagerFrameWork0A10ScreenModeO",
         "moduleName": "CameraManagerFrameWork",
         "declAttributes": [
           "AccessControl"
@@ -1330,9 +2430,17 @@
               },
               {
                 "kind": "TypeNominal",
-                "name": "CMSampleBuffer",
-                "printedName": "CoreMedia.CMSampleBuffer",
-                "usr": "c:@T@CMSampleBufferRef"
+                "name": "Optional",
+                "printedName": "CoreMedia.CMSampleBuffer?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "CMSampleBuffer",
+                    "printedName": "CoreMedia.CMSampleBuffer",
+                    "usr": "c:@T@CMSampleBufferRef"
+                  }
+                ],
+                "usr": "s:Sq"
               },
               {
                 "kind": "TypeNominal",
@@ -1354,8 +2462,8 @@
               }
             ],
             "declKind": "Func",
-            "usr": "s:22CameraManagerFrameWork05MultiA4ViewC011updateSmallA6Buffer06sampleI005pixelI04time20sourceDevicePositionySo08CMSampleI3Refa_So08CVBufferQ0aSo6CMTimeaSo09AVCapturenO0VtF",
-            "mangledName": "$s22CameraManagerFrameWork05MultiA4ViewC011updateSmallA6Buffer06sampleI005pixelI04time20sourceDevicePositionySo08CMSampleI3Refa_So08CVBufferQ0aSo6CMTimeaSo09AVCapturenO0VtF",
+            "usr": "s:22CameraManagerFrameWork05MultiA4ViewC011updateSmallA6Buffer06sampleI005pixelI04time20sourceDevicePositionySo08CMSampleI3RefaSg_So08CVBufferQ0aSo6CMTimeaSo09AVCapturenO0VtF",
+            "mangledName": "$s22CameraManagerFrameWork05MultiA4ViewC011updateSmallA6Buffer06sampleI005pixelI04time20sourceDevicePositionySo08CMSampleI3RefaSg_So08CVBufferQ0aSo6CMTimeaSo09AVCapturenO0VtF",
             "moduleName": "CameraManagerFrameWork",
             "declAttributes": [
               "Preconcurrency",
@@ -1376,9 +2484,17 @@
               },
               {
                 "kind": "TypeNominal",
-                "name": "CMSampleBuffer",
-                "printedName": "CoreMedia.CMSampleBuffer",
-                "usr": "c:@T@CMSampleBufferRef"
+                "name": "Optional",
+                "printedName": "CoreMedia.CMSampleBuffer?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "CMSampleBuffer",
+                    "printedName": "CoreMedia.CMSampleBuffer",
+                    "usr": "c:@T@CMSampleBufferRef"
+                  }
+                ],
+                "usr": "s:Sq"
               },
               {
                 "kind": "TypeNominal",
@@ -1400,8 +2516,8 @@
               }
             ],
             "declKind": "Func",
-            "usr": "s:22CameraManagerFrameWork05MultiA4ViewC010updateMainA6Buffer06sampleI005pixelI04time20sourceDevicePositionySo08CMSampleI3Refa_So08CVBufferQ0aSo6CMTimeaSo09AVCapturenO0VtF",
-            "mangledName": "$s22CameraManagerFrameWork05MultiA4ViewC010updateMainA6Buffer06sampleI005pixelI04time20sourceDevicePositionySo08CMSampleI3Refa_So08CVBufferQ0aSo6CMTimeaSo09AVCapturenO0VtF",
+            "usr": "s:22CameraManagerFrameWork05MultiA4ViewC010updateMainA6Buffer06sampleI005pixelI04time20sourceDevicePositionySo08CMSampleI3RefaSg_So08CVBufferQ0aSo6CMTimeaSo09AVCapturenO0VtF",
+            "mangledName": "$s22CameraManagerFrameWork05MultiA4ViewC010updateMainA6Buffer06sampleI005pixelI04time20sourceDevicePositionySo08CMSampleI3RefaSg_So08CVBufferQ0aSo6CMTimeaSo09AVCapturenO0VtF",
             "moduleName": "CameraManagerFrameWork",
             "declAttributes": [
               "Preconcurrency",
@@ -2472,6 +3588,35 @@
           },
           {
             "kind": "Function",
+            "name": "showFocusBorder",
+            "printedName": "showFocusBorder(at:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CGPoint",
+                "printedName": "CoreFoundation.CGPoint",
+                "usr": "c:@S@CGPoint"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:22CameraManagerFrameWork0A9MetalViewC15showFocusBorder2atySo7CGPointV_tF",
+            "mangledName": "$s22CameraManagerFrameWork0A9MetalViewC15showFocusBorder2atySo7CGPointV_tF",
+            "moduleName": "CameraManagerFrameWork",
+            "declAttributes": [
+              "Preconcurrency",
+              "Custom",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
             "name": "update",
             "printedName": "update(sampleBuffer:pixelBuffer:time:position:)",
             "children": [
@@ -2482,9 +3627,17 @@
               },
               {
                 "kind": "TypeNominal",
-                "name": "CMSampleBuffer",
-                "printedName": "CoreMedia.CMSampleBuffer",
-                "usr": "c:@T@CMSampleBufferRef"
+                "name": "Optional",
+                "printedName": "CoreMedia.CMSampleBuffer?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "CMSampleBuffer",
+                    "printedName": "CoreMedia.CMSampleBuffer",
+                    "usr": "c:@T@CMSampleBufferRef"
+                  }
+                ],
+                "usr": "s:Sq"
               },
               {
                 "kind": "TypeNominal",
@@ -2506,8 +3659,8 @@
               }
             ],
             "declKind": "Func",
-            "usr": "s:22CameraManagerFrameWork0A9MetalViewC6update12sampleBuffer05pixelI04time8positionySo08CMSampleI3Refa_So08CVBufferN0aSo6CMTimeaSo23AVCaptureDevicePositionVtF",
-            "mangledName": "$s22CameraManagerFrameWork0A9MetalViewC6update12sampleBuffer05pixelI04time8positionySo08CMSampleI3Refa_So08CVBufferN0aSo6CMTimeaSo23AVCaptureDevicePositionVtF",
+            "usr": "s:22CameraManagerFrameWork0A9MetalViewC6update12sampleBuffer05pixelI04time8positionySo08CMSampleI3RefaSg_So08CVBufferN0aSo6CMTimeaSo23AVCaptureDevicePositionVtF",
+            "mangledName": "$s22CameraManagerFrameWork0A9MetalViewC6update12sampleBuffer05pixelI04time8positionySo08CMSampleI3RefaSg_So08CVBufferN0aSo6CMTimeaSo23AVCaptureDevicePositionVtF",
             "moduleName": "CameraManagerFrameWork",
             "declAttributes": [
               "Preconcurrency",
@@ -2992,19 +4145,27 @@
           },
           {
             "kind": "Var",
-            "name": "cameraViewMode",
-            "printedName": "cameraViewMode",
+            "name": "cameraOptions",
+            "printedName": "cameraOptions",
             "children": [
               {
                 "kind": "TypeNominal",
-                "name": "CameraViewMode",
-                "printedName": "CameraManagerFrameWork.CameraViewMode",
-                "usr": "s:22CameraManagerFrameWork0A8ViewModeO"
+                "name": "Optional",
+                "printedName": "CameraManagerFrameWork.CameraOptions?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "CameraOptions",
+                    "printedName": "CameraManagerFrameWork.CameraOptions",
+                    "usr": "s:22CameraManagerFrameWork0A7OptionsV"
+                  }
+                ],
+                "usr": "s:Sq"
               }
             ],
             "declKind": "Var",
-            "usr": "s:22CameraManagerFrameWork0aB0C14cameraViewModeAA0afG0Ovp",
-            "mangledName": "$s22CameraManagerFrameWork0aB0C14cameraViewModeAA0afG0Ovp",
+            "usr": "s:22CameraManagerFrameWork0aB0C13cameraOptionsAA0aF0VSgvp",
+            "mangledName": "$s22CameraManagerFrameWork0aB0C13cameraOptionsAA0aF0VSgvp",
             "moduleName": "CameraManagerFrameWork",
             "declAttributes": [
               "HasInitialValue",
@@ -3021,14 +4182,22 @@
                 "children": [
                   {
                     "kind": "TypeNominal",
-                    "name": "CameraViewMode",
-                    "printedName": "CameraManagerFrameWork.CameraViewMode",
-                    "usr": "s:22CameraManagerFrameWork0A8ViewModeO"
+                    "name": "Optional",
+                    "printedName": "CameraManagerFrameWork.CameraOptions?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "CameraOptions",
+                        "printedName": "CameraManagerFrameWork.CameraOptions",
+                        "usr": "s:22CameraManagerFrameWork0A7OptionsV"
+                      }
+                    ],
+                    "usr": "s:Sq"
                   }
                 ],
                 "declKind": "Accessor",
-                "usr": "s:22CameraManagerFrameWork0aB0C14cameraViewModeAA0afG0Ovg",
-                "mangledName": "$s22CameraManagerFrameWork0aB0C14cameraViewModeAA0afG0Ovg",
+                "usr": "s:22CameraManagerFrameWork0aB0C13cameraOptionsAA0aF0VSgvg",
+                "mangledName": "$s22CameraManagerFrameWork0aB0C13cameraOptionsAA0aF0VSgvg",
                 "moduleName": "CameraManagerFrameWork",
                 "implicit": true,
                 "accessorKind": "get"
@@ -3045,14 +4214,22 @@
                   },
                   {
                     "kind": "TypeNominal",
-                    "name": "CameraViewMode",
-                    "printedName": "CameraManagerFrameWork.CameraViewMode",
-                    "usr": "s:22CameraManagerFrameWork0A8ViewModeO"
+                    "name": "Optional",
+                    "printedName": "CameraManagerFrameWork.CameraOptions?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "CameraOptions",
+                        "printedName": "CameraManagerFrameWork.CameraOptions",
+                        "usr": "s:22CameraManagerFrameWork0A7OptionsV"
+                      }
+                    ],
+                    "usr": "s:Sq"
                   }
                 ],
                 "declKind": "Accessor",
-                "usr": "s:22CameraManagerFrameWork0aB0C14cameraViewModeAA0afG0Ovs",
-                "mangledName": "$s22CameraManagerFrameWork0aB0C14cameraViewModeAA0afG0Ovs",
+                "usr": "s:22CameraManagerFrameWork0aB0C13cameraOptionsAA0aF0VSgvs",
+                "mangledName": "$s22CameraManagerFrameWork0aB0C13cameraOptionsAA0aF0VSgvs",
                 "moduleName": "CameraManagerFrameWork",
                 "implicit": true,
                 "accessorKind": "set"
@@ -3069,182 +4246,8 @@
                   }
                 ],
                 "declKind": "Accessor",
-                "usr": "s:22CameraManagerFrameWork0aB0C14cameraViewModeAA0afG0OvM",
-                "mangledName": "$s22CameraManagerFrameWork0aB0C14cameraViewModeAA0afG0OvM",
-                "moduleName": "CameraManagerFrameWork",
-                "implicit": true,
-                "accessorKind": "_modify"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "cameraSessionMode",
-            "printedName": "cameraSessionMode",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "CameraSessionMode",
-                "printedName": "CameraManagerFrameWork.CameraSessionMode",
-                "usr": "s:22CameraManagerFrameWork0A11SessionModeO"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:22CameraManagerFrameWork0aB0C17cameraSessionModeAA0afG0Ovp",
-            "mangledName": "$s22CameraManagerFrameWork0aB0C17cameraSessionModeAA0afG0Ovp",
-            "moduleName": "CameraManagerFrameWork",
-            "declAttributes": [
-              "HasInitialValue",
-              "HasStorage",
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "CameraSessionMode",
-                    "printedName": "CameraManagerFrameWork.CameraSessionMode",
-                    "usr": "s:22CameraManagerFrameWork0A11SessionModeO"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:22CameraManagerFrameWork0aB0C17cameraSessionModeAA0afG0Ovg",
-                "mangledName": "$s22CameraManagerFrameWork0aB0C17cameraSessionModeAA0afG0Ovg",
-                "moduleName": "CameraManagerFrameWork",
-                "implicit": true,
-                "accessorKind": "get"
-              },
-              {
-                "kind": "Accessor",
-                "name": "Set",
-                "printedName": "Set()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Void",
-                    "printedName": "()"
-                  },
-                  {
-                    "kind": "TypeNominal",
-                    "name": "CameraSessionMode",
-                    "printedName": "CameraManagerFrameWork.CameraSessionMode",
-                    "usr": "s:22CameraManagerFrameWork0A11SessionModeO"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:22CameraManagerFrameWork0aB0C17cameraSessionModeAA0afG0Ovs",
-                "mangledName": "$s22CameraManagerFrameWork0aB0C17cameraSessionModeAA0afG0Ovs",
-                "moduleName": "CameraManagerFrameWork",
-                "implicit": true,
-                "accessorKind": "set"
-              },
-              {
-                "kind": "Accessor",
-                "name": "Modify",
-                "printedName": "Modify()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Void",
-                    "printedName": "()"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:22CameraManagerFrameWork0aB0C17cameraSessionModeAA0afG0OvM",
-                "mangledName": "$s22CameraManagerFrameWork0aB0C17cameraSessionModeAA0afG0OvM",
-                "moduleName": "CameraManagerFrameWork",
-                "implicit": true,
-                "accessorKind": "_modify"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "cameraRenderingMode",
-            "printedName": "cameraRenderingMode",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "CameraRenderingMode",
-                "printedName": "CameraManagerFrameWork.CameraRenderingMode",
-                "usr": "s:22CameraManagerFrameWork0A13RenderingModeO"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:22CameraManagerFrameWork0aB0C19cameraRenderingModeAA0afG0Ovp",
-            "mangledName": "$s22CameraManagerFrameWork0aB0C19cameraRenderingModeAA0afG0Ovp",
-            "moduleName": "CameraManagerFrameWork",
-            "declAttributes": [
-              "HasInitialValue",
-              "HasStorage",
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "hasStorage": true,
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "CameraRenderingMode",
-                    "printedName": "CameraManagerFrameWork.CameraRenderingMode",
-                    "usr": "s:22CameraManagerFrameWork0A13RenderingModeO"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:22CameraManagerFrameWork0aB0C19cameraRenderingModeAA0afG0Ovg",
-                "mangledName": "$s22CameraManagerFrameWork0aB0C19cameraRenderingModeAA0afG0Ovg",
-                "moduleName": "CameraManagerFrameWork",
-                "implicit": true,
-                "accessorKind": "get"
-              },
-              {
-                "kind": "Accessor",
-                "name": "Set",
-                "printedName": "Set()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Void",
-                    "printedName": "()"
-                  },
-                  {
-                    "kind": "TypeNominal",
-                    "name": "CameraRenderingMode",
-                    "printedName": "CameraManagerFrameWork.CameraRenderingMode",
-                    "usr": "s:22CameraManagerFrameWork0A13RenderingModeO"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:22CameraManagerFrameWork0aB0C19cameraRenderingModeAA0afG0Ovs",
-                "mangledName": "$s22CameraManagerFrameWork0aB0C19cameraRenderingModeAA0afG0Ovs",
-                "moduleName": "CameraManagerFrameWork",
-                "implicit": true,
-                "accessorKind": "set"
-              },
-              {
-                "kind": "Accessor",
-                "name": "Modify",
-                "printedName": "Modify()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Void",
-                    "printedName": "()"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:22CameraManagerFrameWork0aB0C19cameraRenderingModeAA0afG0OvM",
-                "mangledName": "$s22CameraManagerFrameWork0aB0C19cameraRenderingModeAA0afG0OvM",
+                "usr": "s:22CameraManagerFrameWork0aB0C13cameraOptionsAA0aF0VSgvM",
+                "mangledName": "$s22CameraManagerFrameWork0aB0C13cameraOptionsAA0aF0VSgvM",
                 "moduleName": "CameraManagerFrameWork",
                 "implicit": true,
                 "accessorKind": "_modify"
@@ -7450,27 +8453,114 @@
           },
           {
             "kind": "Var",
+            "name": "maximumFrameRate",
+            "printedName": "maximumFrameRate",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Double",
+                "printedName": "Swift.Double",
+                "usr": "s:Sd"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:22CameraManagerFrameWork0aB0C07maximumC4RateSdvp",
+            "mangledName": "$s22CameraManagerFrameWork0aB0C07maximumC4RateSdvp",
+            "moduleName": "CameraManagerFrameWork",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0aB0C07maximumC4RateSdvg",
+                "mangledName": "$s22CameraManagerFrameWork0aB0C07maximumC4RateSdvg",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0aB0C07maximumC4RateSdvs",
+                "mangledName": "$s22CameraManagerFrameWork0aB0C07maximumC4RateSdvs",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:22CameraManagerFrameWork0aB0C07maximumC4RateSdvM",
+                "mangledName": "$s22CameraManagerFrameWork0aB0C07maximumC4RateSdvM",
+                "moduleName": "CameraManagerFrameWork",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
             "name": "thumbnail",
             "printedName": "thumbnail",
             "children": [
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "CoreVideo.CVBuffer?",
+                "printedName": "CoreGraphics.CGImage?",
                 "children": [
                   {
                     "kind": "TypeNominal",
-                    "name": "CVBuffer",
-                    "printedName": "CoreVideo.CVBuffer",
-                    "usr": "c:@T@CVBufferRef"
+                    "name": "CGImage",
+                    "printedName": "CoreGraphics.CGImage",
+                    "usr": "c:@T@CGImageRef"
                   }
                 ],
                 "usr": "s:Sq"
               }
             ],
             "declKind": "Var",
-            "usr": "s:22CameraManagerFrameWork0aB0C9thumbnailSo11CVBufferRefaSgvp",
-            "mangledName": "$s22CameraManagerFrameWork0aB0C9thumbnailSo11CVBufferRefaSgvp",
+            "usr": "s:22CameraManagerFrameWork0aB0C9thumbnailSo10CGImageRefaSgvp",
+            "mangledName": "$s22CameraManagerFrameWork0aB0C9thumbnailSo10CGImageRefaSgvp",
             "moduleName": "CameraManagerFrameWork",
             "declAttributes": [
               "HasInitialValue",
@@ -7488,21 +8578,21 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "CoreVideo.CVBuffer?",
+                    "printedName": "CoreGraphics.CGImage?",
                     "children": [
                       {
                         "kind": "TypeNominal",
-                        "name": "CVBuffer",
-                        "printedName": "CoreVideo.CVBuffer",
-                        "usr": "c:@T@CVBufferRef"
+                        "name": "CGImage",
+                        "printedName": "CoreGraphics.CGImage",
+                        "usr": "c:@T@CGImageRef"
                       }
                     ],
                     "usr": "s:Sq"
                   }
                 ],
                 "declKind": "Accessor",
-                "usr": "s:22CameraManagerFrameWork0aB0C9thumbnailSo11CVBufferRefaSgvg",
-                "mangledName": "$s22CameraManagerFrameWork0aB0C9thumbnailSo11CVBufferRefaSgvg",
+                "usr": "s:22CameraManagerFrameWork0aB0C9thumbnailSo10CGImageRefaSgvg",
+                "mangledName": "$s22CameraManagerFrameWork0aB0C9thumbnailSo10CGImageRefaSgvg",
                 "moduleName": "CameraManagerFrameWork",
                 "implicit": true,
                 "accessorKind": "get"
@@ -7520,21 +8610,21 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "CoreVideo.CVBuffer?",
+                    "printedName": "CoreGraphics.CGImage?",
                     "children": [
                       {
                         "kind": "TypeNominal",
-                        "name": "CVBuffer",
-                        "printedName": "CoreVideo.CVBuffer",
-                        "usr": "c:@T@CVBufferRef"
+                        "name": "CGImage",
+                        "printedName": "CoreGraphics.CGImage",
+                        "usr": "c:@T@CGImageRef"
                       }
                     ],
                     "usr": "s:Sq"
                   }
                 ],
                 "declKind": "Accessor",
-                "usr": "s:22CameraManagerFrameWork0aB0C9thumbnailSo11CVBufferRefaSgvs",
-                "mangledName": "$s22CameraManagerFrameWork0aB0C9thumbnailSo11CVBufferRefaSgvs",
+                "usr": "s:22CameraManagerFrameWork0aB0C9thumbnailSo10CGImageRefaSgvs",
+                "mangledName": "$s22CameraManagerFrameWork0aB0C9thumbnailSo10CGImageRefaSgvs",
                 "moduleName": "CameraManagerFrameWork",
                 "implicit": true,
                 "accessorKind": "set"
@@ -7551,8 +8641,8 @@
                   }
                 ],
                 "declKind": "Accessor",
-                "usr": "s:22CameraManagerFrameWork0aB0C9thumbnailSo11CVBufferRefaSgvM",
-                "mangledName": "$s22CameraManagerFrameWork0aB0C9thumbnailSo11CVBufferRefaSgvM",
+                "usr": "s:22CameraManagerFrameWork0aB0C9thumbnailSo10CGImageRefaSgvM",
+                "mangledName": "$s22CameraManagerFrameWork0aB0C9thumbnailSo10CGImageRefaSgvM",
                 "moduleName": "CameraManagerFrameWork",
                 "implicit": true,
                 "accessorKind": "_modify"
@@ -7673,7 +8763,7 @@
           {
             "kind": "Constructor",
             "name": "init",
-            "printedName": "init(cameraSessionMode:cameraViewMode:cameraRenderingMode:)",
+            "printedName": "init(cameraOptions:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -7683,29 +8773,14 @@
               },
               {
                 "kind": "TypeNominal",
-                "name": "CameraSessionMode",
-                "printedName": "CameraManagerFrameWork.CameraSessionMode",
-                "hasDefaultArg": true,
-                "usr": "s:22CameraManagerFrameWork0A11SessionModeO"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "CameraViewMode",
-                "printedName": "CameraManagerFrameWork.CameraViewMode",
-                "hasDefaultArg": true,
-                "usr": "s:22CameraManagerFrameWork0A8ViewModeO"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "CameraRenderingMode",
-                "printedName": "CameraManagerFrameWork.CameraRenderingMode",
-                "hasDefaultArg": true,
-                "usr": "s:22CameraManagerFrameWork0A13RenderingModeO"
+                "name": "CameraOptions",
+                "printedName": "CameraManagerFrameWork.CameraOptions",
+                "usr": "s:22CameraManagerFrameWork0A7OptionsV"
               }
             ],
             "declKind": "Constructor",
-            "usr": "s:22CameraManagerFrameWork0aB0C17cameraSessionMode0e4ViewG00e9RenderingG0AcA0afG0O_AA0ahG0OAA0aiG0Otcfc",
-            "mangledName": "$s22CameraManagerFrameWork0aB0C17cameraSessionMode0e4ViewG00e9RenderingG0AcA0afG0O_AA0ahG0OAA0aiG0Otcfc",
+            "usr": "s:22CameraManagerFrameWork0aB0C13cameraOptionsAcA0aF0V_tcfc",
+            "mangledName": "$s22CameraManagerFrameWork0aB0C13cameraOptionsAcA0aF0V_tcfc",
             "moduleName": "CameraManagerFrameWork",
             "declAttributes": [
               "AccessControl",
@@ -7780,6 +8855,34 @@
               "Override"
             ],
             "init_kind": "Designated"
+          },
+          {
+            "kind": "Function",
+            "name": "setThumbnail",
+            "printedName": "setThumbnail(image:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UIImage",
+                "printedName": "UIKit.UIImage",
+                "usr": "c:objc(cs)UIImage"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:22CameraManagerFrameWork0aB0C12setThumbnail5imageySo7UIImageC_tF",
+            "mangledName": "$s22CameraManagerFrameWork0aB0C12setThumbnail5imageySo7UIImageC_tF",
+            "moduleName": "CameraManagerFrameWork",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
           },
           {
             "kind": "Function",
@@ -7873,8 +8976,8 @@
           },
           {
             "kind": "Function",
-            "name": "switchMainCamera",
-            "printedName": "switchMainCamera(mainCameraPostion:)",
+            "name": "setMainCameraPostion",
+            "printedName": "setMainCameraPostion(mainCameraPostion:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -7889,8 +8992,8 @@
               }
             ],
             "declKind": "Func",
-            "usr": "s:22CameraManagerFrameWork0aB0C010switchMainA004mainA7PostionySo23AVCaptureDevicePositionV_tF",
-            "mangledName": "$s22CameraManagerFrameWork0aB0C010switchMainA004mainA7PostionySo23AVCaptureDevicePositionV_tF",
+            "usr": "s:22CameraManagerFrameWork0aB0C07setMainA7Postion04mainaG0ySo23AVCaptureDevicePositionV_tF",
+            "mangledName": "$s22CameraManagerFrameWork0aB0C07setMainA7Postion04mainaG0ySo23AVCaptureDevicePositionV_tF",
             "moduleName": "CameraManagerFrameWork",
             "declAttributes": [
               "AccessControl",
@@ -8079,8 +9182,8 @@
           },
           {
             "kind": "Function",
-            "name": "setCameraViewMode",
-            "printedName": "setCameraViewMode(cameraViewMode:)",
+            "name": "changeExposureBias",
+            "printedName": "changeExposureBias(to:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -8089,14 +9192,14 @@
               },
               {
                 "kind": "TypeNominal",
-                "name": "CameraViewMode",
-                "printedName": "CameraManagerFrameWork.CameraViewMode",
-                "usr": "s:22CameraManagerFrameWork0A8ViewModeO"
+                "name": "Float",
+                "printedName": "Swift.Float",
+                "usr": "s:Sf"
               }
             ],
             "declKind": "Func",
-            "usr": "s:22CameraManagerFrameWork0aB0C03setA8ViewMode06camerafG0yAA0afG0O_tF",
-            "mangledName": "$s22CameraManagerFrameWork0aB0C03setA8ViewMode06camerafG0yAA0afG0O_tF",
+            "usr": "s:22CameraManagerFrameWork0aB0C18changeExposureBias2toySf_tF",
+            "mangledName": "$s22CameraManagerFrameWork0aB0C18changeExposureBias2toySf_tF",
             "moduleName": "CameraManagerFrameWork",
             "declAttributes": [
               "AccessControl",
@@ -8107,8 +9210,36 @@
           },
           {
             "kind": "Function",
-            "name": "toggleTorch",
-            "printedName": "toggleTorch(onTorch:)",
+            "name": "setCameraScreenMode",
+            "printedName": "setCameraScreenMode(cameraScreenMode:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CameraScreenMode",
+                "printedName": "CameraManagerFrameWork.CameraScreenMode",
+                "usr": "s:22CameraManagerFrameWork0A10ScreenModeO"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:22CameraManagerFrameWork0aB0C03setA10ScreenMode06camerafG0yAA0afG0O_tF",
+            "mangledName": "$s22CameraManagerFrameWork0aB0C03setA10ScreenMode06camerafG0yAA0afG0O_tF",
+            "moduleName": "CameraManagerFrameWork",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "setTorch",
+            "printedName": "setTorch(onTorch:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -8123,8 +9254,8 @@
               }
             ],
             "declKind": "Func",
-            "usr": "s:22CameraManagerFrameWork0aB0C11toggleTorch02onF0ySb_tF",
-            "mangledName": "$s22CameraManagerFrameWork0aB0C11toggleTorch02onF0ySb_tF",
+            "usr": "s:22CameraManagerFrameWork0aB0C8setTorch02onF0ySb_tF",
+            "mangledName": "$s22CameraManagerFrameWork0aB0C8setTorch02onF0ySb_tF",
             "moduleName": "CameraManagerFrameWork",
             "declAttributes": [
               "AccessControl",
@@ -8202,8 +9333,8 @@
           },
           {
             "kind": "Function",
-            "name": "createImage",
-            "printedName": "createImage(from:)",
+            "name": "createUIImageFromUIView",
+            "printedName": "createUIImageFromUIView(from:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -8227,8 +9358,8 @@
               }
             ],
             "declKind": "Func",
-            "usr": "s:22CameraManagerFrameWork0aB0C11createImage4fromSo7UIImageCSgSo6UIViewC_tF",
-            "mangledName": "$s22CameraManagerFrameWork0aB0C11createImage4fromSo7UIImageCSgSo6UIViewC_tF",
+            "usr": "s:22CameraManagerFrameWork0aB0C23createUIImageFromUIView4fromSo0F0CSgSo0H0C_tF",
+            "mangledName": "$s22CameraManagerFrameWork0aB0C23createUIImageFromUIView4fromSo0F0CSgSo0H0C_tF",
             "moduleName": "CameraManagerFrameWork",
             "declAttributes": [
               "AccessControl",
@@ -8249,9 +9380,17 @@
               },
               {
                 "kind": "TypeNominal",
-                "name": "CMSampleBuffer",
-                "printedName": "CoreMedia.CMSampleBuffer",
-                "usr": "c:@T@CMSampleBufferRef"
+                "name": "Optional",
+                "printedName": "CoreMedia.CMSampleBuffer?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "CMSampleBuffer",
+                    "printedName": "CoreMedia.CMSampleBuffer",
+                    "usr": "c:@T@CMSampleBufferRef"
+                  }
+                ],
+                "usr": "s:Sq"
               },
               {
                 "kind": "TypeNominal",
@@ -8273,8 +9412,8 @@
               }
             ],
             "declKind": "Func",
-            "usr": "s:22CameraManagerFrameWork0aB0C012doubleScreenA10ModeRender12sampleBuffer05pixelJ04time20sourceDevicePositionySo08CMSampleJ3Refa_So08CVBufferQ0aSo6CMTimeaSo09AVCapturenO0VtF",
-            "mangledName": "$s22CameraManagerFrameWork0aB0C012doubleScreenA10ModeRender12sampleBuffer05pixelJ04time20sourceDevicePositionySo08CMSampleJ3Refa_So08CVBufferQ0aSo6CMTimeaSo09AVCapturenO0VtF",
+            "usr": "s:22CameraManagerFrameWork0aB0C012doubleScreenA10ModeRender12sampleBuffer05pixelJ04time20sourceDevicePositionySo08CMSampleJ3RefaSg_So08CVBufferQ0aSo6CMTimeaSo09AVCapturenO0VtF",
+            "mangledName": "$s22CameraManagerFrameWork0aB0C012doubleScreenA10ModeRender12sampleBuffer05pixelJ04time20sourceDevicePositionySo08CMSampleJ3RefaSg_So08CVBufferQ0aSo6CMTimeaSo09AVCapturenO0VtF",
             "moduleName": "CameraManagerFrameWork",
             "declAttributes": [
               "AccessControl"
@@ -8294,9 +9433,17 @@
               },
               {
                 "kind": "TypeNominal",
-                "name": "CMSampleBuffer",
-                "printedName": "CoreMedia.CMSampleBuffer",
-                "usr": "c:@T@CMSampleBufferRef"
+                "name": "Optional",
+                "printedName": "CoreMedia.CMSampleBuffer?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "CMSampleBuffer",
+                    "printedName": "CoreMedia.CMSampleBuffer",
+                    "usr": "c:@T@CMSampleBufferRef"
+                  }
+                ],
+                "usr": "s:Sq"
               },
               {
                 "kind": "TypeNominal",
@@ -8318,8 +9465,8 @@
               }
             ],
             "declKind": "Func",
-            "usr": "s:22CameraManagerFrameWork0aB0C06singleA10ModeRender12sampleBuffer05pixelI04time20sourceDevicePositionySo08CMSampleI3Refa_So08CVBufferP0aSo6CMTimeaSo09AVCapturemN0VtF",
-            "mangledName": "$s22CameraManagerFrameWork0aB0C06singleA10ModeRender12sampleBuffer05pixelI04time20sourceDevicePositionySo08CMSampleI3Refa_So08CVBufferP0aSo6CMTimeaSo09AVCapturemN0VtF",
+            "usr": "s:22CameraManagerFrameWork0aB0C06singleA10ModeRender12sampleBuffer05pixelI04time20sourceDevicePositionySo08CMSampleI3RefaSg_So08CVBufferP0aSo6CMTimeaSo09AVCapturemN0VtF",
+            "mangledName": "$s22CameraManagerFrameWork0aB0C06singleA10ModeRender12sampleBuffer05pixelI04time20sourceDevicePositionySo08CMSampleI3RefaSg_So08CVBufferP0aSo6CMTimeaSo09AVCapturemN0VtF",
             "moduleName": "CameraManagerFrameWork",
             "declAttributes": [
               "AccessControl"
@@ -8590,28 +9737,6 @@
           },
           {
             "kind": "Function",
-            "name": "startCameraInternal",
-            "printedName": "startCameraInternal()",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Void",
-                "printedName": "()"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:22CameraManagerFrameWork0aB0C05startA8InternalyyF",
-            "mangledName": "$s22CameraManagerFrameWork0aB0C05startA8InternalyyF",
-            "moduleName": "CameraManagerFrameWork",
-            "declAttributes": [
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "isFromExtension": true,
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
             "name": "stopCamera",
             "printedName": "stopCamera()",
             "children": [
@@ -8634,8 +9759,8 @@
           },
           {
             "kind": "Function",
-            "name": "stopCameraInternal",
-            "printedName": "stopCameraInternal(isPause:)",
+            "name": "pauseCamera",
+            "printedName": "pauseCamera(showThumbnail:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -8646,17 +9771,43 @@
                 "kind": "TypeNominal",
                 "name": "Bool",
                 "printedName": "Swift.Bool",
-                "hasDefaultArg": true,
                 "usr": "s:Sb"
               }
             ],
             "declKind": "Func",
-            "usr": "s:22CameraManagerFrameWork0aB0C04stopA8Internal7isPauseySb_tF",
-            "mangledName": "$s22CameraManagerFrameWork0aB0C04stopA8Internal7isPauseySb_tF",
+            "usr": "s:22CameraManagerFrameWork0aB0C05pauseA013showThumbnailySb_tF",
+            "mangledName": "$s22CameraManagerFrameWork0aB0C05pauseA013showThumbnailySb_tF",
             "moduleName": "CameraManagerFrameWork",
             "declAttributes": [
               "AccessControl",
               "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "setShowThumbnail",
+            "printedName": "setShowThumbnail(isShow:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:22CameraManagerFrameWork0aB0C16setShowThumbnail02isF0ySb_tF",
+            "mangledName": "$s22CameraManagerFrameWork0aB0C16setShowThumbnail02isF0ySb_tF",
+            "moduleName": "CameraManagerFrameWork",
+            "declAttributes": [
+              "AccessControl"
             ],
             "isFromExtension": true,
             "funcSelfKind": "NonMutating"
@@ -8675,6 +9826,27 @@
             "declKind": "Func",
             "usr": "s:22CameraManagerFrameWork0aB0C16startDisplayLinkyyF",
             "mangledName": "$s22CameraManagerFrameWork0aB0C16startDisplayLinkyyF",
+            "moduleName": "CameraManagerFrameWork",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "stopDisplayLink",
+            "printedName": "stopDisplayLink()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:22CameraManagerFrameWork0aB0C15stopDisplayLinkyyF",
+            "mangledName": "$s22CameraManagerFrameWork0aB0C15stopDisplayLinkyyF",
             "moduleName": "CameraManagerFrameWork",
             "declAttributes": [
               "AccessControl"
@@ -8937,156 +10109,184 @@
   },
   "ConstValues": [
     {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/CameraMananger\/CameraDevice.swift",
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraOptions.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1084,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraOptions.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1155,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraOptions.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1201,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraDevice.swift",
       "kind": "BooleanLiteral",
       "offset": 3968,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/CameraMananger\/CameraDevice.swift",
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraDevice.swift",
       "kind": "BooleanLiteral",
       "offset": 5235,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/CameraMananger\/CameraDevice.swift",
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/Metal\/CameraMetalView.swift",
       "kind": "BooleanLiteral",
-      "offset": 20617,
-      "length": 5,
-      "value": "false"
-    },
-    {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/Metal\/CameraMetalView.swift",
-      "kind": "BooleanLiteral",
-      "offset": 723,
+      "offset": 762,
       "length": 4,
       "value": "true"
     },
     {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/Metal\/CameraMetalView.swift",
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/Metal\/CameraMetalView.swift",
       "kind": "BooleanLiteral",
-      "offset": 764,
+      "offset": 803,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/Metal\/CameraMetalView.swift",
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/Metal\/CameraMetalView.swift",
       "kind": "BooleanLiteral",
-      "offset": 798,
+      "offset": 837,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/Metal\/CameraMetalView.swift",
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/Metal\/CameraMetalView.swift",
       "kind": "IntegerLiteral",
-      "offset": 877,
+      "offset": 916,
       "length": 1,
       "value": "1"
     },
     {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/Metal\/CameraMetalView.swift",
       "kind": "BooleanLiteral",
-      "offset": 952,
+      "offset": 1025,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 1033,
-      "length": 4,
-      "value": "true"
-    },
-    {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
-      "kind": "BooleanLiteral",
-      "offset": 3112,
+      "offset": 730,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 3176,
+      "offset": 811,
       "length": 4,
       "value": "true"
     },
     {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 3549,
-      "length": 4,
-      "value": "true"
-    },
-    {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
-      "kind": "BooleanLiteral",
-      "offset": 3776,
+      "offset": 2890,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
+      "kind": "BooleanLiteral",
+      "offset": 2954,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
+      "kind": "BooleanLiteral",
+      "offset": 3327,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
+      "kind": "BooleanLiteral",
+      "offset": 3554,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "FloatLiteral",
-      "offset": 3897,
+      "offset": 3675,
       "length": 3,
       "value": "1.0"
     },
     {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "FloatLiteral",
-      "offset": 3955,
+      "offset": 3733,
       "length": 3,
       "value": "1.0"
     },
     {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "FloatLiteral",
-      "offset": 4013,
+      "offset": 3791,
       "length": 3,
       "value": "1.0"
     },
     {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "FloatLiteral",
-      "offset": 4071,
+      "offset": 3849,
       "length": 3,
       "value": "1.0"
     },
     {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "FloatLiteral",
-      "offset": 4135,
+      "offset": 3913,
       "length": 3,
       "value": "1.0"
     },
     {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "FloatLiteral",
-      "offset": 4194,
+      "offset": 3972,
       "length": 3,
       "value": "1.0"
     },
     {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "FloatLiteral",
-      "offset": 4253,
+      "offset": 4031,
       "length": 3,
       "value": "1.0"
     },
     {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "FloatLiteral",
-      "offset": 4312,
+      "offset": 4090,
       "length": 3,
       "value": "1.0"
     },
     {
-      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManangerFrameWork\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "FloatLiteral",
-      "offset": 4360,
+      "offset": 4138,
+      "length": 4,
+      "value": "30.0"
+    },
+    {
+      "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
+      "kind": "FloatLiteral",
+      "offset": 4204,
       "length": 4,
       "value": "30.0"
     }

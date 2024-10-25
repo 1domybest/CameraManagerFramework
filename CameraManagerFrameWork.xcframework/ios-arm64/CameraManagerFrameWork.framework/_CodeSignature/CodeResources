@@ -18,23 +18,23 @@
 		</data>
 		<key>Modules/CameraManagerFrameWork.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		BsHO9GvWHx0fOZe0B3s+Znrp0iU=
+		fpeOZ7NE2P0/V9+d2fbLAsy0Cdw=
 		</data>
 		<key>Modules/CameraManagerFrameWork.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		a8NtuTOSdjEM32aZ3hllpl+HUwU=
+		CcQORnxzbLwiQyQ+6CMWvqvYRss=
 		</data>
 		<key>Modules/CameraManagerFrameWork.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		CtsGdK56iC5ucufvdSqmi/b9M0Y=
+		mRZUYm8OhyQ6xEmhwgCPegNnE7U=
 		</data>
 		<key>Modules/CameraManagerFrameWork.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		a8NtuTOSdjEM32aZ3hllpl+HUwU=
+		CcQORnxzbLwiQyQ+6CMWvqvYRss=
 		</data>
 		<key>Modules/CameraManagerFrameWork.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		PnT/8T7zv0Ro8x2i5kH9VmGyPfU=
+		NbBa+CbJlWc2fWcBCu5WcugLFbw=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -65,35 +65,35 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			1yJFNxdJnTuYsZ+LS6eEx6KdqtLyIaW/3p2ACB1a86Q=
+			Zs5avCAKVA61RRRlVfDQ1rBT+pRYkPPo2TIMdEenxwI=
 			</data>
 		</dict>
 		<key>Modules/CameraManagerFrameWork.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2RPhrd7hMVvok1XmAMSrfb5RDcbebUHnnERJPhXV7pI=
+			lISvEKXmRcUcsgnah4Y2Gmcwi36sPWXAGugFe2u5Y6I=
 			</data>
 		</dict>
 		<key>Modules/CameraManagerFrameWork.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZshH9hTtsXWpZzzKGp8qXGtdx9IZbi1QhsNk9GOy1HA=
+			04Lb5nTk8e1O0mTMgzmjdvNVO2IRms4ekhKGt4i9/As=
 			</data>
 		</dict>
 		<key>Modules/CameraManagerFrameWork.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2RPhrd7hMVvok1XmAMSrfb5RDcbebUHnnERJPhXV7pI=
+			lISvEKXmRcUcsgnah4Y2Gmcwi36sPWXAGugFe2u5Y6I=
 			</data>
 		</dict>
 		<key>Modules/CameraManagerFrameWork.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			eCgUK0/XCXfW8hqpl1v5tD9jr7mOoDDICclwLXRdAko=
+			NJ8PMQmzwdrgyc7492ez8Q9zOZSboR2npqQNypGs0zc=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
