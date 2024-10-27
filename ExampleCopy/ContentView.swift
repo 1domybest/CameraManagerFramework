@@ -21,7 +21,7 @@ struct ContentView: View {
                             .foregroundColor(.blue)
                             .frame(width: 200, height: 100)
                             .overlay(
-                                Text("1Single_Camera")
+                                Text("Single_Camera")
                                     .bold()
                                     .foregroundColor(.white)
                             )

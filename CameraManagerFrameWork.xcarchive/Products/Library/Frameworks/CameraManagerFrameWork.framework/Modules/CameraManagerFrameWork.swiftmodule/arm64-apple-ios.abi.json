@@ -4990,21 +4990,21 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "AVFoundation.AVCaptureSession?",
+                "printedName": "AVFoundation.AVCaptureMultiCamSession?",
                 "children": [
                   {
                     "kind": "TypeNominal",
-                    "name": "AVCaptureSession",
-                    "printedName": "AVFoundation.AVCaptureSession",
-                    "usr": "c:objc(cs)AVCaptureSession"
+                    "name": "AVCaptureMultiCamSession",
+                    "printedName": "AVFoundation.AVCaptureMultiCamSession",
+                    "usr": "c:objc(cs)AVCaptureMultiCamSession"
                   }
                 ],
                 "usr": "s:Sq"
               }
             ],
             "declKind": "Var",
-            "usr": "s:22CameraManagerFrameWork0aB0C16dualVideoSessionSo09AVCaptureG0CSgvp",
-            "mangledName": "$s22CameraManagerFrameWork0aB0C16dualVideoSessionSo09AVCaptureG0CSgvp",
+            "usr": "s:22CameraManagerFrameWork0aB0C16dualVideoSessionSo017AVCaptureMultiCamG0CSgvp",
+            "mangledName": "$s22CameraManagerFrameWork0aB0C16dualVideoSessionSo017AVCaptureMultiCamG0CSgvp",
             "moduleName": "CameraManagerFrameWork",
             "declAttributes": [
               "HasInitialValue",
@@ -5022,21 +5022,21 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "AVFoundation.AVCaptureSession?",
+                    "printedName": "AVFoundation.AVCaptureMultiCamSession?",
                     "children": [
                       {
                         "kind": "TypeNominal",
-                        "name": "AVCaptureSession",
-                        "printedName": "AVFoundation.AVCaptureSession",
-                        "usr": "c:objc(cs)AVCaptureSession"
+                        "name": "AVCaptureMultiCamSession",
+                        "printedName": "AVFoundation.AVCaptureMultiCamSession",
+                        "usr": "c:objc(cs)AVCaptureMultiCamSession"
                       }
                     ],
                     "usr": "s:Sq"
                   }
                 ],
                 "declKind": "Accessor",
-                "usr": "s:22CameraManagerFrameWork0aB0C16dualVideoSessionSo09AVCaptureG0CSgvg",
-                "mangledName": "$s22CameraManagerFrameWork0aB0C16dualVideoSessionSo09AVCaptureG0CSgvg",
+                "usr": "s:22CameraManagerFrameWork0aB0C16dualVideoSessionSo017AVCaptureMultiCamG0CSgvg",
+                "mangledName": "$s22CameraManagerFrameWork0aB0C16dualVideoSessionSo017AVCaptureMultiCamG0CSgvg",
                 "moduleName": "CameraManagerFrameWork",
                 "implicit": true,
                 "accessorKind": "get"
@@ -5054,21 +5054,21 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "AVFoundation.AVCaptureSession?",
+                    "printedName": "AVFoundation.AVCaptureMultiCamSession?",
                     "children": [
                       {
                         "kind": "TypeNominal",
-                        "name": "AVCaptureSession",
-                        "printedName": "AVFoundation.AVCaptureSession",
-                        "usr": "c:objc(cs)AVCaptureSession"
+                        "name": "AVCaptureMultiCamSession",
+                        "printedName": "AVFoundation.AVCaptureMultiCamSession",
+                        "usr": "c:objc(cs)AVCaptureMultiCamSession"
                       }
                     ],
                     "usr": "s:Sq"
                   }
                 ],
                 "declKind": "Accessor",
-                "usr": "s:22CameraManagerFrameWork0aB0C16dualVideoSessionSo09AVCaptureG0CSgvs",
-                "mangledName": "$s22CameraManagerFrameWork0aB0C16dualVideoSessionSo09AVCaptureG0CSgvs",
+                "usr": "s:22CameraManagerFrameWork0aB0C16dualVideoSessionSo017AVCaptureMultiCamG0CSgvs",
+                "mangledName": "$s22CameraManagerFrameWork0aB0C16dualVideoSessionSo017AVCaptureMultiCamG0CSgvs",
                 "moduleName": "CameraManagerFrameWork",
                 "implicit": true,
                 "accessorKind": "set"
@@ -5085,8 +5085,8 @@
                   }
                 ],
                 "declKind": "Accessor",
-                "usr": "s:22CameraManagerFrameWork0aB0C16dualVideoSessionSo09AVCaptureG0CSgvM",
-                "mangledName": "$s22CameraManagerFrameWork0aB0C16dualVideoSessionSo09AVCaptureG0CSgvM",
+                "usr": "s:22CameraManagerFrameWork0aB0C16dualVideoSessionSo017AVCaptureMultiCamG0CSgvM",
+                "mangledName": "$s22CameraManagerFrameWork0aB0C16dualVideoSessionSo017AVCaptureMultiCamG0CSgvM",
                 "moduleName": "CameraManagerFrameWork",
                 "implicit": true,
                 "accessorKind": "_modify"
@@ -8790,6 +8790,26 @@
           },
           {
             "kind": "Function",
+            "name": "startSession",
+            "printedName": "startSession()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:22CameraManagerFrameWork0aB0C12startSessionyyF",
+            "mangledName": "$s22CameraManagerFrameWork0aB0C12startSessionyyF",
+            "moduleName": "CameraManagerFrameWork",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
             "name": "unreference",
             "printedName": "unreference()",
             "children": [
@@ -10195,98 +10215,98 @@
     {
       "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 2890,
+      "offset": 2898,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 2954,
+      "offset": 2962,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 3327,
+      "offset": 3335,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 3554,
+      "offset": 3562,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "FloatLiteral",
-      "offset": 3675,
+      "offset": 3683,
       "length": 3,
       "value": "1.0"
     },
     {
       "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "FloatLiteral",
-      "offset": 3733,
+      "offset": 3741,
       "length": 3,
       "value": "1.0"
     },
     {
       "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "FloatLiteral",
-      "offset": 3791,
+      "offset": 3799,
       "length": 3,
       "value": "1.0"
     },
     {
       "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "FloatLiteral",
-      "offset": 3849,
+      "offset": 3857,
       "length": 3,
       "value": "1.0"
     },
     {
       "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "FloatLiteral",
-      "offset": 3913,
+      "offset": 3921,
       "length": 3,
       "value": "1.0"
     },
     {
       "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "FloatLiteral",
-      "offset": 3972,
+      "offset": 3980,
       "length": 3,
       "value": "1.0"
     },
     {
       "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "FloatLiteral",
-      "offset": 4031,
+      "offset": 4039,
       "length": 3,
       "value": "1.0"
     },
     {
       "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "FloatLiteral",
-      "offset": 4090,
+      "offset": 4098,
       "length": 3,
       "value": "1.0"
     },
     {
       "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "FloatLiteral",
-      "offset": 4138,
+      "offset": 4146,
       "length": 4,
       "value": "30.0"
     },
     {
       "filePath": "\/Users\/onseoktae\/Documents\/GitHub\/CameraManagerFramework\/CameraManagerFrameWork\/CameraMananger\/CameraManager.swift",
       "kind": "FloatLiteral",
-      "offset": 4204,
+      "offset": 4212,
       "length": 4,
       "value": "30.0"
     }

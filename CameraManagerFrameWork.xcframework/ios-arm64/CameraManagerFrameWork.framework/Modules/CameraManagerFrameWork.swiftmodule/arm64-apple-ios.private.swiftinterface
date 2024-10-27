@@ -155,7 +155,7 @@ extension CameraManagerFrameWork.CameraMetalView : MetalKit.MTKViewDelegate {
   public var isUltraWideCamera: Swift.Bool
   public var backCamera: AVFoundation.AVCaptureDevice?
   public var frontCamera: AVFoundation.AVCaptureDevice?
-  public var dualVideoSession: AVFoundation.AVCaptureSession?
+  public var dualVideoSession: AVFoundation.AVCaptureMultiCamSession?
   public var multiCameraCaptureInput: AVFoundation.AVCaptureDeviceInput?
   public var multiBackCameraConnection: AVFoundation.AVCaptureConnection?
   public var multiFrontCameraConnection: AVFoundation.AVCaptureConnection?
@@ -195,6 +195,7 @@ extension CameraManagerFrameWork.CameraMetalView : MetalKit.MTKViewDelegate {
   public var displayLink: QuartzCore.CADisplayLink?
   public init(cameraOptions: CameraManagerFrameWork.CameraOptions)
   @objc deinit
+  public func startSession()
   public func unreference()
   public func checkCameraPermission()
 }
