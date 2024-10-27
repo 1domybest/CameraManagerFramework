@@ -31,7 +31,7 @@ public class CameraManager: NSObject {
     public var frontCamera: AVCaptureDevice? // 전면 카메라 [공통]
     
     // 멀티세션 디바이스 세션 변수
-    public var dualVideoSession:AVCaptureSession? // 멀티 카메라 세션
+    public var dualVideoSession:AVCaptureMultiCamSession? // 멀티 카메라 세션
     
     public var multiCameraCaptureInput: AVCaptureDeviceInput? // 멀티 카메라 캡처 인풋
     
@@ -132,7 +132,13 @@ public class CameraManager: NSObject {
             self.setupCaptureSessions()
             self.setupGestureRecognizers()
         }
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleSessionRuntimeError), name: .AVCaptureSessionRuntimeError, object: nil)
+    }
+
+    @objc func handleSessionRuntimeError(notification: Notification) {
+        if let error = notification.userInfo?[AVCaptureSessionErrorKey] as? NSError {
+            print("세션 런타임 오류 발생: \(error)")
+        }
     }
     
     ///
@@ -153,6 +159,7 @@ public class CameraManager: NSObject {
     /// - Returns:
     ///
     public func unreference() {
+        NotificationCenter.default.removeObserver(self, name: .AVCaptureSessionRuntimeError, object: nil)
         self.cameraManagerFrameWorkDelegate = nil
         
         self.multiCameraView?.unreference()
