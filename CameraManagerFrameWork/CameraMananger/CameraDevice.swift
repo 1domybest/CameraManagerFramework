@@ -338,64 +338,89 @@ extension CameraManager {
         
         // 지원되는 멀티 카메라 세트 확인
         let supportedDeviceSets = discoverySession.supportedMultiCamDeviceSets
-        
-        for device in supportedDeviceSets {
-            // 지원되는 멀티 카메라 세트 내에서 장치 선택
-            if let tripleCamera = device.first(where: { $0.deviceType == .builtInTripleCamera && $0.position == position }) {
-                if position == .back {
-                    backCameraMinimumZoonFactor = tripleCamera.minAvailableVideoZoomFactor
-                    backCameraMaximumZoonFactor = tripleCamera.maxAvailableVideoZoomFactor
-                    backCameraDefaultZoomFactor = 2.0
-                    backCameraCurrentZoomFactor = backCameraDefaultZoomFactor
-                    
-                    print("트리플 카메라 - 후면 - 최소줌 \(backCameraMinimumZoonFactor) 최대줌\(backCameraMaximumZoonFactor) 기본줌 \(backCameraDefaultZoomFactor)")
-                } else {
-                    frontCameraMinimumZoonFactor = tripleCamera.minAvailableVideoZoomFactor
-                    frontCameraMaximumZoonFactor = tripleCamera.maxAvailableVideoZoomFactor
-                    frontCameraDefaultZoomFactor = 1.0
-                    frontCameraCurrentZoomFactor = frontCameraDefaultZoomFactor
-                    print("트리플 카메라 - 전면 - 최소줌 \(frontCameraMinimumZoonFactor) 최대줌\(frontCameraMaximumZoonFactor) 기본줌 \(frontCameraDefaultZoomFactor)")
+        if position == .back {
+            for device in supportedDeviceSets {
+                // 지원되는 멀티 카메라 세트 내에서 장치 선택
+                if let tripleCamera = device.first(where: { $0.deviceType == .builtInTripleCamera && $0.position == position }) {
+                    if position == .back {
+                        backCameraMinimumZoonFactor = tripleCamera.minAvailableVideoZoomFactor
+                        backCameraMaximumZoonFactor = tripleCamera.maxAvailableVideoZoomFactor
+                        backCameraDefaultZoomFactor = 2.0
+                        backCameraCurrentZoomFactor = backCameraDefaultZoomFactor
+                        
+                        print("트리플 카메라 - 후면 - 최소줌 \(backCameraMinimumZoonFactor) 최대줌\(backCameraMaximumZoonFactor) 기본줌 \(backCameraDefaultZoomFactor)")
+                    } else {
+                        frontCameraMinimumZoonFactor = tripleCamera.minAvailableVideoZoomFactor
+                        frontCameraMaximumZoonFactor = tripleCamera.maxAvailableVideoZoomFactor
+                        frontCameraDefaultZoomFactor = 1.0
+                        frontCameraCurrentZoomFactor = frontCameraDefaultZoomFactor
+                        print("트리플 카메라 - 전면 - 최소줌 \(frontCameraMinimumZoonFactor) 최대줌\(frontCameraMaximumZoonFactor) 기본줌 \(frontCameraDefaultZoomFactor)")
+                    }
+                    return tripleCamera
+                } else if let dualWideCamera = device.first(where: { $0.deviceType == .builtInDualWideCamera && $0.position == position }) {
+                    if position == .back {
+                        // 트리플 카메라가 없으면 듀얼 와이드 카메라 선택
+                        backCameraMinimumZoonFactor = dualWideCamera.minAvailableVideoZoomFactor
+                        backCameraMaximumZoonFactor = dualWideCamera.maxAvailableVideoZoomFactor
+                        backCameraDefaultZoomFactor = 2.0
+                        backCameraCurrentZoomFactor = backCameraDefaultZoomFactor
+                        
+                        print("듀얼 카메라 - 후면 - 최소줌 \(backCameraMinimumZoonFactor) 최대줌\(backCameraMaximumZoonFactor) 기본줌 \(backCameraDefaultZoomFactor)")
+                    } else {
+                        frontCameraMinimumZoonFactor = dualWideCamera.minAvailableVideoZoomFactor
+                        frontCameraMaximumZoonFactor = dualWideCamera.maxAvailableVideoZoomFactor
+                        frontCameraDefaultZoomFactor = 1.0
+                        frontCameraCurrentZoomFactor = frontCameraDefaultZoomFactor
+                        print("듀얼 카메라 - 전면 - 최소줌 \(frontCameraMinimumZoonFactor) 최대줌\(frontCameraMaximumZoonFactor) 기본줌 \(frontCameraDefaultZoomFactor)")
+                    }
+                    return dualWideCamera
+                } else if let normalCamera = device.first(where: { $0.deviceType == .builtInWideAngleCamera && $0.position == position }) {
+                    if position == .back {
+                        // 트리플 카메라가 없으면 듀얼 와이드 카메라 선택
+                        backCameraMinimumZoonFactor = normalCamera.minAvailableVideoZoomFactor
+                        backCameraMaximumZoonFactor = normalCamera.maxAvailableVideoZoomFactor
+                        backCameraDefaultZoomFactor = 1.0
+                        backCameraCurrentZoomFactor = backCameraDefaultZoomFactor
+                        
+                        print("노멀 카메라 - 후면 - 최소줌 \(backCameraMinimumZoonFactor) 최대줌\(backCameraMaximumZoonFactor) 기본줌 \(backCameraDefaultZoomFactor)")
+                    } else {
+                        frontCameraMinimumZoonFactor = normalCamera.minAvailableVideoZoomFactor
+                        frontCameraMaximumZoonFactor = normalCamera.maxAvailableVideoZoomFactor
+                        frontCameraDefaultZoomFactor = 1.0
+                        frontCameraCurrentZoomFactor = frontCameraDefaultZoomFactor
+                        
+                        print("노멀 카메라 - 전면 - 최소줌 \(frontCameraMinimumZoonFactor) 최대줌\(frontCameraMaximumZoonFactor) 기본줌 \(frontCameraDefaultZoomFactor)")
+                    }
+                    return normalCamera
                 }
-                return tripleCamera
-            } else if let dualWideCamera = device.first(where: { $0.deviceType == .builtInDualWideCamera && $0.position == position }) {
-                if position == .back {
-                    // 트리플 카메라가 없으면 듀얼 와이드 카메라 선택
-                    backCameraMinimumZoonFactor = dualWideCamera.minAvailableVideoZoomFactor
-                    backCameraMaximumZoonFactor = dualWideCamera.maxAvailableVideoZoomFactor
-                    backCameraDefaultZoomFactor = 2.0
-                    backCameraCurrentZoomFactor = backCameraDefaultZoomFactor
-                    
-                    print("듀얼 카메라 - 후면 - 최소줌 \(backCameraMinimumZoonFactor) 최대줌\(backCameraMaximumZoonFactor) 기본줌 \(backCameraDefaultZoomFactor)")
-                } else {
-                    frontCameraMinimumZoonFactor = dualWideCamera.minAvailableVideoZoomFactor
-                    frontCameraMaximumZoonFactor = dualWideCamera.maxAvailableVideoZoomFactor
-                    frontCameraDefaultZoomFactor = 1.0
-                    frontCameraCurrentZoomFactor = frontCameraDefaultZoomFactor
-                    print("듀얼 카메라 - 전면 - 최소줌 \(frontCameraMinimumZoonFactor) 최대줌\(frontCameraMaximumZoonFactor) 기본줌 \(frontCameraDefaultZoomFactor)")
-                }
-                return dualWideCamera
-            } else if let normalCamera = device.first(where: { $0.deviceType == .builtInWideAngleCamera && $0.position == position }) {
-                if position == .back {
-                    // 트리플 카메라가 없으면 듀얼 와이드 카메라 선택
-                    backCameraMinimumZoonFactor = normalCamera.minAvailableVideoZoomFactor
-                    backCameraMaximumZoonFactor = normalCamera.maxAvailableVideoZoomFactor
-                    backCameraDefaultZoomFactor = 1.0
-                    backCameraCurrentZoomFactor = backCameraDefaultZoomFactor
-                    
-                    print("노멀 카메라 - 후면 - 최소줌 \(backCameraMinimumZoonFactor) 최대줌\(backCameraMaximumZoonFactor) 기본줌 \(backCameraDefaultZoomFactor)")
-                } else {
-                    frontCameraMinimumZoonFactor = normalCamera.minAvailableVideoZoomFactor
-                    frontCameraMaximumZoonFactor = normalCamera.maxAvailableVideoZoomFactor
-                    frontCameraDefaultZoomFactor = 1.0
-                    frontCameraCurrentZoomFactor = frontCameraDefaultZoomFactor
-                    
-                    print("노멀 카메라 - 전면 - 최소줌 \(frontCameraMinimumZoonFactor) 최대줌\(frontCameraMaximumZoonFactor) 기본줌 \(frontCameraDefaultZoomFactor)")
-                }
-                return normalCamera
             }
+        } else {
+            if let defaultFrontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) {
+                  // 멀티 세션과 호환되는 포맷을 선택합니다.
+                if let compatibleFormat = defaultFrontCamera.formats.first(where: { format in
+                      format.isMultiCamSupported &&
+                      format.mediaType == .video &&
+                      CMVideoFormatDescriptionGetDimensions(format.formatDescription).width == 1280 &&
+                      CMVideoFormatDescriptionGetDimensions(format.formatDescription).height == 720 &&
+                      format.videoSupportedFrameRateRanges.contains(where: { $0.maxFrameRate >= 30 })
+                  }) {
+                      do {
+                          try defaultFrontCamera.lockForConfiguration()
+                          let dimensions = CMVideoFormatDescriptionGetDimensions(compatibleFormat.formatDescription)
+
+                          defaultFrontCamera.activeFormat = compatibleFormat
+                          defaultFrontCamera.activeVideoMinFrameDuration = CMTimeMake(value: 1, timescale: 30)
+                          defaultFrontCamera.activeVideoMaxFrameDuration = CMTimeMake(value: 1, timescale: 30)
+                          defaultFrontCamera.unlockForConfiguration()
+                      } catch {
+                          print("포맷 설정 오류: \(error)")
+                      }
+                  }
+                  return defaultFrontCamera
+              }
         }
         
-        return AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: position)
+        return nil
     }
 
     

@@ -31,6 +31,7 @@ class SingleCameraViewModel:ObservableObject {
         
         self.cameraMananger = CameraManager(cameraOptions: cameraOption)
         self.cameraMananger?.setThumbnail(image: UIImage(named: "testThumbnail")!)
+        self.cameraMananger?.startSession()
     }
     
     deinit {

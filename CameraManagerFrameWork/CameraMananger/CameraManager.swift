@@ -120,6 +120,39 @@ public class CameraManager: NSObject {
         sessionQueue = DispatchQueue(label: "camera.single.sessionqueue", attributes: attr)
         videoDataOutputQueue = DispatchQueue(label: "camera.single.videoDataOutputQueue")
         
+       
+        NotificationCenter.default.addObserver(self, selector: #selector(handleSessionRuntimeError), name: .AVCaptureSessionRuntimeError, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(sessionDidStopRunning(_:)), name: .AVCaptureSessionDidStopRunning, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(sessionDidStartRunning(_:)), name: .AVCaptureSessionDidStartRunning, object: nil)
+    }
+
+    @objc func handleSessionRuntimeError(notification: Notification) {
+        if let error = notification.userInfo?[AVCaptureSessionErrorKey] as? NSError {
+            print("Session Runtime Error: \(error)")
+        }
+    }
+    
+
+    @objc private func sessionDidStopRunning(_ notification: Notification) {
+        print("Session stopped running: \(notification.object)")
+    }
+    
+    @objc private func sessionDidStartRunning(_ notification: Notification) {
+        print("Session started running: \(notification.object)")
+    }
+
+    
+    ///
+    /// 카메라 deit 함수
+    ///
+    /// - Parameters:
+    /// - Returns:
+    ///
+    deinit {
+        print("CamerManager deinit")
+    }
+    
+    public func startSession() {
         if self.cameraOptions?.cameraSessionMode == .multiSession {
             self.multiCameraView = MultiCameraView(parent: self, appendQueueCallback: self)
             self.setupMultiCaptureSessions()
@@ -132,24 +165,6 @@ public class CameraManager: NSObject {
             self.setupCaptureSessions()
             self.setupGestureRecognizers()
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(handleSessionRuntimeError), name: .AVCaptureSessionRuntimeError, object: nil)
-    }
-
-    @objc func handleSessionRuntimeError(notification: Notification) {
-        if let error = notification.userInfo?[AVCaptureSessionErrorKey] as? NSError {
-            print("세션 런타임 오류 발생: \(error)")
-        }
-    }
-    
-    ///
-    /// 카메라 deit 함수
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
-    deinit {
-        print("CamerManager deinit")
-        NotificationCenter.default.removeObserver(self)
     }
     
     ///
@@ -159,7 +174,8 @@ public class CameraManager: NSObject {
     /// - Returns:
     ///
     public func unreference() {
-        NotificationCenter.default.removeObserver(self, name: .AVCaptureSessionRuntimeError, object: nil)
+        NotificationCenter.default.removeObserver(self)
+        
         self.cameraManagerFrameWorkDelegate = nil
         
         self.multiCameraView?.unreference()
@@ -175,7 +191,25 @@ public class CameraManager: NSObject {
         
         self.stopCamera()
         
-        self.dualVideoSession = nil
+        
+
+        if let frontInput = self.frontCameraCaptureInput {
+            self.frontCaptureSession?.removeInput(frontInput)
+        }
+        
+        if let frontOutput = self.frontCameravideoOutput {
+            self.frontCaptureSession?.removeOutput(frontOutput)
+        }
+        
+        if let backInput = self.backCameraCaptureInput {
+            self.backCaptureSession?.removeInput(backInput)
+        }
+        
+        if let backOutput = self.backCameravideoOutput {
+            self.backCaptureSession?.removeOutput(backOutput)
+        }
+        
+        
         
         self.backCaptureSession = nil
         self.backCameraConnection = nil
@@ -187,6 +221,7 @@ public class CameraManager: NSObject {
         self.frontCameraCaptureInput = nil
         self.frontCameravideoOutput = nil
         
+        self.dualVideoSession = nil
         self.multiFrontCameraConnection = nil
         self.multiBackCameraConnection = nil
         self.multiBackCameraCaptureInput = nil
