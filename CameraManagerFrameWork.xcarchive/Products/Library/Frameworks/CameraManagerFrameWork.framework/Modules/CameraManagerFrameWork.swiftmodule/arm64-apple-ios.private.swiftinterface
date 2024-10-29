@@ -18,11 +18,9 @@ import simd
 extension CameraManagerFrameWork.CameraManager {
   public func setThumbnail(image: UIKit.UIImage)
   public func setAppendQueueCallback(appendQueueCallback: any CameraManagerFrameWork.CameraManagerFrameWorkDelegate)
-  public func setFrameRate(desiredFrameRate: Swift.Double, for camera: AVFoundation.AVCaptureDevice)
   public func setPosition(_ position: AVFoundation.AVCaptureDevice.Position)
   public func setMainCameraPostion(mainCameraPostion: AVFoundation.AVCaptureDevice.Position)
   public func setMirrorMode(isMirrorMode: Swift.Bool)
-  public func setVideoOrientation(_ videoOrientation: AVFoundation.AVCaptureVideoOrientation)
   @objc dynamic public func handlePinchCamera(_ scale: CoreFoundation.CGFloat)
   public func setZoom(position: AVFoundation.AVCaptureDevice.Position, zoomFactor: CoreFoundation.CGFloat)
   public func changeDeviceFocusPointOfInterest(to pointOfInterest: CoreFoundation.CGPoint) -> Swift.Bool
@@ -63,15 +61,14 @@ public struct CameraOptions {
   public init(startPostion: AVFoundation.AVCaptureDevice.Position = .back, cameraScreenMode: CameraManagerFrameWork.CameraScreenMode = .singleScreen, cameraSessionMode: CameraManagerFrameWork.CameraSessionMode = .singleSession, cameraRenderingMode: CameraManagerFrameWork.CameraRenderingMode = .normal, autoFocusAndExposure: Swift.Bool = true, showAutoFocusAndExposureRoundedRectangle: Swift.Bool = true, enAblePinchZoom: Swift.Bool = true, onChangeMainScreenPostion: ((AVFoundation.AVCaptureDevice.Position) -> Swift.Void)? = { _ in }, onChangeScreenMode: ((CameraManagerFrameWork.CameraScreenMode?) -> Swift.Void)? = { _ in })
 }
 extension CameraManagerFrameWork.CameraManager {
-  public func setupCaptureSessions()
   public func setupMultiCaptureSessions()
   public func setupInput(for session: AVFoundation.AVCaptureSession, position: AVFoundation.AVCaptureDevice.Position, isMultiSession: Swift.Bool = false)
   public func setupOutput(for session: AVFoundation.AVCaptureSession, position: AVFoundation.AVCaptureDevice.Position, isMultiSession: Swift.Bool = false)
   public func findDevice(withPosition position: AVFoundation.AVCaptureDevice.Position) -> AVFoundation.AVCaptureDevice?
   public func findDeviceForMultiSession(withPosition position: AVFoundation.AVCaptureDevice.Position) -> AVFoundation.AVCaptureDevice?
-  public func startCamera()
-  public func stopCamera()
-  public func pauseCamera(showThumbnail: Swift.Bool)
+  public func startCameraSession()
+  public func stopRunningCameraSession()
+  public func pauseCameraSession(showThumbnail: Swift.Bool)
   public func setShowThumbnail(isShow: Swift.Bool)
   public func startDisplayLink()
   public func stopDisplayLink()
@@ -156,7 +153,6 @@ extension CameraManagerFrameWork.CameraMetalView : MetalKit.MTKViewDelegate {
   public var backCamera: AVFoundation.AVCaptureDevice?
   public var frontCamera: AVFoundation.AVCaptureDevice?
   public var dualVideoSession: AVFoundation.AVCaptureMultiCamSession?
-  public var multiCameraCaptureInput: AVFoundation.AVCaptureDeviceInput?
   public var multiBackCameraConnection: AVFoundation.AVCaptureConnection?
   public var multiFrontCameraConnection: AVFoundation.AVCaptureConnection?
   public var multiBackCameraCaptureInput: AVFoundation.AVCaptureDeviceInput?
@@ -176,8 +172,6 @@ extension CameraManagerFrameWork.CameraMetalView : MetalKit.MTKViewDelegate {
   public var mirrorFrontCamera: Swift.Bool
   public var position: AVFoundation.AVCaptureDevice.Position
   public var preset: AVFoundation.AVCaptureSession.Preset
-  public var videoOrientation: AVFoundation.AVCaptureVideoOrientation
-  public var mirrorCamera: Swift.Bool
   public var sessionQueue: Dispatch.DispatchQueue?
   public var videoDataOutputQueue: Dispatch.DispatchQueue?
   public var hasCameraPermission: Swift.Bool
@@ -195,7 +189,7 @@ extension CameraManagerFrameWork.CameraMetalView : MetalKit.MTKViewDelegate {
   public var displayLink: QuartzCore.CADisplayLink?
   public init(cameraOptions: CameraManagerFrameWork.CameraOptions)
   @objc deinit
-  public func startSession()
+  public func initialize()
   public func unreference()
   public func checkCameraPermission()
 }

@@ -437,7 +437,9 @@ extension CameraManager {
     /**
      start Camera Session
      
-     but it will work after you used pauseCamera(showThumbnail: Bool)
+     only Session will Start
+     
+     but it will work after you used pauseCameraSession(showThumbnail: Bool)
      
      or begin of make instance about CameraManager
      */
@@ -479,11 +481,13 @@ extension CameraManager {
     
     /**
      pause Camera Session
-
+     
+     only Session will Stop
+     
      - Parameters:
         - showThumbnail: if it's TRUE the Thumbnail will show if you called setThumbnail(image: UIImage) before
      */
-    public func pauseCamera(showThumbnail: Bool) {
+    public func pauseCameraSession(showThumbnail: Bool) {
         sessionQueue?.async { [weak self] in
             guard let self = self else { return }
             

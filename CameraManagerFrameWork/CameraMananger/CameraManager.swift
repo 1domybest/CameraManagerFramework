@@ -448,9 +448,9 @@ public class CameraManager: NSObject {
     }
     
     /**
-     start Camera Session
+     initialize Camera Mananger
      */
-    public func startSession() {
+    public func initialize() {
         if self.cameraOptions?.cameraSessionMode == .multiSession {
             self.multiCameraView = MultiCameraView(parent: self, appendQueueCallback: self)
             self.setupMultiCaptureSessions()

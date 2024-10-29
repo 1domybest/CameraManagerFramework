@@ -20,17 +20,6 @@
 		D101D8622CC9E91A00D4DDF6 /* CameraDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = D101D8612CC9E91A00D4DDF6 /* CameraDevice.swift */; };
 		D101D89F2CCA1EFC00D4DDF6 /* CameraMetalShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = D101D89E2CCA1EFC00D4DDF6 /* CameraMetalShader.metal */; };
 		D1241A1B2CCB8B7000812E45 /* CameraOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1241A1A2CCB8B7000812E45 /* CameraOptions.swift */; };
-		D158B15A2CCE270B000B9B8D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D158B1572CCE270B000B9B8D /* ContentView.swift */; };
-		D158B15B2CCE270B000B9B8D /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D158B1582CCE270B000B9B8D /* ExampleApp.swift */; };
-		D158B15C2CCE270B000B9B8D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D158B1542CCE270B000B9B8D /* Preview Assets.xcassets */; };
-		D158B15D2CCE270B000B9B8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D158B1562CCE270B000B9B8D /* Assets.xcassets */; };
-		D158B16C2CCE272F000B9B8D /* MultiCameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D158B1612CCE272F000B9B8D /* MultiCameraViewModel.swift */; };
-		D158B16D2CCE272F000B9B8D /* SingleCameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D158B1682CCE272F000B9B8D /* SingleCameraViewModel.swift */; };
-		D158B16E2CCE272F000B9B8D /* UIKitViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D158B16B2CCE272F000B9B8D /* UIKitViewRepresentable.swift */; };
-		D158B16F2CCE272F000B9B8D /* LazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D158B15E2CCE272F000B9B8D /* LazyView.swift */; };
-		D158B1702CCE272F000B9B8D /* SingleCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D158B1662CCE272F000B9B8D /* SingleCameraView.swift */; };
-		D158B1712CCE272F000B9B8D /* MultiCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D158B15F2CCE272F000B9B8D /* MultiCameraView.swift */; };
-		D158B1722CCE272F000B9B8D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D158B1642CCE272F000B9B8D /* Preview Assets.xcassets */; };
 		D1E69F072CCA34D000F01132 /* CameraMetalShader.metallib in Resources */ = {isa = PBXBuildFile; fileRef = D1E69F062CCA34D000F01132 /* CameraMetalShader.metallib */; };
 /* End PBXBuildFile section */
 
@@ -49,30 +38,11 @@
 		D101D8612CC9E91A00D4DDF6 /* CameraDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraDevice.swift; sourceTree = "<group>"; };
 		D101D89E2CCA1EFC00D4DDF6 /* CameraMetalShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CameraMetalShader.metal; sourceTree = "<group>"; };
 		D1241A1A2CCB8B7000812E45 /* CameraOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOptions.swift; sourceTree = "<group>"; };
-		D158B1462CCE2703000B9B8D /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D158B1542CCE270B000B9B8D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		D158B1562CCE270B000B9B8D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		D158B1572CCE270B000B9B8D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		D158B1582CCE270B000B9B8D /* ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
-		D158B15E2CCE272F000B9B8D /* LazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyView.swift; sourceTree = "<group>"; };
-		D158B15F2CCE272F000B9B8D /* MultiCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiCameraView.swift; sourceTree = "<group>"; };
-		D158B1612CCE272F000B9B8D /* MultiCameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiCameraViewModel.swift; sourceTree = "<group>"; };
-		D158B1642CCE272F000B9B8D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		D158B1662CCE272F000B9B8D /* SingleCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCameraView.swift; sourceTree = "<group>"; };
-		D158B1682CCE272F000B9B8D /* SingleCameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCameraViewModel.swift; sourceTree = "<group>"; };
-		D158B16B2CCE272F000B9B8D /* UIKitViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitViewRepresentable.swift; sourceTree = "<group>"; };
 		D1E69F062CCA34D000F01132 /* CameraMetalShader.metallib */ = {isa = PBXFileReference; lastKnownFileType = "archive.metal-library"; path = CameraMetalShader.metallib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		D101D82A2CC9DBE200D4DDF6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D158B1432CCE2703000B9B8D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -86,7 +56,6 @@
 			isa = PBXGroup;
 			children = (
 				D101D8392CC9DBE600D4DDF6 /* CameraManagerFrameWork */,
-				D158B1592CCE270B000B9B8D /* Example */,
 				D101D8862CCA122000D4DDF6 /* Frameworks */,
 				D101D82E2CC9DBE200D4DDF6 /* Products */,
 			);
@@ -96,7 +65,6 @@
 			isa = PBXGroup;
 			children = (
 				D101D82D2CC9DBE200D4DDF6 /* CameraManagerFrameWork.framework */,
-				D158B1462CCE2703000B9B8D /* Example.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -161,88 +129,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D158B1552CCE270B000B9B8D /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				D158B1542CCE270B000B9B8D /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		D158B1592CCE270B000B9B8D /* Example */ = {
-			isa = PBXGroup;
-			children = (
-				D158B15E2CCE272F000B9B8D /* LazyView.swift */,
-				D158B1632CCE272F000B9B8D /* MultiCamera */,
-				D158B1652CCE272F000B9B8D /* Preview Content */,
-				D158B16A2CCE272F000B9B8D /* SingleCamera */,
-				D158B16B2CCE272F000B9B8D /* UIKitViewRepresentable.swift */,
-				D158B1552CCE270B000B9B8D /* Preview Content */,
-				D158B1562CCE270B000B9B8D /* Assets.xcassets */,
-				D158B1572CCE270B000B9B8D /* ContentView.swift */,
-				D158B1582CCE270B000B9B8D /* ExampleApp.swift */,
-			);
-			path = Example;
-			sourceTree = "<group>";
-		};
-		D158B1602CCE272F000B9B8D /* View */ = {
-			isa = PBXGroup;
-			children = (
-				D158B15F2CCE272F000B9B8D /* MultiCameraView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		D158B1622CCE272F000B9B8D /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				D158B1612CCE272F000B9B8D /* MultiCameraViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		D158B1632CCE272F000B9B8D /* MultiCamera */ = {
-			isa = PBXGroup;
-			children = (
-				D158B1602CCE272F000B9B8D /* View */,
-				D158B1622CCE272F000B9B8D /* ViewModel */,
-			);
-			path = MultiCamera;
-			sourceTree = "<group>";
-		};
-		D158B1652CCE272F000B9B8D /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				D158B1642CCE272F000B9B8D /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		D158B1672CCE272F000B9B8D /* View */ = {
-			isa = PBXGroup;
-			children = (
-				D158B1662CCE272F000B9B8D /* SingleCameraView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		D158B1692CCE272F000B9B8D /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				D158B1682CCE272F000B9B8D /* SingleCameraViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		D158B16A2CCE272F000B9B8D /* SingleCamera */ = {
-			isa = PBXGroup;
-			children = (
-				D158B1672CCE272F000B9B8D /* View */,
-				D158B1692CCE272F000B9B8D /* ViewModel */,
-			);
-			path = SingleCamera;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -277,25 +163,6 @@
 			productReference = D101D82D2CC9DBE200D4DDF6 /* CameraManagerFrameWork.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		D158B1452CCE2703000B9B8D /* Example */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D158B1512CCE2704000B9B8D /* Build configuration list for PBXNativeTarget "Example" */;
-			buildPhases = (
-				D158B1422CCE2703000B9B8D /* Sources */,
-				D158B1432CCE2703000B9B8D /* Frameworks */,
-				D158B1442CCE2703000B9B8D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Example;
-			packageProductDependencies = (
-			);
-			productName = Example;
-			productReference = D158B1462CCE2703000B9B8D /* Example.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -309,9 +176,6 @@
 					D101D82C2CC9DBE200D4DDF6 = {
 						CreatedOnToolsVersion = 16.0;
 						LastSwiftMigration = 1600;
-					};
-					D158B1452CCE2703000B9B8D = {
-						CreatedOnToolsVersion = 16.0;
 					};
 				};
 			};
@@ -330,7 +194,6 @@
 			projectRoot = "";
 			targets = (
 				D101D82C2CC9DBE200D4DDF6 /* CameraManagerFrameWork */,
-				D158B1452CCE2703000B9B8D /* Example */,
 			);
 		};
 /* End PBXProject section */
@@ -341,16 +204,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1E69F072CCA34D000F01132 /* CameraMetalShader.metallib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D158B1442CCE2703000B9B8D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D158B15C2CCE270B000B9B8D /* Preview Assets.xcassets in Resources */,
-				D158B1722CCE272F000B9B8D /* Preview Assets.xcassets in Resources */,
-				D158B15D2CCE270B000B9B8D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,21 +226,6 @@
 				D101D8572CC9DD4E00D4DDF6 /* CameraMetalView.swift in Sources */,
 				D101D83C2CC9DBFD00D4DDF6 /* CameraManager.swift in Sources */,
 				D101D89F2CCA1EFC00D4DDF6 /* CameraMetalShader.metal in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D158B1422CCE2703000B9B8D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D158B15A2CCE270B000B9B8D /* ContentView.swift in Sources */,
-				D158B15B2CCE270B000B9B8D /* ExampleApp.swift in Sources */,
-				D158B16C2CCE272F000B9B8D /* MultiCameraViewModel.swift in Sources */,
-				D158B16D2CCE272F000B9B8D /* SingleCameraViewModel.swift in Sources */,
-				D158B16E2CCE272F000B9B8D /* UIKitViewRepresentable.swift in Sources */,
-				D158B16F2CCE272F000B9B8D /* LazyView.swift in Sources */,
-				D158B1702CCE272F000B9B8D /* SingleCameraView.swift in Sources */,
-				D158B1712CCE272F000B9B8D /* MultiCameraView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,66 +430,6 @@
 			};
 			name = Release;
 		};
-		D158B1522CCE2704000B9B8D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Example/Preview Content\"";
-				DEVELOPMENT_TEAM = 6SCMS5NHSF;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.otis.projects.Example;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		D158B1532CCE2704000B9B8D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Example/Preview Content\"";
-				DEVELOPMENT_TEAM = 6SCMS5NHSF;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.otis.projects.Example;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -669,15 +447,6 @@
 			buildConfigurations = (
 				D101D8342CC9DBE200D4DDF6 /* Debug */,
 				D101D8352CC9DBE200D4DDF6 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D158B1512CCE2704000B9B8D /* Build configuration list for PBXNativeTarget "Example" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D158B1522CCE2704000B9B8D /* Debug */,
-				D158B1532CCE2704000B9B8D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
