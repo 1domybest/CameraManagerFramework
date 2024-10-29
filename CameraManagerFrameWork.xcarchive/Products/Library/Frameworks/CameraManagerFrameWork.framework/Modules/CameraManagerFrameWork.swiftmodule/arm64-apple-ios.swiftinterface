@@ -35,6 +35,8 @@ extension CameraManagerFrameWork.CameraManager {
 extension CameraManagerFrameWork.CameraManager {
   public func setupGestureRecognizers()
   public func setupPanGesture()
+  @objc dynamic public func singleViewHandlePinchGesture(_ gesture: UIKit.UIPinchGestureRecognizer)
+  @objc dynamic public func singleCameraHandleTapGesture(_ gesture: UIKit.UITapGestureRecognizer)
   public func createUIImageFromUIView(from view: UIKit.UIView) -> UIKit.UIImage?
   public func doubleScreenCameraModeRender(sampleBuffer: CoreMedia.CMSampleBuffer?, pixelBuffer: CoreVideo.CVPixelBuffer, time: CoreMedia.CMTime, sourceDevicePosition: AVFoundation.AVCaptureDevice.Position)
   public func singleCameraModeRender(sampleBuffer: CoreMedia.CMSampleBuffer?, pixelBuffer: CoreVideo.CVPixelBuffer, time: CoreMedia.CMTime, sourceDevicePosition: AVFoundation.AVCaptureDevice.Position)
@@ -69,8 +71,8 @@ extension CameraManagerFrameWork.CameraManager {
   public func setupOutput(for session: AVFoundation.AVCaptureSession, position: AVFoundation.AVCaptureDevice.Position, isMultiSession: Swift.Bool = false)
   public func findDevice(withPosition position: AVFoundation.AVCaptureDevice.Position) -> AVFoundation.AVCaptureDevice?
   public func findDeviceForMultiSession(withPosition position: AVFoundation.AVCaptureDevice.Position) -> AVFoundation.AVCaptureDevice?
-  public func startCamera()
-  public func stopCamera()
+  public func startCameraSession()
+  public func stopRunningCameraSession()
   public func pauseCamera(showThumbnail: Swift.Bool)
   public func setShowThumbnail(isShow: Swift.Bool)
   public func startDisplayLink()
@@ -156,7 +158,6 @@ extension CameraManagerFrameWork.CameraMetalView : MetalKit.MTKViewDelegate {
   public var backCamera: AVFoundation.AVCaptureDevice?
   public var frontCamera: AVFoundation.AVCaptureDevice?
   public var dualVideoSession: AVFoundation.AVCaptureMultiCamSession?
-  public var multiCameraCaptureInput: AVFoundation.AVCaptureDeviceInput?
   public var multiBackCameraConnection: AVFoundation.AVCaptureConnection?
   public var multiFrontCameraConnection: AVFoundation.AVCaptureConnection?
   public var multiBackCameraCaptureInput: AVFoundation.AVCaptureDeviceInput?
@@ -177,7 +178,6 @@ extension CameraManagerFrameWork.CameraMetalView : MetalKit.MTKViewDelegate {
   public var position: AVFoundation.AVCaptureDevice.Position
   public var preset: AVFoundation.AVCaptureSession.Preset
   public var videoOrientation: AVFoundation.AVCaptureVideoOrientation
-  public var mirrorCamera: Swift.Bool
   public var sessionQueue: Dispatch.DispatchQueue?
   public var videoDataOutputQueue: Dispatch.DispatchQueue?
   public var hasCameraPermission: Swift.Bool

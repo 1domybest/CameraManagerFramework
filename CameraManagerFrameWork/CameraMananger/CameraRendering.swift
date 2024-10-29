@@ -12,9 +12,7 @@ import AVFoundation
 /// Rendering Functions For CameraManager
 extension CameraManager {
     
-    /**
-     Set Gesture Event For `singleCameraView`
-     */
+    /// Set Gesture Event For `singleCameraView`
     public func setupGestureRecognizers() {
         // 단일 카메라 뷰에 핀치 제스처 추가
         if cameraOptions?.enAblePinchZoom ?? false {
@@ -31,9 +29,7 @@ extension CameraManager {
     }
     
     
-    /**
-     Set Pan Gesture Event For `multiCameraView - smallCameraView`
-     */
+    /// Set Pan Gesture Event For `multiCameraView - smallCameraView`
     public func setupPanGesture() {
         // 서브 카메라 뷰에 드래그 제스처 추가
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(smallViewHandlePanGesture(_:)))
@@ -42,9 +38,7 @@ extension CameraManager {
         multiCameraView?.addGestureRecognizer(panGesture)
     }
     
-    /**
-     Set Grag Gesture Event For `multiCameraView - smallCameraView`
-     */
+    /// Set Grag Gesture Event For `multiCameraView - smallCameraView`
     @objc func smallViewHandlePanGesture(_ gesture: UIPanGestureRecognizer) {
         
         guard let view = gesture.view else { return }
@@ -68,13 +62,11 @@ extension CameraManager {
         }
     }
     
-    /**
-     Set PinchZoom Gesture Event For `singleCameraView`
-
-     - Parameters:
-        - gesture: gesture that you wnat to add
-     */
-    @objc func singleViewHandlePinchGesture(_ gesture: UIPinchGestureRecognizer) {
+    
+    /// Set PinchZoom Gesture Event For `singleCameraView`
+    /// - Parameters:
+    ///     - gesture: gesture that you wnat to add
+    @objc public func singleViewHandlePinchGesture(_ gesture: UIPinchGestureRecognizer) {
         guard gesture.view != nil else { return }
         if self.cameraOptions?.cameraSessionMode == .multiSession && self.position == .front { return }
         if gesture.state == .changed {
@@ -101,13 +93,11 @@ extension CameraManager {
         }
     }
     
-    /**
-     Set Tab Gesture Event For `singleCameraView`
 
-     - Parameters:
-        - gesture: gesture that you wnat to add
-     */
-    @objc private func singleCameraHandleTapGesture(_ gesture: UITapGestureRecognizer) {
+    /// Set Tab Gesture Event For `singleCameraView`
+    /// - Parameters:
+    ///     - gesture: gesture that you wnat to add
+    @objc public  func singleCameraHandleTapGesture(_ gesture: UITapGestureRecognizer) {
         // 현재 탭 위치를 superview 좌표계에서 얻기
         let location = gesture.location(in: gesture.view)
         
@@ -132,31 +122,27 @@ extension CameraManager {
         }
     }
 
-    /**
-     Convert UIView From UIView to UIImage for Thumbnail
-     - Parameters:
-        - view: UIView for use
-     
-     - Returns: `UIImage`
-     */
+    
+    /// Convert UIView From UIView to UIImage for Thumbnail
+    /// - Parameters:
+    ///     - view: UIView for use
+    /// - Returns: `UIImage`
     public func createUIImageFromUIView(from view: UIView) -> UIImage? {
         let renderer = UIGraphicsImageRenderer(size: view.bounds.size)
         return renderer.image { context in
             view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
         }
     }
-      
-    /**
-     for `multiSession` View rendering
-     
-     when after sampleBuffer came out from output
-     
-     - Parameters:
-        - sampleBuffer: buffer
-        - pixelBuffer: buffer from sampleBuffer
-        - time: time from sampleBuffer
-        - sourceDevicePosition: position of buffer
-     */
+
+    
+    /// for `multiSession` View rendering
+    ///
+    /// when after sampleBuffer came out from output
+    /// - Parameters:
+    ///     - sampleBuffer: buffer
+    ///     - pixelBuffer: buffer from sampleBuffer
+    ///     - time: time from sampleBuffer
+    ///     - sourceDevicePosition: position of buffer
     public func doubleScreenCameraModeRender (sampleBuffer: CMSampleBuffer?, pixelBuffer: CVPixelBuffer, time: CMTime, sourceDevicePosition: AVCaptureDevice.Position) {
           
           switch sourceDevicePosition {
@@ -176,18 +162,17 @@ extension CameraManager {
               break
           }
       }
-      
-    /**
-     for `singleSession` View rendering
-     
-     when after sampleBuffer came out from output
-     
-     - Parameters:
-        - sampleBuffer: buffer
-        - pixelBuffer: buffer from sampleBuffer
-        - time: time from sampleBuffer
-        - sourceDevicePosition: position of buffer
-     */
+
+    
+    /// for `singleSession` View rendering
+    ///
+    /// when after sampleBuffer came out from output
+    ///
+    /// - Parameters:
+    ///     - sampleBuffer: buffer
+    ///     - pixelBuffer: buffer from sampleBuffer
+    ///     - time: time from sampleBuffer
+    ///     - sourceDevicePosition: position of buffer
       public func singleCameraModeRender (sampleBuffer: CMSampleBuffer?, pixelBuffer: CVPixelBuffer, time: CMTime, sourceDevicePosition: AVCaptureDevice.Position) {
           
           switch sourceDevicePosition {
@@ -214,21 +199,19 @@ extension CameraManager: UIGestureRecognizerDelegate {
 
 
 extension CameraManager {
+
     
-    /**
-     renderingCameraFrame
-     
-     this function checking about what screen mode and what session you use
-     
-     and what delegate you use and
-     
-     decide where frame should go
-    
-     - Parameters:
-        - sampleBuffer: CMSampleBuffer
-        - connection: AVCaptureConnection
-     
-     */
+    /// renderingCameraFrame
+    ///
+    /// this function checking about what screen mode and what session you use
+    ///
+    /// and what delegate you use and
+    ///
+    /// decide where frame should go
+    ///
+    /// - Parameters:
+    ///     - sampleBuffer: CMSampleBuffer
+    ///     - connection: AVCaptureConnection
     func renderingCameraFrame(
         sampleBuffer: CMSampleBuffer,
         connection: AVCaptureConnection
@@ -271,22 +254,20 @@ extension CameraManager {
         }
     }
     
-    
-    /**
-     renderingThumbnailFrame
-     
-     when you use thumbnail rendering
-     
-     and if you also want to full video and include thumbnail
-     
-     the thumbnail image will throw this function and you will get
-     
-     the buffer for thumbnail and time from delgate
-    
-     - Parameters:
-        - sampleBuffer: CMSampleBuffer
-        - connection: AVCaptureConnection
-     */
+
+    /// renderingThumbnailFrame
+    ///
+    /// when you use thumbnail rendering
+    ///
+    /// and if you also want to full video and include thumbnail
+    ///
+    /// the thumbnail image will throw this function and you will get
+    ///
+    /// the buffer for thumbnail and time from delgate
+    /// 
+    /// - Parameters:
+    ///     - sampleBuffer: CMSampleBuffer
+    ///     - connection: AVCaptureConnection
     func renderingThumbnailFrame(
         pixelBuffer: CVPixelBuffer,
         sourcePostion: AVCaptureDevice.Position

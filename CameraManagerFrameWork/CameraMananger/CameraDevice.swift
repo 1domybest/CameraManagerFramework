@@ -11,15 +11,10 @@ import AVFoundation
 
 /// Device Functions For CameraManager
 extension CameraManager {
+
     
-    /**
-     initialize of singleSession Camera
-
-     - Parameters:
-
-     - Returns:
-     */
-    func setupCaptureSessions() {
+    /// initialize of singleSession Camera
+    public func setupCaptureSessions() {
         self.backCamera = self.findDevice(withPosition: .back)
         self.frontCamera = self.findDevice(withPosition: .front)
         
@@ -73,13 +68,7 @@ extension CameraManager {
        
     }
     
-    /**
-     initialize of multiSession Camera
-
-     - Parameters:
-
-     - Returns:
-     */
+    /// initialize of multiSession Camera
     public func setupMultiCaptureSessions() {
         self.backCamera = self.findDeviceForMultiSession(withPosition: .back)
         self.frontCamera = self.findDeviceForMultiSession(withPosition: .front)
@@ -105,14 +94,13 @@ extension CameraManager {
         }
     }
     
-    /**
-     set input device for session
-
-     - Parameters:
-        - session: capture session
-        - position: postion of camera.
-        - isMultiSession: check is multiSession
-     */
+    
+    /// set input device for session
+    ///
+    /// - Parameters:
+    ///     - session: capture session
+    ///     - position: postion of camera.
+    ///     - isMultiSession: check is multiSession
     public func setupInput(for session: AVCaptureSession, position: AVCaptureDevice.Position, isMultiSession: Bool = false) {
         guard let device = position == .back ? self.backCamera : self.frontCamera else { return }
         guard let input = try? AVCaptureDeviceInput(device: device) else { return }
@@ -140,17 +128,14 @@ extension CameraManager {
             print("에러")
         }
     }
-    
-    /**
-     set output device for session
 
-     - Parameters:
-        - session: capture session
-        - position: position of camera
-        - isMultiSession: check is multiSession
-     
-     - Returns:
-     */
+    
+    /// set output device for session
+    ///
+    /// - Parameters:
+    ///     - session: capture session
+    ///     - position: postion of camera.
+    ///     - isMultiSession: check is multiSession
     public func setupOutput(for session: AVCaptureSession, position: AVCaptureDevice.Position, isMultiSession: Bool = false) {
         let videoOutput = AVCaptureVideoDataOutput()
         videoOutput.setSampleBufferDelegate(self, queue: videoDataOutputQueue)
@@ -226,15 +211,14 @@ extension CameraManager {
             }
         }
     }
-    
-    /**
-     Finds a device in `.singleSession`.
 
-     - Parameters:
-       - position: The position of the camera you are searching for.
-       
-     - Returns: The found `AVCaptureDevice` instance.
-     */
+    
+    /// Finds a device in `.singleSession`.
+    ///
+    /// - Parameters:
+    ///     - position: The position of the camera you are searching for.
+    ///
+    /// - Returns: The found `AVCaptureDevice` instance.
     public func findDevice(withPosition position: AVCaptureDevice.Position) -> AVCaptureDevice? {
         var deviceTypes = [AVCaptureDevice.DeviceType]()
         
@@ -317,15 +301,14 @@ extension CameraManager {
     }
   
     
-    /**
-     find device from ".multiSession"
-
-     - Parameters:
-        - position: postion of camera what you searching for
-     
-     - Returns: AVCaptureDevice
-     */
-    public  func findDeviceForMultiSession(withPosition position: AVCaptureDevice.Position) -> AVCaptureDevice? {
+    
+    /// find device from ".multiSession"
+    ///
+    /// - Parameters:
+    ///     - position: The position of the camera you are searching for.
+    ///
+    /// - Returns: The found `AVCaptureDevice` instance.
+    public func findDeviceForMultiSession(withPosition position: AVCaptureDevice.Position) -> AVCaptureDevice? {
         var deviceTypes = [AVCaptureDevice.DeviceType]()
         
         if #available(iOS 13.0, *) {
@@ -434,13 +417,11 @@ extension CameraManager {
     }
 
     
-    /**
-     start Camera Session
-     
-     but it will work after you used pauseCamera(showThumbnail: Bool)
-     
-     or begin of make instance about CameraManager
-     */
+    /// start Camera Session
+    ///
+    /// but it will work after you used pauseCamera(showThumbnail: Bool)
+    ///
+    /// or begin of make instance about CameraManager
     public func startCameraSession() {
         sessionQueue?.async { [weak self] in
             guard let self = self else { return }
@@ -457,9 +438,7 @@ extension CameraManager {
         }
     }
     
-    /**
-     stop Camera Session and (displayLink  [for thumbnail])
-     */
+    /// stop Camera Session and (displayLink  [for thumbnail])
     public func stopRunningCameraSession() {
         sessionQueue?.async { [weak self] in
             guard let self = self else { return }
@@ -496,13 +475,12 @@ extension CameraManager {
             }
         }
     }
-    
-    /**
-     Set Thumbnail Show
 
-     - Parameters:
-        - isShow : if it's TRUE the Thumbnail will show if you called setThumbnail(image: UIImage) before
-     */
+    
+    /// Set Thumbnail Show
+    /// - Parameters:
+    ///     - isShow: if it's TRUE the Thumbnail will show if you called setThumbnail(image: UIImage) before
+    ///
     public func setShowThumbnail(isShow: Bool) {
         DispatchQueue.main.async {
             if isShow {
@@ -540,12 +518,11 @@ extension CameraManager {
             
         }
     }
+
     
-    /**
-     Start DisplayLink For show Thumbnail
-     
-     and this is will display with 30FPS
-     */
+    /// Start DisplayLink For show Thumbnail
+    ///
+    /// and this is will display with 30FPS
     public func startDisplayLink() {
          displayLink = CADisplayLink(target: self, selector: #selector(handleDisplayLink(_:)))
          // iOS 10 이상에서는 preferredFramesPerSecond를 사용하여 프레임 속도 조절
@@ -555,20 +532,15 @@ extension CameraManager {
     }
     
     
-    /**
-     Stop DisplayLink For show Thumbnail
-     */
+    /// Stop DisplayLink For show Thumbnail
     public func stopDisplayLink() {
         self.displayLink?.invalidate() // DisplayLink를 중지
         self.displayLink = nil
     }
     
-    /**
-     Handle Event For DisplayLink
-
-     - Parameters:
-        - displayLink : displayLink that you used
-     */
+    /// Handle Event For DisplayLink
+    /// - Parameters:
+    ///     - displayLink : displayLink that you used
     @objc public func handleDisplayLink(_ displayLink: CADisplayLink) {
         // 여기에서 프레임 처리 로직을 실행
         if !(self.frontCaptureSession?.isRunning ?? false && self.backCaptureSession?.isRunning ?? false && self.dualVideoSession?.isRunning ?? false) {
@@ -579,16 +551,14 @@ extension CameraManager {
             }
         }
     }
-    
-    /**
-     Set Camera Preset
 
-     this funcion is only for trigger
-     
-     - Parameters:
-        - preset: new Preset
-     */
-    public  func setPreset(_ preset: AVCaptureSession.Preset) {
+    /// Set Camera Preset
+    ///
+    /// this funcion is only for trigger
+    /// - Parameters:
+    ///     - preset: new Preset
+    ///
+    public func setPreset(_ preset: AVCaptureSession.Preset) {
         guard let captureSession = backCaptureSession else { return }
         
         if captureSession.isRunning && self.preset != preset {
@@ -601,9 +571,8 @@ extension CameraManager {
         }
     }
     
-    /**
-     Switch Camera Preset
-     */
+
+    /// Switch Camera Preset
     public func switchPreset() {
         guard let captureSession = backCaptureSession else { return }
         
@@ -632,13 +601,10 @@ extension CameraManager:CameraManagerFrameWorkDelegate {
 
 extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
     
-    /**
-     captureOutput from Camera Delegate
 
-     - Parameters:
-       
-     - Returns: sampleBuffer `CMSampleBuffer`, connection `AVCaptureConnection`
-     */
+    /// captureOutput from Camera Delegate
+    ///
+    /// - Returns: sampleBuffer `CMSampleBuffer`, connection `AVCaptureConnection`
     open func captureOutput(
         _: AVCaptureOutput,
         didOutput sampleBuffer: CMSampleBuffer,
