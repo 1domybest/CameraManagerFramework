@@ -1,5 +1,5 @@
 //
-//  CameraController.swift
+//  CameraInterFace.swift
 //  CameraManagerFrameWork
 //
 //  Created by 온석태 on 10/24/24.
@@ -9,14 +9,17 @@ import Foundation
 import AVFoundation
 import UIKit
 
+/// Interface For CameraManager
 extension CameraManager {
     
-    ///
-    /// 썸네일 등록
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
+    /**
+     Sets the thumbnail image.
+
+     - Parameters:
+       - image: The image to be set as the thumbnail.
+
+     - Returns:
+     */
     public func setThumbnail(image: UIImage) {
         guard let cgImage = image.cgImage else {
             return
@@ -24,23 +27,28 @@ extension CameraManager {
         self.thumbnail = cgImage
     }
     
-    ///
-    /// output 용 콜백등록
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
+    /**
+     Sets Camera Output Delegate
+
+     - Parameters:
+       - appendQueueCallback: delegate
+
+     - Returns:
+     */
     public func setAppendQueueCallback (appendQueueCallback: CameraManagerFrameWorkDelegate) {
         self.cameraManagerFrameWorkDelegate = appendQueueCallback
     }
     
-    ///
-    /// 카메라 프레임레이트 [fps] 지정함수
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
-    public func setFrameRate(desiredFrameRate: Double, for camera: AVCaptureDevice) {
+    /**
+     Sets Camera FrameRate
+
+     - Parameters:
+       - desiredFrameRate: frame rate you want
+       - camera: camera Device
+
+     - Returns:
+     */
+    func setFrameRate(desiredFrameRate: Double, for camera: AVCaptureDevice) {
         var bestFormat: AVCaptureDevice.Format?
         var bestFrameRateRange: AVFrameRateRange?
         
@@ -80,13 +88,14 @@ extension CameraManager {
         }
     }
     
-    ///
-    /// 전/후 면 카메라 지정함수 [단일 스크린일경우만]
-    ///
-    /// - Parameters:
-    ///     - position ( AVCaptureDevice ) : 카메라 방향
-    /// - Returns:
-    ///
+    /**
+     Sets Camera Postion
+
+     - Parameters:
+       - position: camera postion
+
+     - Returns:
+     */
     public func setPosition(_ position: AVCaptureDevice.Position) {
         DispatchQueue.main.async {
             self.position = position
@@ -113,25 +122,29 @@ extension CameraManager {
         }
     }
     
-    ///
-    /// 큰화면 작은화면 스위치
-    ///
-    /// - Parameters:
-    ///     - position ( AVCaptureDevice ) : 카메라 방향
-    /// - Returns:
-    ///
+    /**
+     Sets Main Camera Postion
+
+     this is only work when you use .multiSession from CameraSessionMode and .multiScreen from CameraScreenMode
+     
+     - Parameters:
+       - mainCameraPostion: camera postion
+
+     - Returns:
+     */
     public func setMainCameraPostion (mainCameraPostion: AVCaptureDevice.Position) {
         self.mainCameraPostion = mainCameraPostion
         self.cameraOptions?.onChangeMainScreenPostion?(self.mainCameraPostion)
     }
     
-    ///
-    /// 카메라 좌우반전 설정
-    ///
-    /// - Parameters:
-    ///    - isMirrorMode ( Bool ) : 기본: 전면카메라 = true / 후면카메라 = false
-    /// - Returns:
-    ///
+    /**
+     Sets Camera Mirror Mode
+     
+     - Parameters:
+       - isMirrorMode: mirror mode
+
+     - Returns:
+     */
     public func setMirrorMode (isMirrorMode: Bool) {
         
         if self.dualVideoSession?.isRunning ?? false {
@@ -143,36 +156,38 @@ extension CameraManager {
                 self.multiFrontCameraConnection?.isVideoMirrored = self.mirrorFrontCamera
             }
         } else {
-            self.mirrorCamera = isMirrorMode
-            
             if self.position == .back {
-                self.backCameraConnection?.isVideoMirrored = mirrorCamera
+                self.mirrorBackCamera = isMirrorMode
+                self.backCameraConnection?.isVideoMirrored = self.mirrorBackCamera
             } else {
-                self.frontCameraConnection?.isVideoMirrored = mirrorCamera
+                self.mirrorFrontCamera = isMirrorMode
+                self.frontCameraConnection?.isVideoMirrored = self.mirrorFrontCamera
             }
         }
         
     }
     
-    ///
-    /// 가로/세로 모드에 따른 비디오 방향설정 함수
-    ///
-    /// - Parameters:
-    ///     - videoOrientation ( AVCaptureVideoOrientation ) : 기기방향
-    /// - Returns:
-    ///
-    public func setVideoOrientation(_ videoOrientation: AVCaptureVideoOrientation) {
+    /**
+     Sets Camera Orientation
+     
+     - Parameters:
+       - videoOrientation: Orientation
+
+     - Returns:
+     */
+    func setVideoOrientation(_ videoOrientation: AVCaptureVideoOrientation) {
         self.videoOrientation = videoOrientation
         backCameraConnection?.videoOrientation = videoOrientation
     }
     
-    ///
-    /// 화면 줌했을시 카메라의 Zoom 을 해주는 함수
-    ///
-    /// - Parameters:
-    ///    - scale ( CGFloat ) : 줌 정도
-    /// - Returns:
-    ///
+    /**
+     Sets Camera Zoom scale for Pinch Gesture
+     
+     - Parameters:
+       - scale: scale of zoom
+
+     - Returns:
+     */
     @objc
     public func handlePinchCamera(_ scale: CGFloat) {
         let currentPostion = self.isMultiCamSupported ? self.mainCameraPostion : self.position
@@ -191,13 +206,15 @@ extension CameraManager {
         self.setZoom(position: currentPostion, zoomFactor: zoomFactor)
     }
     
-    ///
-    /// Zoom 세팅
-    ///
-    /// - Parameters:
-    ///    - scale ( CGFloat ) : 줌 정도
-    /// - Returns:
-    ///
+    /**
+     Sets Camera Zoom scale by CGFloat
+     
+     - Parameters:
+       - position: postion of camera
+       - zoomFactor: zoomFactor of camera
+
+     - Returns:
+     */
     public func setZoom(position: AVCaptureDevice.Position, zoomFactor: CGFloat) {
         if let device = position == .front ? self.frontCamera : self.backCamera {
 
@@ -219,13 +236,16 @@ extension CameraManager {
         }
     }
     
-    ///
-    /// 카메라 포커스 변경함수
-    ///
-    /// - Parameters:
-    ///    - pointOfInterest ( CGPoint ) : 누른 화면좌표
-    /// - Returns: Bool
-    ///
+    /**
+     Sets Camera Auto Focus postion from device screen
+     
+     ** only back camera has this function **
+     
+     - Parameters:
+       - pointOfInterest: point of screen
+
+     - Returns: A Bool Value return if it's "false" mean is failed focus
+     */
     public func changeDeviceFocusPointOfInterest(to pointOfInterest: CGPoint) -> Bool {
         guard pointOfInterest.x <= 1, pointOfInterest.y <= 1, pointOfInterest.x >= 0,
               pointOfInterest.y >= 0
@@ -260,13 +280,14 @@ extension CameraManager {
         }
     }
     
-    ///
-    /// 터치영역으로 카메라 노출조절 함수
-    ///
-    /// - Parameters:
-    ///    - pointOfInterest ( CGPoint ) : 노출정도
-    /// - Returns: Bool
-    ///
+    /**
+     Sets Camera UV Auto Exposure postion from device screen
+     
+     - Parameters:
+       - pointOfInterest: point of screen
+
+     - Returns: A Bool Value return if it's "false" mean is failed set exposure
+     */
     public func changeDeviceExposurePointOfInterest(to pointOfInterest: CGPoint) -> Bool {
         guard pointOfInterest.x <= 1, pointOfInterest.y <= 1, pointOfInterest.x >= 0, pointOfInterest.y >= 0
         else {
@@ -303,13 +324,14 @@ extension CameraManager {
         }
     }
     
-    ///
-    /// 노출 양 직접 조절
-    ///
-    /// - Parameters:
-    ///    - pointOfInterest ( CGPoint ) : 노출정도
-    /// - Returns: Bool
-    ///
+    /**
+     Sets Camera UV Exposure amount by float
+     
+     - Parameters:
+       - bias: amount of UV Exposure
+
+     - Returns: A Bool Value return if it's "false" mean is failed set exposure
+     */
     public func changeExposureBias(to bias: Float) {
         
         var device = backCamera
@@ -337,13 +359,14 @@ extension CameraManager {
         }
     }
     
-    ///
-    ///  카메라 View모드 변경 [멀티, 싱글]
-    ///
-    /// - Parameters:
-    ///    - onTorch ( Bool ) : 장치 켜짐 유무
-    /// - Returns:
-    ///
+    /**
+     Sets Camera ScreenMode
+     
+     - Parameters:
+       - cameraScreenMode: CameraScreenMode [.singleScreen, .doubleScreen]
+
+     - Returns: A Bool Value return if it's "false" mean is failed set exposure
+     */
     public func setCameraScreenMode (cameraScreenMode: CameraScreenMode) {
         if self.dualVideoSession?.isRunning ?? false {
             if cameraScreenMode == .singleScreen {
@@ -356,13 +379,18 @@ extension CameraManager {
         self.cameraOptions?.onChangeScreenMode?(self.cameraOptions?.cameraScreenMode)
     }
     
-    ///
-    /// 기기 플레쉬 장치 on/off 함수
-    ///
-    /// - Parameters:
-    ///    - onTorch ( Bool ) : 장치 켜짐 유무
-    /// - Returns:
-    ///
+    /**
+     Sets Torch
+     
+     if you use ".singleSession" you can turn on Torch
+     
+     when camera postio is ".back"
+     
+     - Parameters:
+       - onTorch: TRUE = TorchOn | FALSE = TorchOff
+
+     - Returns: A Bool Value return if it's "false" mean is failed set exposure
+     */
     public func setTorch(onTorch: Bool) {
         guard let device = backCamera, device.hasTorch else {
             return
@@ -377,13 +405,13 @@ extension CameraManager {
         }
     }
     
-    ///
-    /// 기기 플레쉬 장치 on/off 함수
-    ///
-    /// - Parameters:
-    ///    - onTorch ( Bool ) : 장치 켜짐 유무
-    /// - Returns:
-    ///
+    /**
+     Check Device has Torch
+     
+     - Parameters:
+
+     - Returns: A Bool Value return if it's "false" mean the device has no torch or broken
+     */
     public func doseHaseTorch() -> Bool {
         guard let device = backCamera, device.hasTorch else {
             return false

@@ -1,6 +1,6 @@
 //
-//  AppendQueueProtocol.swift
-//  HypyG
+//  CameraManagerFrameWorkDelegate.swift
+//  CameraManagerFrameWork
 //
 //  Created by 온석태 on 11/25/23.
 //
@@ -8,70 +8,82 @@
 import AVFoundation
 import Foundation
 
-// 우선순위
-// 1. videoChangeAbleCaptureOutput [렌더링 전 수정]
-// 2. videoOffscreenRenderCaptureOutput [offscreen 직접 렌더링 x ]
-// 3. videoCaptureOutput [렌더링 후]
-
-// 우선순위
-// 1. PixelBuffer
-// 1. CMSampleBuffer
-
 ///
-/// AppendQueueProtocol 프로토콜
-///
-/// - Parameters:
-/// - Returns:
-///
+/// CameraManagerFrameWorkDelegate
 @objc public protocol CameraManagerFrameWorkDelegate {
     ///
-    /// 비디오관련 버퍼 생성시 매프레임마다 callback
+    /// videoCaptureOutput
+    ///
+    /// this call back will called after rendering `singleCameraView or multiCameraView`
+    ///
+    /// but if you set `CameraRenderingMode` to `.offScreen` will not called
     ///
     /// - Parameters:
-    ///    - pixelBuffer ( CVPixelBuffer ) : 카메라에서 받아온 프레임 버퍼
-    ///    - time ( CMTime ) : SampleBuffer에 등록된 타임스탬프
-    /// - Returns:
+    ///    - pixelBuffer: pixelBuffer from camera output
+    ///    - time: time for buffer
+    ///    - position: position of camera
     ///
     @objc optional func videoCaptureOutput(pixelBuffer: CVPixelBuffer, time: CMTime, position: AVCaptureDevice.Position)
     
     ///
-    /// 비디오관련 버퍼 생성시 매프레임마다 callback
+    /// videoCaptureOutput
+    ///
+    /// this call back will called after rendering `singleCameraView or multiCameraView`
     ///
     /// - Parameters:
-    ///    - pixelBuffer ( CVPixelBuffer ) : 카메라에서 받아온 프레임 버퍼
-    ///    - time ( CMTime ) : SampleBuffer에 등록된 타임스탬프
-    /// - Returns:
+    ///    - sampleBuffer: sampleBuffer from Camera
+    ///    - position: position of camera
     ///
     @objc optional func videoCaptureOutput(sampleBuffer: CMSampleBuffer, position: AVCaptureDevice.Position)
     
     
     ///
-    /// 비디오관련 버퍼 생성시 매프레임마다 callback
+    /// videoOffscreenRenderCaptureOutput
+    ///
+    /// this call back will called before rendering `singleCameraView or multiCameraView`
+    ///
+    /// but if you set `CameraRenderingMode` to `.normal` will not called
     ///
     /// - Parameters:
-    ///    - pixelBuffer ( CVPixelBuffer ) : 카메라에서 받아온 프레임 버퍼
-    ///    - time ( CMTime ) : SampleBuffer에 등록된 타임스탬프
-    /// - Returns:
+    ///    - pixelBuffer: pixelBuffer from camera output
+    ///    - time: time for buffer
+    ///    - position: position of camera
     ///
     @objc optional func videoOffscreenRenderCaptureOutput(pixelBuffer: CVPixelBuffer, time: CMTime, position: AVCaptureDevice.Position)
     
     ///
-    /// 비디오관련 버퍼 생성시 매프레임마다 callback
+    /// videoOffscreenRenderCaptureOutput
+    ///
+    /// this call back will called before rendering `singleCameraView or multiCameraView`
+    ///
+    /// but if you set `CameraRenderingMode` to `.normal` will not called
     ///
     /// - Parameters:
-    ///    - pixelBuffer ( CVPixelBuffer ) : 카메라에서 받아온 프레임 버퍼
-    ///    - time ( CMTime ) : SampleBuffer에 등록된 타임스탬프
-    /// - Returns:
+    ///    - sampleBuffer: sampleBuffer from Camera
+    ///    - position: position of camera
     ///
     @objc optional func videoOffscreenRenderCaptureOutput(CMSampleBuffer: CMSampleBuffer, position: AVCaptureDevice.Position)
     
     ///
-    /// 비디오관련 버퍼 생성시 매프레임마다 callback
+    /// videoChangeAbleCaptureOutput
+    ///
+    ///
+    /// if you want to change sampleBuffer
+    ///
+    /// such as use own you filter kinda thing
+    ///
+    /// get Buffer from paramters and change
+    ///
+    /// and if you return buffer that you changed
+    ///
+    /// it will show on screen
     ///
     /// - Parameters:
-    ///    - pixelBuffer ( CVPixelBuffer ) : 카메라에서 받아온 프레임 버퍼
-    ///    - time ( CMTime ) : SampleBuffer에 등록된 타임스탬프
-    /// - Returns:
+    ///    - pixelBuffer: pixelBuffer from camera output
+    ///    - time: time for buffer
+    ///    - position: position of camera
+    ///
+    /// - Returns: buffer for render `CMSampleBuffer`
     ///
     @objc optional func videoChangeAbleCaptureOutput(
            pixelBuffer: CVPixelBuffer,
@@ -80,12 +92,23 @@ import Foundation
        ) -> CVPixelBuffer?
     
     ///
-    /// 비디오관련 버퍼 생성시 매프레임마다 callback
+    /// videoChangeAbleCaptureOutput
+    ///
+    /// if you want to change sampleBuffer
+    ///
+    /// such as use own you filter kinda thing
+    ///
+    /// get Buffer from paramters and change
+    ///
+    /// and if you return buffer that you changed
+    ///
+    /// it will show on screen
     ///
     /// - Parameters:
-    ///    - pixelBuffer ( CVPixelBuffer ) : 카메라에서 받아온 프레임 버퍼
-    ///    - time ( CMTime ) : SampleBuffer에 등록된 타임스탬프
-    /// - Returns:
+    ///    - sampleBuffer: sampleBuffer from Camera
+    ///    - position: position of camera
+    ///
+    /// - Returns: buffer for render `CMSampleBuffer`
     ///
     @objc optional func videoChangeAbleCaptureOutput(
         CMSampleBuffer: CMSampleBuffer,

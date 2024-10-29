@@ -62,7 +62,7 @@ class SingleCameraViewModel:ObservableObject {
         } else {
             self.isCameraOn = true
             self.isShowThumnnail = false
-            self.cameraMananger?.startCamera()
+            self.cameraMananger?.startCameraSession()
         }
         
     }

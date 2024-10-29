@@ -9,96 +9,394 @@ import Foundation
 import AVFoundation
 import UIKit
 
-
+/// Main Class For CameraManager
 public class CameraManager: NSObject {
     
-    public var singleCameraView: CameraMetalView? // 단일 카메라뷰
+    /**
+     CameraMetalView
+     
+     if you use this view make sure you using "singleSession" from CameraOptions
+     
+     # Code
+         var cameraOptions:CameraOptions = CameraOptions()
+         cameraOptions.cameraSessionMode = .singleSession
+     */
+    public var singleCameraView: CameraMetalView?
     
-    public var multiCameraView: MultiCameraView? // 멀티 카메라뷰
+    /**
+     MultiCameraView
+     
+    if you use this view make sure you using "multiSession" from CameraOptions
+     
+     # Code
+         var cameraOptions:CameraOptions = CameraOptions()
+         cameraOptions.cameraSessionMode = .multiSession
+     */
+    public var multiCameraView: MultiCameraView?
         
+    /**
+     Camera Setting Options
+    
+     this is  options for Camera
+    
+     # Code
+         var cameraOptions:CameraOptions = CameraOptions()
+         CameraManager(cameraOptions: cameraOptions)
+     */
     public var cameraOptions: CameraOptions?
     
-    public var cameraManagerFrameWorkDelegate: CameraManagerFrameWorkDelegate? // 렌더링후 실행하는 콜백
+    /**
+     CameraManagerFrameWorkDelegate
     
-    public var previousImageBuffer: CVPixelBuffer? // 이전 프레임 이미지 버퍼
-    public var previousTimeStamp: CMTime? // 이전 프레임 시간
+     this is observer from camera output
+     */
+    public var cameraManagerFrameWorkDelegate: CameraManagerFrameWorkDelegate?
     
-    public var isMultiCamSupported: Bool = false // 다중 카메라 지원 유무
-    public var isUltraWideCamera: Bool = true // 울트라 와이드 == 후면카메라 3개인지 0.5줌 가능유무
+    /**
+     CVPixelBuffer
     
-    // 카메라
-    public var backCamera: AVCaptureDevice? // 후면카메라 [공통]
-    public var frontCamera: AVCaptureDevice? // 전면 카메라 [공통]
+     this is last frame PixelBuffer from camera output
+    
+     */
+    public var previousImageBuffer: CVPixelBuffer?
+    
+    /**
+     CMTime
+    
+     this is last frame timeStamp from camera output
+     
+     */
+    public var previousTimeStamp: CMTime?
+    
+    /**
+     Bool
+    
+     if this value is true mean that the device that you use supported AVCaptureMultiCamSession
+     
+     so you can use ".multiSession" From CameraSessionMode
+     
+     */
+    public var isMultiCamSupported: Bool = false
+    
+    /**
+     Bool
+    
+     if this value is true mean that the device that you use has isUltraWideCamera so you can zoom 0.5
+     
+     */
+    public var isUltraWideCamera: Bool = true
+    
+    /**
+     AVCaptureDevice
+    
+     backCamera device
+     */
+    public var backCamera: AVCaptureDevice?
+    
+    /**
+     AVCaptureDevice
+    
+     frontCamera device
+     */
+    public var frontCamera: AVCaptureDevice?
+    
     
     // 멀티세션 디바이스 세션 변수
-    public var dualVideoSession:AVCaptureMultiCamSession? // 멀티 카메라 세션
     
-    public var multiCameraCaptureInput: AVCaptureDeviceInput? // 멀티 카메라 캡처 인풋
+    /**
+     AVCaptureMultiCamSession
+    
+     MultiCamSession is will be used when you setting ".multiSession" from CameraOptions
+     */
+    public var dualVideoSession:AVCaptureMultiCamSession?
+    
+    /**
+     AVCaptureConnection
+    
+     BackCameraConnection for AVCaptureMultiCamSession
+     */
+    public var multiBackCameraConnection: AVCaptureConnection?
+    
+    /**
+     AVCaptureConnection
+    
+     FrontCameraConnection for AVCaptureMultiCamSession
+     */
+    public var multiFrontCameraConnection: AVCaptureConnection?
+    
+    /**
+     AVCaptureDeviceInput
+    
+     BackDeviceInput for AVCaptureMultiCamSession
+     */
+    public var multiBackCameraCaptureInput: AVCaptureDeviceInput?
+    
+    /**
+     AVCaptureDeviceInput
+    
+     FrontDeviceInput for AVCaptureMultiCamSession
+     */
+    public var multiFrontCameraCaptureInput: AVCaptureDeviceInput?
+    
+    /**
+     AVCaptureVideoDataOutput
+    
+     BackDeviceOutput for AVCaptureMultiCamSession
+     */
+    public var multiBackCameravideoOutput: AVCaptureVideoDataOutput?
     
     
-    public var multiBackCameraConnection: AVCaptureConnection? // 멀티 후면 카메라 커넥션
-    public var multiFrontCameraConnection: AVCaptureConnection? // 멀티 전면 카메라 커넥션
+    /**
+     AVCaptureVideoDataOutput
     
-    public var multiBackCameraCaptureInput: AVCaptureDeviceInput? // 멀티 후면 카메라 인풋
-    public var multiFrontCameraCaptureInput: AVCaptureDeviceInput? // 멀티 전면 카메라 인풋
-    
-    public var multiBackCameravideoOutput: AVCaptureVideoDataOutput? // 후면 카메라 아웃풋
-    public var multiFrontCameravideoOutput: AVCaptureVideoDataOutput? // 전면 카메라 아웃풋
+     FrontDeviceOutput for AVCaptureMultiCamSession
+     */
+    public var multiFrontCameravideoOutput: AVCaptureVideoDataOutput?
     
     
     // 단일 디바이스 세션 변수
-    public var backCaptureSession: AVCaptureSession? // 후면 카메라 세션
-    public var frontCaptureSession: AVCaptureSession? // 전면 카메라 세션
     
-    public var backCameraConnection: AVCaptureConnection? // 후면 카메라 커넥션
-    public var frontCameraConnection: AVCaptureConnection? // 전면 카메라 커넥션
+    /**
+     AVCaptureSession
     
-    public var backCameraCaptureInput: AVCaptureDeviceInput? // 후면 카메라 인풋
-    public var frontCameraCaptureInput: AVCaptureDeviceInput? // 전면 카메라 인풋
+     backCaptureSession will be used when you setting ".singleSession" from CameraOptions
+     */
+    public var backCaptureSession: AVCaptureSession?
     
-    public var backCameravideoOutput: AVCaptureVideoDataOutput? // 후면 카메라 아웃풋
-    public var frontCameravideoOutput: AVCaptureVideoDataOutput? // 전면 카메라 아웃풋
+    /**
+     AVCaptureSession
+    
+     frontCaptureSession will be used when you setting ".singleSession" from CameraOptions
+     */
+    public var frontCaptureSession: AVCaptureSession?
+    
+    /**
+     AVCaptureConnection
+    
+     backCameraConnection for AVCaptureSession
+     */
+    public var backCameraConnection: AVCaptureConnection?
+    
+    /**
+     AVCaptureConnection
+    
+     frontCameraConnection for AVCaptureSession
+     */
+    public var frontCameraConnection: AVCaptureConnection?
+    
+    /**
+     AVCaptureDeviceInput
+    
+     backCameraCaptureInput for AVCaptureSession
+     */
+    public var backCameraCaptureInput: AVCaptureDeviceInput?
+    
+    /**
+     AVCaptureDeviceInput
+    
+     frontCameraCaptureInput for AVCaptureSession
+     */
+    public var frontCameraCaptureInput: AVCaptureDeviceInput?
+    
+    /**
+     AVCaptureVideoDataOutput
+    
+     backCameravideoOutput for AVCaptureSession
+     */
+    public var backCameravideoOutput: AVCaptureVideoDataOutput?
+    
+    /**
+     AVCaptureVideoDataOutput
+    
+     frontCameravideoOutput for AVCaptureSession
+     */
+    public var frontCameravideoOutput: AVCaptureVideoDataOutput?
     
     // 멀티 디바이스 상태 변수
-    public var mainCameraPostion: AVCaptureDevice.Position = .back // 카메라 포지션
     
-    // 더블 스크린 관련변수
-    public var mirrorBackCamera = false // 미러모드 유무
-    public var mirrorFrontCamera = true // 미러모드 유무
+    /**
+     AVCaptureDevice.Position
+    
+     when you use ".multiSession" from CameraOptions
+     
+     this value will switch when you switch screen between main camera and sub camera
+     
+     */
+    public var mainCameraPostion: AVCaptureDevice.Position = .back
+    
+    /**
+     Bool
+    
+     mirrorMode value for BackCameraDevice
+     
+     basiclly each device has own value of mirrorMode
+     
+     */
+    public var mirrorBackCamera:Bool = false
+    
+    /**
+     Bool
+    
+     mirrorMode value for FrontCameraDevice
+     
+     basiclly each device has own value of mirrorMode
+     */
+    public var mirrorFrontCamera:Bool = true
     
     // 단일 디바이스 상태 변수
-    public var position: AVCaptureDevice.Position = .back // 카메라 포지션
     
-    public var preset: AVCaptureSession.Preset = .hd1280x720 // 화면 비율
-    public var videoOrientation: AVCaptureVideoOrientation = .portrait // 카메라 가로 세로 모드
-    public var mirrorCamera = true // 미러모드 유무
+    /**
+     AVCaptureDevice.Position
+    
+     Current Camera Potions for SingleSession
+     
+     */
+    public var position: AVCaptureDevice.Position = .back
+    
+    /**
+     AVCaptureSession.Preset
+    
+     Current Camera Preset
+     
+     */
+    public var preset: AVCaptureSession.Preset = .hd1280x720
+    
+    /**
+     AVCaptureVideoOrientation
+    
+     Current Camera AVCaptureVideoOrientation
+     
+     */
+    var videoOrientation: AVCaptureVideoOrientation = .portrait
     
     // 큐
-    public var sessionQueue: DispatchQueue? // 세션 큐
-    public var videoDataOutputQueue: DispatchQueue? // 아웃풋 큐
+    /**
+     DispatchQueue
+    
+     Queue For Session
+     
+     */
+    public var sessionQueue: DispatchQueue?
+    
+    /**
+     DispatchQueue
+    
+     Queue For Camera Output
+     
+     */
+    public var videoDataOutputQueue: DispatchQueue?
     
     // 권한
-    public var hasCameraPermission = false // 카메라 권한 유무
+    
+    /**
+     Bool
+    
+     Camera Permission Bool Value
+     
+     */
+    public var hasCameraPermission:Bool = false
     
     
     // 줌관련 변수
+    /**
+     CGFloat
+    
+     BackCamera Current ZoomFactor
+     
+     */
     public var backCameraCurrentZoomFactor: CGFloat = 1.0
+    
+    /**
+     CGFloat
+    
+     BackCamera Default ZoomFactor
+     
+     */
     public var backCameraDefaultZoomFactor: CGFloat = 1.0
+    
+    /**
+     CGFloat
+    
+     BackCamera Minimum ZoomFactor
+     
+     */
     public var backCameraMinimumZoonFactor: CGFloat = 1.0
+    
+    /**
+     CGFloat
+    
+     BackCamera Maximum ZoomFactor
+     
+     */
     public var backCameraMaximumZoonFactor: CGFloat = 1.0
     
+    
+    /**
+     CGFloat
+    
+     FrontCamera Current ZoomFactor
+     
+     */
     public var frontCameraCurrentZoomFactor: CGFloat = 1.0
+    
+    /**
+     CGFloat
+    
+     FrontCamera Default ZoomFactor
+     
+     */
     public var frontCameraDefaultZoomFactor: CGFloat = 1.0
+    
+    /**
+     CGFloat
+    
+     FrontCamera Minimum ZoomFactor
+     
+     */
     public var frontCameraMinimumZoonFactor: CGFloat = 1.0
+    
+    /**
+     CGFloat
+    
+     FrontCamera Maximum ZoomFactor
+     
+     */
     public var frontCameraMaximumZoonFactor: CGFloat = 1.0
     
     
-    public var frameRate:Double = 30.0 // 초당 프레임
-    public var maximumFrameRate:Double = 30.0 // 초당 프레임
+    /**
+     Double
     
-    public var thumbnail: CGImage? // 썸네일
+     Camera Frame Rate
+     
+     */
+    public var frameRate:Double = 30.0
     
-    public var displayLink: CADisplayLink? // 카메라 종료시 반복문으로 돌릴 링크
+    /**
+     Double
+    
+     Camera Maximum Frame Rate
+     
+     */
+    public var maximumFrameRate:Double = 30.0
+    
+    /**
+     CGImage
+    
+     Thumbnail
+     
+     you can set own image from setThumbnail(image: UIImage)
+     */
+    public var thumbnail: CGImage?
+    
+    /**
+     
+     CADisplayLink
+    
+     this will be run when you use thumbnail mode
+        
+     */
+    public var displayLink: CADisplayLink?
     
     public init(cameraOptions: CameraOptions) {
         self.cameraOptions = cameraOptions
@@ -142,16 +440,16 @@ public class CameraManager: NSObject {
     }
 
     
-    ///
-    /// 카메라 deit 함수
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
+    /**
+     CameraManager Deinit
+     */
     deinit {
         print("CamerManager deinit")
     }
     
+    /**
+     start Camera Session
+     */
     public func startSession() {
         if self.cameraOptions?.cameraSessionMode == .multiSession {
             self.multiCameraView = MultiCameraView(parent: self, appendQueueCallback: self)
@@ -167,12 +465,12 @@ public class CameraManager: NSObject {
         }
     }
     
-    ///
-    /// 참조 해제
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
+    /**
+     unreference for all memory that camera using in include camera session
+     
+     you must use this function when you finished use this CameraMananger
+     for memory leack
+     */
     public func unreference() {
         NotificationCenter.default.removeObserver(self)
         
@@ -189,7 +487,7 @@ public class CameraManager: NSObject {
         self.cameraOptions = nil
         self.thumbnail = nil
         
-        self.stopCamera()
+        self.stopRunningCameraSession()
         
         
 
@@ -234,12 +532,9 @@ public class CameraManager: NSObject {
     }
 
     
-    ///
-    /// 카메라 퍼미션 체크 함수
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
+    /**
+     check Camera Permission
+     */
     public func checkCameraPermission() {
         let mediaType = AVMediaType.video
         switch AVCaptureDevice.authorizationStatus(for: mediaType) {

@@ -9,16 +9,17 @@ import Foundation
 import QuartzCore
 import AVFoundation
 
-// 디바이스 관련 메니저
+/// Device Functions For CameraManager
 extension CameraManager {
     
-    ///
-    /// 싱글 세션 카메라 init 함수
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
-    public func setupCaptureSessions() {
+    /**
+     initialize of singleSession Camera
+
+     - Parameters:
+
+     - Returns:
+     */
+    func setupCaptureSessions() {
         self.backCamera = self.findDevice(withPosition: .back)
         self.frontCamera = self.findDevice(withPosition: .front)
         
@@ -72,12 +73,13 @@ extension CameraManager {
        
     }
     
-    ///
-    /// 멀티 세션 카메라 init 함수
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
+    /**
+     initialize of multiSession Camera
+
+     - Parameters:
+
+     - Returns:
+     */
     public func setupMultiCaptureSessions() {
         self.backCamera = self.findDeviceForMultiSession(withPosition: .back)
         self.frontCamera = self.findDeviceForMultiSession(withPosition: .front)
@@ -103,12 +105,14 @@ extension CameraManager {
         }
     }
     
-    ///
-    /// 카메라 input 설정함수
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
+    /**
+     set input device for session
+
+     - Parameters:
+        - session: capture session
+        - position: postion of camera.
+        - isMultiSession: check is multiSession
+     */
     public func setupInput(for session: AVCaptureSession, position: AVCaptureDevice.Position, isMultiSession: Bool = false) {
         guard let device = position == .back ? self.backCamera : self.frontCamera else { return }
         guard let input = try? AVCaptureDeviceInput(device: device) else { return }
@@ -137,12 +141,16 @@ extension CameraManager {
         }
     }
     
-    ///
-    /// 카메라 output 설정함수
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
+    /**
+     set output device for session
+
+     - Parameters:
+        - session: capture session
+        - position: position of camera
+        - isMultiSession: check is multiSession
+     
+     - Returns:
+     */
     public func setupOutput(for session: AVCaptureSession, position: AVCaptureDevice.Position, isMultiSession: Bool = false) {
         let videoOutput = AVCaptureVideoDataOutput()
         videoOutput.setSampleBufferDelegate(self, queue: videoDataOutputQueue)
@@ -219,13 +227,14 @@ extension CameraManager {
         }
     }
     
-    ///
-    /// 사용하고있는 기기의 방향에 따른 기기정보 가져오는 함수
-    ///
-    /// - Parameters:
-    ///     - position ( AVCaptureDevice ) : 카메라 방향
-    /// - Returns: AVCaptureDevice?
-    ///
+    /**
+     Finds a device in `.singleSession`.
+
+     - Parameters:
+       - position: The position of the camera you are searching for.
+       
+     - Returns: The found `AVCaptureDevice` instance.
+     */
     public func findDevice(withPosition position: AVCaptureDevice.Position) -> AVCaptureDevice? {
         var deviceTypes = [AVCaptureDevice.DeviceType]()
         
@@ -308,13 +317,14 @@ extension CameraManager {
     }
   
     
-    ///
-    /// 멀티세션에서 사용할 디바이스의 카메라 가져오기
-    ///
-    /// - Parameters:
-    ///     - position ( AVCaptureDevice ) : 카메라 방향
-    /// - Returns: AVCaptureDevice?
-    ///
+    /**
+     find device from ".multiSession"
+
+     - Parameters:
+        - position: postion of camera what you searching for
+     
+     - Returns: AVCaptureDevice
+     */
     public  func findDeviceForMultiSession(withPosition position: AVCaptureDevice.Position) -> AVCaptureDevice? {
         var deviceTypes = [AVCaptureDevice.DeviceType]()
         
@@ -424,13 +434,14 @@ extension CameraManager {
     }
 
     
-    ///
-    /// 카메라 세션 시작함수
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
-    public func startCamera() {
+    /**
+     start Camera Session
+     
+     but it will work after you used pauseCamera(showThumbnail: Bool)
+     
+     or begin of make instance about CameraManager
+     */
+    public func startCameraSession() {
         sessionQueue?.async { [weak self] in
             guard let self = self else { return }
             if self.dualVideoSession != nil {
@@ -446,13 +457,10 @@ extension CameraManager {
         }
     }
     
-    ///
-    /// 카메라 세션 정지함수
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
-    public func stopCamera() {
+    /**
+     stop Camera Session and (displayLink  [for thumbnail])
+     */
+    public func stopRunningCameraSession() {
         sessionQueue?.async { [weak self] in
             guard let self = self else { return }
             
@@ -469,12 +477,12 @@ extension CameraManager {
         }
     }
     
-    ///
-    /// 카메라 세션 일시정지 함수
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
+    /**
+     pause Camera Session
+
+     - Parameters:
+        - showThumbnail: if it's TRUE the Thumbnail will show if you called setThumbnail(image: UIImage) before
+     */
     public func pauseCamera(showThumbnail: Bool) {
         sessionQueue?.async { [weak self] in
             guard let self = self else { return }
@@ -489,6 +497,12 @@ extension CameraManager {
         }
     }
     
+    /**
+     Set Thumbnail Show
+
+     - Parameters:
+        - isShow : if it's TRUE the Thumbnail will show if you called setThumbnail(image: UIImage) before
+     */
     public func setShowThumbnail(isShow: Bool) {
         DispatchQueue.main.async {
             if isShow {
@@ -527,6 +541,11 @@ extension CameraManager {
         }
     }
     
+    /**
+     Start DisplayLink For show Thumbnail
+     
+     and this is will display with 30FPS
+     */
     public func startDisplayLink() {
          displayLink = CADisplayLink(target: self, selector: #selector(handleDisplayLink(_:)))
          // iOS 10 이상에서는 preferredFramesPerSecond를 사용하여 프레임 속도 조절
@@ -535,18 +554,24 @@ extension CameraManager {
          displayLink?.add(to: .main, forMode: .common)
     }
     
+    
+    /**
+     Stop DisplayLink For show Thumbnail
+     */
     public func stopDisplayLink() {
         self.displayLink?.invalidate() // DisplayLink를 중지
         self.displayLink = nil
     }
     
-    
+    /**
+     Handle Event For DisplayLink
+
+     - Parameters:
+        - displayLink : displayLink that you used
+     */
     @objc public func handleDisplayLink(_ displayLink: CADisplayLink) {
         // 여기에서 프레임 처리 로직을 실행
         if !(self.frontCaptureSession?.isRunning ?? false && self.backCaptureSession?.isRunning ?? false && self.dualVideoSession?.isRunning ?? false) {
-//            guard let thumbnail = self.thumbnail else { return }
-//            
-//            self.renderingThumbnailFrame(pixelBuffer: thumbnail, sourcePostion: self.mainCameraPostion)
             if self.dualVideoSession != nil {
                 self.multiCameraView?.mainCameraView?.setNeedsDisplay()
             } else {
@@ -555,13 +580,14 @@ extension CameraManager {
         }
     }
     
-    ///
-    /// 캡처세션의 해상도를 설정하는 함수
-    ///
-    /// - Parameters:
-    ///    - preset ( AVCaptureSession.Preset ) : 해상도
-    /// - Returns:
-    ///
+    /**
+     Set Camera Preset
+
+     this funcion is only for trigger
+     
+     - Parameters:
+        - preset: new Preset
+     */
     public  func setPreset(_ preset: AVCaptureSession.Preset) {
         guard let captureSession = backCaptureSession else { return }
         
@@ -575,12 +601,9 @@ extension CameraManager {
         }
     }
     
-    ///
-    /// 캡처세션의 해상도변경 함수
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
+    /**
+     Switch Camera Preset
+     */
     public func switchPreset() {
         guard let captureSession = backCaptureSession else { return }
         
@@ -608,15 +631,14 @@ extension CameraManager:CameraManagerFrameWorkDelegate {
 }
 
 extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
-    ///
-    /// 카메라 세션 실행시 매프레임마다 callback 되는 함수
-    ///
-    /// - Parameters:
-    ///    - _ ( AVCaptureOutput ) : 아웃풋에대한 정보
-    ///    - sampleBuffer ( AVCaptureConnection ) : 카메라에서 받아온 샘플정보
-    ///    - from ( AVCaptureConnection ) :기기정보[카메라 혹은 마이크]
-    /// - Returns:
-    ///
+    
+    /**
+     captureOutput from Camera Delegate
+
+     - Parameters:
+       
+     - Returns: sampleBuffer `CMSampleBuffer`, connection `AVCaptureConnection`
+     */
     open func captureOutput(
         _: AVCaptureOutput,
         didOutput sampleBuffer: CMSampleBuffer,
