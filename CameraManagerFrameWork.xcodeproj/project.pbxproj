@@ -21,19 +21,19 @@
 		D101D89F2CCA1EFC00D4DDF6 /* CameraMetalShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = D101D89E2CCA1EFC00D4DDF6 /* CameraMetalShader.metal */; };
 		D1241A1B2CCB8B7000812E45 /* CameraOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1241A1A2CCB8B7000812E45 /* CameraOptions.swift */; };
 		D1274AFC2CD47BED00D18070 /* CameraManagerFrameWork.docc in Sources */ = {isa = PBXBuildFile; fileRef = D1274AFB2CD47BED00D18070 /* CameraManagerFrameWork.docc */; };
-		D15CE1472CD5057900179EE2 /* LogManager.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D15CE1312CD504C600179EE2 /* LogManager.xcframework */; };
-		D15CE1482CD5057900179EE2 /* LogManager.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D15CE1312CD504C600179EE2 /* LogManager.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D15BDB952CD532E300C9B43E /* LogManager.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D170EDAB2CD5206700EB4FF4 /* LogManager.xcframework */; };
+		D15BDB962CD532E300C9B43E /* LogManager.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D170EDAB2CD5206700EB4FF4 /* LogManager.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D1E69F072CCA34D000F01132 /* CameraMetalShader.metallib in Resources */ = {isa = PBXBuildFile; fileRef = D1E69F062CCA34D000F01132 /* CameraMetalShader.metallib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		D15CE1492CD5057900179EE2 /* Embed Frameworks */ = {
+		D15BDB972CD532E300C9B43E /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D15CE1482CD5057900179EE2 /* LogManager.xcframework in Embed Frameworks */,
+				D15BDB962CD532E300C9B43E /* LogManager.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -56,7 +56,7 @@
 		D101D89E2CCA1EFC00D4DDF6 /* CameraMetalShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CameraMetalShader.metal; sourceTree = "<group>"; };
 		D1241A1A2CCB8B7000812E45 /* CameraOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOptions.swift; sourceTree = "<group>"; };
 		D1274AFB2CD47BED00D18070 /* CameraManagerFrameWork.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = CameraManagerFrameWork.docc; sourceTree = "<group>"; };
-		D15CE1312CD504C600179EE2 /* LogManager.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = LogManager.xcframework; path = ../../LogBoardManager/LogManager/LogManager.xcframework; sourceTree = "<group>"; };
+		D170EDAB2CD5206700EB4FF4 /* LogManager.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = LogManager.xcframework; path = CameraManagerFrameWork/LogManager.xcframework; sourceTree = "<group>"; };
 		D1E69F062CCA34D000F01132 /* CameraMetalShader.metallib */ = {isa = PBXFileReference; lastKnownFileType = "archive.metal-library"; path = CameraMetalShader.metallib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,7 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D15CE1472CD5057900179EE2 /* LogManager.xcframework in Frameworks */,
+				D15BDB952CD532E300C9B43E /* LogManager.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,7 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				D101D8392CC9DBE600D4DDF6 /* CameraManagerFrameWork */,
-				D101D8862CCA122000D4DDF6 /* Frameworks */,
+				D15CE1612CD51B0A00179EE2 /* Frameworks */,
 				D101D82E2CC9DBE200D4DDF6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -143,10 +143,10 @@
 			path = CameraMananger;
 			sourceTree = "<group>";
 		};
-		D101D8862CCA122000D4DDF6 /* Frameworks */ = {
+		D15CE1612CD51B0A00179EE2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D15CE1312CD504C600179EE2 /* LogManager.xcframework */,
+				D170EDAB2CD5206700EB4FF4 /* LogManager.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -173,7 +173,7 @@
 				D101D8292CC9DBE200D4DDF6 /* Sources */,
 				D101D82A2CC9DBE200D4DDF6 /* Frameworks */,
 				D101D82B2CC9DBE200D4DDF6 /* Resources */,
-				D15CE1492CD5057900179EE2 /* Embed Frameworks */,
+				D15BDB972CD532E300C9B43E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -211,6 +211,8 @@
 			);
 			mainGroup = D101D8232CC9DBE200D4DDF6;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D101D82E2CC9DBE200D4DDF6 /* Products */;
 			projectDirPath = "";

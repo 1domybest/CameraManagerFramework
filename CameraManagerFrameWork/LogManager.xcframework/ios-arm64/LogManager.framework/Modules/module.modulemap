@@ -1,0 +1,6 @@
+framework module LogManager {
+  umbrella header "LogManager.h"
+  export *
+
+  module * { export * }
+}
