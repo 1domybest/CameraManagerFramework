@@ -9,6 +9,11 @@ import Foundation
 import UIKit
 import AVFoundation
 
+/// ``MultiCameraView``
+///
+/// this view has two ``CameraMetalView`` ``MultiCameraView/smallCameraView`` and ``MultiCameraView/mainCameraView``
+///
+/// and this view only for ``CameraSessionMode/multiSession``
 public class MultiCameraView: UIView, UIGestureRecognizerDelegate {
     // 부모 참조하기
     var parent: CameraManager?
@@ -164,7 +169,7 @@ public class MultiCameraView: UIView, UIGestureRecognizerDelegate {
     
     @objc func multiViewHandlePinchGesture(_ gesture: UIPinchGestureRecognizer) {
         guard let parent = self.parent else { return }
-        guard let view = gesture.view else { return }
+        guard gesture.view != nil else { return }
         if parent.mainCameraPostion == .front { return }
         print("줌 제스처")
         if gesture.state == .changed {

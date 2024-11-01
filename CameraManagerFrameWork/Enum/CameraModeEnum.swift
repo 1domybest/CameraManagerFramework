@@ -23,19 +23,20 @@ public enum CameraRenderingMode {
 /// Modes for Camera Screen
 public enum CameraScreenMode {
     
-    /// Only one screen will show but if you use `.singleSession` this mode only option you can use
+    /// Only one screen will show but if you use ``CameraSessionMode/singleSession``
+    /// this mode only option you can use
     case singleScreen
     
-    /// double screen will show but this mode will work when you use `.multiSession`
+    /// double screen will show but this mode will work when you use ``CameraSessionMode/multiSession``
     case doubleScreen
 }
 
 /// Modes For Camera Session
 public enum CameraSessionMode {
     
-    /// normal `AVCaptrueSession`
+    /// session for ``AVCaptrueSession``
     case singleSession
     
-    ///  session for `AVCaptureMultiCamSession`
+    ///  session for ``AVCaptureMultiCamSession``
     case multiSession
 }

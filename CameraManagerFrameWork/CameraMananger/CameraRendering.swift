@@ -9,11 +9,11 @@ import Foundation
 import UIKit
 import AVFoundation
 
-/// Rendering Functions For CameraManager
+/// Rendering Functions For ``CameraManager``
 extension CameraManager {
     
     /**
-     Set Gesture Event For `singleCameraView`
+     Set Gesture Event For ``singleCameraView``
      */
     public func setupGestureRecognizers() {
         // 단일 카메라 뷰에 핀치 제스처 추가
@@ -32,7 +32,7 @@ extension CameraManager {
     
     
     /**
-     Set Pan Gesture Event For `multiCameraView - smallCameraView`
+     Set Pan Gesture Event For ``MultiCameraView`` And ``SmallCameraView``
      */
     public func setupPanGesture() {
         // 서브 카메라 뷰에 드래그 제스처 추가
@@ -43,7 +43,7 @@ extension CameraManager {
     }
     
     /**
-     Set Grag Gesture Event For `multiCameraView - smallCameraView`
+     Set Grag Gesture Event For ``MultiCameraView`` And ``SmallCameraView``
      */
     @objc func smallViewHandlePanGesture(_ gesture: UIPanGestureRecognizer) {
         
@@ -69,7 +69,7 @@ extension CameraManager {
     }
     
     /**
-     Set PinchZoom Gesture Event For `singleCameraView`
+     Set PinchZoom Gesture Event For ``singleCameraView``
 
      - Parameters:
         - gesture: gesture that you wnat to add
@@ -102,7 +102,7 @@ extension CameraManager {
     }
     
     /**
-     Set Tab Gesture Event For `singleCameraView`
+     Set Tab Gesture Event For ``singleCameraView``
 
      - Parameters:
         - gesture: gesture that you wnat to add
@@ -147,7 +147,7 @@ extension CameraManager {
     }
       
     /**
-     for `multiSession` View rendering
+     for ``CameraSessionMode/multiSession`` View rendering
      
      when after sampleBuffer came out from output
      
@@ -178,7 +178,7 @@ extension CameraManager {
       }
       
     /**
-     for `singleSession` View rendering
+     for ``CameraSessionMode/singleSession`` View rendering
      
      when after sampleBuffer came out from output
      
@@ -236,9 +236,9 @@ extension CameraManager {
         guard var pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
               return
           }
-        guard var sourcePostion: AVCaptureDevice.Position = connection.inputPorts.first?.sourceDevicePosition else { return }
+        guard let sourcePostion: AVCaptureDevice.Position = connection.inputPorts.first?.sourceDevicePosition else { return }
           // 타임스탬프 추출
-        var timestamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
+        let timestamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
         
         
         self.previousImageBuffer = pixelBuffer
@@ -251,9 +251,9 @@ extension CameraManager {
             
         } else {
             
-            var newPixelBuffer:CVPixelBuffer? = self.cameraManagerFrameWorkDelegate?.videoChangeAbleCaptureOutput?(pixelBuffer: pixelBuffer, time: timestamp, position: sourcePostion)
+            let newPixelBuffer:CVPixelBuffer? = self.cameraManagerFrameWorkDelegate?.videoChangeAbleCaptureOutput?(pixelBuffer: pixelBuffer, time: timestamp, position: sourcePostion)
             
-            var newCMSampleBuffer:CMSampleBuffer? = self.cameraManagerFrameWorkDelegate?.videoChangeAbleCaptureOutput?(CMSampleBuffer: sampleBuffer, position: sourcePostion)
+            let newCMSampleBuffer:CMSampleBuffer? = self.cameraManagerFrameWorkDelegate?.videoChangeAbleCaptureOutput?(CMSampleBuffer: sampleBuffer, position: sourcePostion)
             
             if let newPixelBuffer = newPixelBuffer {
                 pixelBuffer = newPixelBuffer

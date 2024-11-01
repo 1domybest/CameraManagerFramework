@@ -17,8 +17,6 @@ extension CameraManager {
 
      - Parameters:
        - image: The image to be set as the thumbnail.
-
-     - Returns:
      */
     public func setThumbnail(image: UIImage) {
         guard let cgImage = image.cgImage else {
@@ -32,8 +30,6 @@ extension CameraManager {
 
      - Parameters:
        - appendQueueCallback: delegate
-
-     - Returns:
      */
     public func setAppendQueueCallback (appendQueueCallback: CameraManagerFrameWorkDelegate) {
         self.cameraManagerFrameWorkDelegate = appendQueueCallback
@@ -45,8 +41,6 @@ extension CameraManager {
      - Parameters:
        - desiredFrameRate: frame rate you want
        - camera: camera Device
-
-     - Returns:
      */
     func setFrameRate(desiredFrameRate: Double, for camera: AVCaptureDevice) {
         var bestFormat: AVCaptureDevice.Format?
@@ -66,7 +60,7 @@ extension CameraManager {
               }
           }
         
-        if let selectedFormat = bestFormat, let selectedFrameRateRange = bestFrameRateRange {
+        if let selectedFormat = bestFormat, let _ = bestFrameRateRange {
             do {
                 try camera.lockForConfiguration()
                 
@@ -94,7 +88,6 @@ extension CameraManager {
      - Parameters:
        - position: camera postion
 
-     - Returns:
      */
     public func setPosition(_ position: AVCaptureDevice.Position) {
         DispatchQueue.main.async {
@@ -125,12 +118,11 @@ extension CameraManager {
     /**
      Sets Main Camera Postion
 
-     this is only work when you use .multiSession from CameraSessionMode and .multiScreen from CameraScreenMode
+     this is only work when you use ``CameraSessionMode/multiSession`` from ``CameraSessionMode`` and ``CameraScreenMode/doubleScreen`` from ``CameraScreenMode``
      
      - Parameters:
        - mainCameraPostion: camera postion
 
-     - Returns:
      */
     public func setMainCameraPostion (mainCameraPostion: AVCaptureDevice.Position) {
         self.mainCameraPostion = mainCameraPostion
@@ -143,7 +135,6 @@ extension CameraManager {
      - Parameters:
        - isMirrorMode: mirror mode
 
-     - Returns:
      */
     public func setMirrorMode (isMirrorMode: Bool) {
         
@@ -173,7 +164,6 @@ extension CameraManager {
      - Parameters:
        - videoOrientation: Orientation
 
-     - Returns:
      */
     func setVideoOrientation(_ videoOrientation: AVCaptureVideoOrientation) {
         self.videoOrientation = videoOrientation
@@ -186,7 +176,6 @@ extension CameraManager {
      - Parameters:
        - scale: scale of zoom
 
-     - Returns:
      */
     @objc
     public func handlePinchCamera(_ scale: CGFloat) {
@@ -212,8 +201,6 @@ extension CameraManager {
      - Parameters:
        - position: postion of camera
        - zoomFactor: zoomFactor of camera
-
-     - Returns:
      */
     public func setZoom(position: AVCaptureDevice.Position, zoomFactor: CGFloat) {
         if let device = position == .front ? self.frontCamera : self.backCamera {
@@ -329,8 +316,6 @@ extension CameraManager {
      
      - Parameters:
        - bias: amount of UV Exposure
-
-     - Returns: A Bool Value return if it's "false" mean is failed set exposure
      */
     public func changeExposureBias(to bias: Float) {
         
@@ -365,7 +350,6 @@ extension CameraManager {
      - Parameters:
        - cameraScreenMode: CameraScreenMode [.singleScreen, .doubleScreen]
 
-     - Returns: A Bool Value return if it's "false" mean is failed set exposure
      */
     public func setCameraScreenMode (cameraScreenMode: CameraScreenMode) {
         if self.dualVideoSession?.isRunning ?? false {
@@ -389,7 +373,6 @@ extension CameraManager {
      - Parameters:
        - onTorch: TRUE = TorchOn | FALSE = TorchOff
 
-     - Returns: A Bool Value return if it's "false" mean is failed set exposure
      */
     public func setTorch(onTorch: Bool) {
         guard let device = backCamera, device.hasTorch else {

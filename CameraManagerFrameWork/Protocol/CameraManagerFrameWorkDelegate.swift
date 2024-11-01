@@ -9,14 +9,17 @@ import AVFoundation
 import Foundation
 
 ///
-/// CameraManagerFrameWorkDelegate
+/// `CameraManagerFrameWorkDelegate`
+///
+/// protocol for output frame from camera
 @objc public protocol CameraManagerFrameWorkDelegate {
+    
     ///
-    /// videoCaptureOutput
+    /// videoCaptureOutput will call after rendering
     ///
-    /// this call back will called after rendering `singleCameraView or multiCameraView`
+    /// this call back will call after rendering ``SingleCameraView`` or ``MultiCameraView``
     ///
-    /// but if you set `CameraRenderingMode` to `.offScreen` will not called
+    /// but if you set ``CameraRenderingMode``  to ``CameraRenderingMode/offScreen`` will not call
     ///
     /// - Parameters:
     ///    - pixelBuffer: pixelBuffer from camera output
@@ -26,9 +29,9 @@ import Foundation
     @objc optional func videoCaptureOutput(pixelBuffer: CVPixelBuffer, time: CMTime, position: AVCaptureDevice.Position)
     
     ///
-    /// videoCaptureOutput
+    /// videoCaptureOutput will call after rendering
     ///
-    /// this call back will called after rendering `singleCameraView or multiCameraView`
+    /// this call back will call after rendering ``SingleCameraView`` or ``MultiCameraView``
     ///
     /// - Parameters:
     ///    - sampleBuffer: sampleBuffer from Camera
@@ -38,11 +41,11 @@ import Foundation
     
     
     ///
-    /// videoOffscreenRenderCaptureOutput
+    /// videoOffscreenRenderCaptureOutput will call before rendering
     ///
-    /// this call back will called before rendering `singleCameraView or multiCameraView`
+    /// this call back will call before rendering ``SingleCameraView`` or ``MultiCameraView``
     ///
-    /// but if you set `CameraRenderingMode` to `.normal` will not called
+    /// but if you set ``CameraRenderingMode`` to ``CameraRenderingMode/normal`` will not call
     ///
     /// - Parameters:
     ///    - pixelBuffer: pixelBuffer from camera output
@@ -52,11 +55,11 @@ import Foundation
     @objc optional func videoOffscreenRenderCaptureOutput(pixelBuffer: CVPixelBuffer, time: CMTime, position: AVCaptureDevice.Position)
     
     ///
-    /// videoOffscreenRenderCaptureOutput
+    /// videoOffscreenRenderCaptureOutput will call before rendering
     ///
-    /// this call back will called before rendering `singleCameraView or multiCameraView`
+    /// this call back will call before rendering ``SingleCameraView`` or ``MultiCameraView``
     ///
-    /// but if you set `CameraRenderingMode` to `.normal` will not called
+    /// but if you set ``CameraRenderingMode`` to ``CameraRenderingMode/normal`` will not call
     ///
     /// - Parameters:
     ///    - sampleBuffer: sampleBuffer from Camera
@@ -65,7 +68,7 @@ import Foundation
     @objc optional func videoOffscreenRenderCaptureOutput(CMSampleBuffer: CMSampleBuffer, position: AVCaptureDevice.Position)
     
     ///
-    /// videoChangeAbleCaptureOutput
+    /// videoChangeAbleCaptureOutput for edit frame
     ///
     ///
     /// if you want to change sampleBuffer
@@ -92,7 +95,7 @@ import Foundation
        ) -> CVPixelBuffer?
     
     ///
-    /// videoChangeAbleCaptureOutput
+    /// videoChangeAbleCaptureOutput for edit frame
     ///
     /// if you want to change sampleBuffer
     ///

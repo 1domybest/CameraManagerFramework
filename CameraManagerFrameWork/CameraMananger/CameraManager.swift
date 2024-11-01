@@ -10,10 +10,11 @@ import AVFoundation
 import UIKit
 
 /// Main Class For CameraManager
+/// Base - [`AVFoundation`](https://developer.apple.com/documentation/avfoundation)
 public class CameraManager: NSObject {
     
     /**
-     CameraMetalView
+     ``CameraMetalView``
      
      if you use this view make sure you using "singleSession" from CameraOptions
      
@@ -24,7 +25,7 @@ public class CameraManager: NSObject {
     public var singleCameraView: CameraMetalView?
     
     /**
-     MultiCameraView
+     ``MultiCameraView``
      
     if you use this view make sure you using "multiSession" from CameraOptions
      
@@ -35,25 +36,25 @@ public class CameraManager: NSObject {
     public var multiCameraView: MultiCameraView?
         
     /**
-     Camera Setting Options
+     Camera Setting Options ``CameraOptions``
     
      this is  options for Camera
     
      # Code
-         var cameraOptions:CameraOptions = CameraOptions()
+         var cameraOptions:CameraOptions = `CameraOptions`()
          CameraManager(cameraOptions: cameraOptions)
      */
     public var cameraOptions: CameraOptions?
     
     /**
-     CameraManagerFrameWorkDelegate
+     ``CameraManagerFrameWorkDelegate``
     
      this is observer from camera output
      */
     public var cameraManagerFrameWorkDelegate: CameraManagerFrameWorkDelegate?
     
     /**
-     CVPixelBuffer
+     ``CVPixelBuffer``
     
      this is last frame PixelBuffer from camera output
     
@@ -61,7 +62,7 @@ public class CameraManager: NSObject {
     public var previousImageBuffer: CVPixelBuffer?
     
     /**
-     CMTime
+     ``CMTime``
     
      this is last frame timeStamp from camera output
      
@@ -87,14 +88,14 @@ public class CameraManager: NSObject {
     public var isUltraWideCamera: Bool = true
     
     /**
-     AVCaptureDevice
+     ``AVCaptureDevice``
     
      backCamera device
      */
     public var backCamera: AVCaptureDevice?
     
     /**
-     AVCaptureDevice
+     ``AVCaptureDevice``
     
      frontCamera device
      */
@@ -104,52 +105,52 @@ public class CameraManager: NSObject {
     // 멀티세션 디바이스 세션 변수
     
     /**
-     AVCaptureMultiCamSession
+     ``AVCaptureMultiCamSession``
     
-     MultiCamSession is will be used when you setting ".multiSession" from CameraOptions
+     MultiCamSession is will be used when you setting ``CameraSessionMode/multiSession`` from ``CameraOptions``
      */
     public var dualVideoSession:AVCaptureMultiCamSession?
     
     /**
-     AVCaptureConnection
+     ``AVCaptureConnection``
     
-     BackCameraConnection for AVCaptureMultiCamSession
+     BackCameraConnection for ``AVCaptureMultiCamSession``
      */
     public var multiBackCameraConnection: AVCaptureConnection?
     
     /**
-     AVCaptureConnection
+     ``AVCaptureConnection``
     
-     FrontCameraConnection for AVCaptureMultiCamSession
+     FrontCameraConnection for ``AVCaptureMultiCamSession``
      */
     public var multiFrontCameraConnection: AVCaptureConnection?
     
     /**
-     AVCaptureDeviceInput
+     ``AVCaptureDeviceInput``
     
-     BackDeviceInput for AVCaptureMultiCamSession
+     BackDeviceInput for ``AVCaptureMultiCamSession``
      */
     public var multiBackCameraCaptureInput: AVCaptureDeviceInput?
     
     /**
-     AVCaptureDeviceInput
+     ``AVCaptureDeviceInput``
     
-     FrontDeviceInput for AVCaptureMultiCamSession
+     FrontDeviceInput for ``AVCaptureMultiCamSession``
      */
     public var multiFrontCameraCaptureInput: AVCaptureDeviceInput?
     
     /**
-     AVCaptureVideoDataOutput
+     ``AVCaptureVideoDataOutput``
     
-     BackDeviceOutput for AVCaptureMultiCamSession
+     BackDeviceOutput for ``AVCaptureMultiCamSession``
      */
     public var multiBackCameravideoOutput: AVCaptureVideoDataOutput?
     
     
     /**
-     AVCaptureVideoDataOutput
+     ``AVCaptureVideoDataOutput``
     
-     FrontDeviceOutput for AVCaptureMultiCamSession
+     FrontDeviceOutput for ``AVCaptureMultiCamSession``
      */
     public var multiFrontCameravideoOutput: AVCaptureVideoDataOutput?
     
@@ -157,65 +158,65 @@ public class CameraManager: NSObject {
     // 단일 디바이스 세션 변수
     
     /**
-     AVCaptureSession
+     ``AVCaptureSession``
     
-     backCaptureSession will be used when you setting ".singleSession" from CameraOptions
+     backCaptureSession will be used when you setting ``CameraSessionMode/singleSession`` from ``CameraOptions``
      */
     public var backCaptureSession: AVCaptureSession?
     
     /**
-     AVCaptureSession
+     ``AVCaptureSession``
     
-     frontCaptureSession will be used when you setting ".singleSession" from CameraOptions
+     frontCaptureSession will be used when you setting ``CameraScreenMode/singleScreen`` from ``CameraOptions``
      */
     public var frontCaptureSession: AVCaptureSession?
     
     /**
-     AVCaptureConnection
+     ``AVCaptureConnection``
     
-     backCameraConnection for AVCaptureSession
+     backCameraConnection for ``AVCaptureSession``
      */
     public var backCameraConnection: AVCaptureConnection?
     
     /**
-     AVCaptureConnection
+     ``AVCaptureConnection``
     
-     frontCameraConnection for AVCaptureSession
+     frontCameraConnection for ``AVCaptureSession``
      */
     public var frontCameraConnection: AVCaptureConnection?
     
     /**
-     AVCaptureDeviceInput
+     ``AVCaptureDeviceInput``
     
-     backCameraCaptureInput for AVCaptureSession
+     backCameraCaptureInput for ``AVCaptureSession``
      */
     public var backCameraCaptureInput: AVCaptureDeviceInput?
     
     /**
-     AVCaptureDeviceInput
+     ``AVCaptureDeviceInput``
     
-     frontCameraCaptureInput for AVCaptureSession
+     frontCameraCaptureInput for ``AVCaptureSession``
      */
     public var frontCameraCaptureInput: AVCaptureDeviceInput?
     
     /**
-     AVCaptureVideoDataOutput
+     ``AVCaptureVideoDataOutput``
     
-     backCameravideoOutput for AVCaptureSession
+     backCameravideoOutput for ``AVCaptureSession``
      */
     public var backCameravideoOutput: AVCaptureVideoDataOutput?
     
     /**
-     AVCaptureVideoDataOutput
+     ``AVCaptureVideoDataOutput``
     
-     frontCameravideoOutput for AVCaptureSession
+     frontCameravideoOutput for ``AVCaptureSession``
      */
     public var frontCameravideoOutput: AVCaptureVideoDataOutput?
     
     // 멀티 디바이스 상태 변수
     
     /**
-     AVCaptureDevice.Position
+     ``AVCaptureDevice.Position``
     
      when you use ".multiSession" from CameraOptions
      
@@ -246,7 +247,7 @@ public class CameraManager: NSObject {
     // 단일 디바이스 상태 변수
     
     /**
-     AVCaptureDevice.Position
+     ``AVCaptureDevice.Position``
     
      Current Camera Potions for SingleSession
      
@@ -254,7 +255,7 @@ public class CameraManager: NSObject {
     public var position: AVCaptureDevice.Position = .back
     
     /**
-     AVCaptureSession.Preset
+     ``AVCaptureSession/Preset``
     
      Current Camera Preset
      
@@ -262,7 +263,7 @@ public class CameraManager: NSObject {
     public var preset: AVCaptureSession.Preset = .hd1280x720
     
     /**
-     AVCaptureVideoOrientation
+     ``AVCaptureVideoOrientation``
     
      Current Camera AVCaptureVideoOrientation
      
@@ -271,7 +272,7 @@ public class CameraManager: NSObject {
     
     // 큐
     /**
-     DispatchQueue
+     ``DispatchQueue``
     
      Queue For Session
      
@@ -279,7 +280,7 @@ public class CameraManager: NSObject {
     public var sessionQueue: DispatchQueue?
     
     /**
-     DispatchQueue
+     ``DispatchQueue``
     
      Queue For Camera Output
      
@@ -391,7 +392,7 @@ public class CameraManager: NSObject {
     
     /**
      
-     CADisplayLink
+     ``CADisplayLink``
     
      this will be run when you use thumbnail mode
         
@@ -432,23 +433,23 @@ public class CameraManager: NSObject {
     
 
     @objc private func sessionDidStopRunning(_ notification: Notification) {
-        print("Session stopped running: \(notification.object)")
+        print("Session stopped running: \(String(describing: notification.object))")
     }
     
     @objc private func sessionDidStartRunning(_ notification: Notification) {
-        print("Session started running: \(notification.object)")
+        print("Session started running: \(String(describing: notification.object))")
     }
 
     
     /**
-     CameraManager Deinit
+     ``CameraManager`` Deinit
      */
     deinit {
         print("CamerManager deinit")
     }
     
     /**
-     initialize Camera Mananger
+     initialize ``CameraMananger``
      */
     public func initialize() {
         if self.cameraOptions?.cameraSessionMode == .multiSession {
@@ -468,7 +469,7 @@ public class CameraManager: NSObject {
     /**
      unreference for all memory that camera using in include camera session
      
-     you must use this function when you finished use this CameraMananger
+     you must use this function when you finished use this ``CameraMananger``
      for memory leack
      */
     public func unreference() {

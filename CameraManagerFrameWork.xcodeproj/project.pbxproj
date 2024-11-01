@@ -20,6 +20,7 @@
 		D101D8622CC9E91A00D4DDF6 /* CameraDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = D101D8612CC9E91A00D4DDF6 /* CameraDevice.swift */; };
 		D101D89F2CCA1EFC00D4DDF6 /* CameraMetalShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = D101D89E2CCA1EFC00D4DDF6 /* CameraMetalShader.metal */; };
 		D1241A1B2CCB8B7000812E45 /* CameraOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1241A1A2CCB8B7000812E45 /* CameraOptions.swift */; };
+		D1274AFC2CD47BED00D18070 /* CameraManagerFrameWork.docc in Sources */ = {isa = PBXBuildFile; fileRef = D1274AFB2CD47BED00D18070 /* CameraManagerFrameWork.docc */; };
 		D1E69F072CCA34D000F01132 /* CameraMetalShader.metallib in Resources */ = {isa = PBXBuildFile; fileRef = D1E69F062CCA34D000F01132 /* CameraMetalShader.metallib */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,7 @@
 		D101D8612CC9E91A00D4DDF6 /* CameraDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraDevice.swift; sourceTree = "<group>"; };
 		D101D89E2CCA1EFC00D4DDF6 /* CameraMetalShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CameraMetalShader.metal; sourceTree = "<group>"; };
 		D1241A1A2CCB8B7000812E45 /* CameraOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOptions.swift; sourceTree = "<group>"; };
+		D1274AFB2CD47BED00D18070 /* CameraManagerFrameWork.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = CameraManagerFrameWork.docc; sourceTree = "<group>"; };
 		D1E69F062CCA34D000F01132 /* CameraMetalShader.metallib */ = {isa = PBXFileReference; lastKnownFileType = "archive.metal-library"; path = CameraMetalShader.metallib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,6 +79,7 @@
 				D101D8522CC9DD4E00D4DDF6 /* Metal */,
 				D101D83F2CC9DC2A00D4DDF6 /* Enum */,
 				D101D8452CC9DC2A00D4DDF6 /* Protocol */,
+				D1274AFB2CD47BED00D18070 /* CameraManagerFrameWork.docc */,
 			);
 			path = CameraManagerFrameWork;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 				D101D8552CC9DD4E00D4DDF6 /* UIKitViewRepresentable.swift in Sources */,
 				D101D8562CC9DD4E00D4DDF6 /* Vertex.swift in Sources */,
 				D101D8572CC9DD4E00D4DDF6 /* CameraMetalView.swift in Sources */,
+				D1274AFC2CD47BED00D18070 /* CameraManagerFrameWork.docc in Sources */,
 				D101D83C2CC9DBFD00D4DDF6 /* CameraManager.swift in Sources */,
 				D101D89F2CCA1EFC00D4DDF6 /* CameraMetalShader.metal in Sources */,
 			);
@@ -241,6 +245,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 6SCMS5NHSF;
+				DOCC_HOSTING_BASE_PATH = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -277,6 +282,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 6SCMS5NHSF;
+				DOCC_HOSTING_BASE_PATH = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";

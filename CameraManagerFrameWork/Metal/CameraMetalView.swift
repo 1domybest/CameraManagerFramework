@@ -13,6 +13,11 @@ import CoreVideo
 import SwiftUI
 import AVFoundation
 
+/// ``CameraMetalView``
+///
+/// this view for render camera frame
+///
+/// if you set ``CameraOptions/cameraRenderingMode`` for ``CameraRenderingMode/normal``
 public class CameraMetalView: MTKView {
     public var sampleBuffer: CMSampleBuffer?
     public var pixelBuffer: CVPixelBuffer?
@@ -241,7 +246,7 @@ extension CameraMetalView: MTKViewDelegate {
             let frameworkBundle = Bundle(for: type(of: self))
             
             // 메탈 기본 라이브러리를 생성합니다.
-            let bundleLib = try device?.makeDefaultLibrary(bundle: frameworkBundle)
+            _ = try device?.makeDefaultLibrary(bundle: frameworkBundle)
 
             // 메탈 라이브러리 경로를 찾습니다.
             if let libraryPath = frameworkBundle.path(forResource: "CameraMetalShader", ofType: "metallib") {

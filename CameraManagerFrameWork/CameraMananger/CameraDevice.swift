@@ -78,7 +78,6 @@ extension CameraManager {
 
      - Parameters:
 
-     - Returns:
      */
     public func setupMultiCaptureSessions() {
         self.backCamera = self.findDeviceForMultiSession(withPosition: .back)
@@ -117,27 +116,23 @@ extension CameraManager {
         guard let device = position == .back ? self.backCamera : self.frontCamera else { return }
         guard let input = try? AVCaptureDeviceInput(device: device) else { return }
         
-        do {
-            if isMultiSession {
-                if position == .back {
-                    self.multiBackCameraCaptureInput = input
-                } else {
-                    self.multiFrontCameraCaptureInput = input
-                }
-                dualVideoSession?.addInputWithNoConnections(input)
+        if isMultiSession {
+            if position == .back {
+                self.multiBackCameraCaptureInput = input
             } else {
-                if position == .back {
-                    self.backCameraCaptureInput = input
-                    backCaptureSession?.canAddInput(input)
-                    backCaptureSession?.addInput(input)
-                } else {
-                    self.frontCameraCaptureInput = input
-                    frontCaptureSession?.canAddInput(input)
-                    frontCaptureSession?.addInput(input)
-                }
+                self.multiFrontCameraCaptureInput = input
             }
-        } catch {
-            print("에러")
+            dualVideoSession?.addInputWithNoConnections(input)
+        } else {
+            if position == .back {
+                self.backCameraCaptureInput = input
+                backCaptureSession?.canAddInput(input)
+                backCaptureSession?.addInput(input)
+            } else {
+                self.frontCameraCaptureInput = input
+                frontCaptureSession?.canAddInput(input)
+                frontCaptureSession?.addInput(input)
+            }
         }
     }
     
@@ -149,7 +144,6 @@ extension CameraManager {
         - position: position of camera
         - isMultiSession: check is multiSession
      
-     - Returns:
      */
     public func setupOutput(for session: AVCaptureSession, position: AVCaptureDevice.Position, isMultiSession: Bool = false) {
         let videoOutput = AVCaptureVideoDataOutput()
@@ -228,12 +222,12 @@ extension CameraManager {
     }
     
     /**
-     Finds a device in `.singleSession`.
+     Finds a device in ``CameraSessionMode/singleSession``.
 
      - Parameters:
        - position: The position of the camera you are searching for.
        
-     - Returns: The found `AVCaptureDevice` instance.
+     - Returns: The found ``AVCaptureDevice`` instance.
      */
     public func findDevice(withPosition position: AVCaptureDevice.Position) -> AVCaptureDevice? {
         var deviceTypes = [AVCaptureDevice.DeviceType]()
@@ -256,7 +250,7 @@ extension CameraManager {
             position: position
         ).devices
         
-        for device in devices {
+        for _ in devices {
             if let tripleCamera = devices.first(where: { $0.deviceType == .builtInTripleCamera }) {
                 // 트리플 카메라를 가장 높은 우선순위로 선택
                 if position == .back {
@@ -318,7 +312,7 @@ extension CameraManager {
   
     
     /**
-     find device from ".multiSession"
+     find device from ``CameraSessionMode/multiSession``.
 
      - Parameters:
         - position: postion of camera what you searching for
@@ -416,7 +410,7 @@ extension CameraManager {
                   }) {
                       do {
                           try defaultFrontCamera.lockForConfiguration()
-                          let dimensions = CMVideoFormatDescriptionGetDimensions(compatibleFormat.formatDescription)
+                          _ = CMVideoFormatDescriptionGetDimensions(compatibleFormat.formatDescription)
 
                           defaultFrontCamera.activeFormat = compatibleFormat
                           defaultFrontCamera.activeVideoMinFrameDuration = CMTimeMake(value: 1, timescale: 30)
@@ -640,8 +634,6 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
      captureOutput from Camera Delegate
 
      - Parameters:
-       
-     - Returns: sampleBuffer `CMSampleBuffer`, connection `AVCaptureConnection`
      */
     open func captureOutput(
         _: AVCaptureOutput,

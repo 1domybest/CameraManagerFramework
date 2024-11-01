@@ -8,11 +8,20 @@
 import Foundation
 import AVFoundation
 
-/// CameraOptions For CameraManager
+/**
+ ``CameraOptions`` For ``CameraManager``
+ Camera Setting Options
+
+ this is  options for Camera
+
+ # Code
+     var cameraOptions:CameraOptions = CameraOptions()
+     CameraManager(cameraOptions: cameraOptions)
+ */
 public struct CameraOptions {
     
     /**
-     AVCaptureDevice.Position
+     ``AVCaptureDevice/Position`` first postion
      
      when camera session started first time
      
@@ -21,17 +30,17 @@ public struct CameraOptions {
     public var startPostion: AVCaptureDevice.Position
     
     /**
-     CameraScreenMode
+     ``CameraScreenMode``
      */
     public var cameraScreenMode: CameraScreenMode
     
     /**
-     CameraSessionMode
+     ``CameraSessionMode``
      */
     public var cameraSessionMode: CameraSessionMode
     
     /**
-     CameraRenderingMode
+     ``CameraRenderingMode``
      */
     public var cameraRenderingMode: CameraRenderingMode
     
@@ -47,7 +56,7 @@ public struct CameraOptions {
     /**
      showTapAutoFocusAndExposureRoundedRectangle
      
-     if you set `"tapAutoFocusAndExposure"` this true
+     if you set ``CameraOptions/tapAutoFocusAndExposure`` this true
      
      and
      
@@ -65,7 +74,7 @@ public struct CameraOptions {
     public var enAblePinchZoom: Bool
     
     /**
-     Callback when you using `".multiSession"`
+     Callback when you using ``CameraSessionMode/multiSession``
      
      and the mainCamera View Switch between FrontCamera and BackCamera
      
@@ -74,11 +83,11 @@ public struct CameraOptions {
     public var onChangeMainScreenPostion: ((AVCaptureDevice.Position) -> Void)?
     
     /**
-     Callback when you using `".multiSession"`
+     Callback when you using ``CameraSessionMode/multiSession``
      
      and the View Switch between singleScreen and doubleScreen
      
-     this callback will be called with `"screenMode"`
+     this callback will be called with ``CameraScreenMode``
      */
     public var onChangeScreenMode: ((CameraScreenMode?) -> Void)?
     
