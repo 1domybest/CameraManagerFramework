@@ -42,7 +42,7 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
         sessionQueue = DispatchQueue(label: "cc.otis.audioSessionqueue", attributes: attr)
         audioCaptureQueue = DispatchQueue(label: "cc.otis.audioCaptureQueue", attributes: attr)
     }
-
+    
     ///
     /// 카메라 deinit 함수
     ///
@@ -93,7 +93,9 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
                 
                 self.captureSession?.commitConfiguration()
                 
-                self.captureSession?.startRunning()
+                self.sessionQueue?.async {
+                    self.captureSession?.startRunning()
+                }
             }
         }
         
@@ -178,14 +180,23 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
         sessionQueue?.async { [weak self] in
             guard let self = self else { return }
             if let captureSession = self.captureSession {
-                if captureSession.isRunning {
+                if audioCaptureInput != nil {
                     captureSession.removeInput(audioCaptureInput!)
                     audioCaptureInput = nil
-                    captureSession.removeOutput(audioOutput!)
-                    audioOutput = nil
-                    audioConnection = nil
-                    captureSession.stopRunning()
                 }
+                
+                if audioOutput != nil {
+                    captureSession.removeOutput(audioOutput!)
+                    self.audioOutput = nil
+                }
+                
+                if audioConnection != nil {
+                    captureSession.removeConnection(audioConnection!)
+                    audioConnection = nil
+                }
+                
+                captureSession.stopRunning()
+                self.captureSession = nil
             }
         }
     }
