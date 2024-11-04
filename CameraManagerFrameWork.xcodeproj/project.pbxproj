@@ -21,6 +21,8 @@
 		D101D89F2CCA1EFC00D4DDF6 /* CameraMetalShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = D101D89E2CCA1EFC00D4DDF6 /* CameraMetalShader.metal */; };
 		D1241A1B2CCB8B7000812E45 /* CameraOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1241A1A2CCB8B7000812E45 /* CameraOptions.swift */; };
 		D1274AFC2CD47BED00D18070 /* CameraManagerFrameWork.docc in Sources */ = {isa = PBXBuildFile; fileRef = D1274AFB2CD47BED00D18070 /* CameraManagerFrameWork.docc */; };
+		D147FB1D2CD8B55700022334 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D147FB1C2CD8B55700022334 /* AudioManager.swift */; };
+		D147FB342CD8B73800022334 /* AudioManagerFrameWorkDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D147FB332CD8B73800022334 /* AudioManagerFrameWorkDelegate.swift */; };
 		D15BDB952CD532E300C9B43E /* LogManager.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D170EDAB2CD5206700EB4FF4 /* LogManager.xcframework */; };
 		D15BDB962CD532E300C9B43E /* LogManager.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D170EDAB2CD5206700EB4FF4 /* LogManager.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D1E69F072CCA34D000F01132 /* CameraMetalShader.metallib in Resources */ = {isa = PBXBuildFile; fileRef = D1E69F062CCA34D000F01132 /* CameraMetalShader.metallib */; };
@@ -56,6 +58,8 @@
 		D101D89E2CCA1EFC00D4DDF6 /* CameraMetalShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CameraMetalShader.metal; sourceTree = "<group>"; };
 		D1241A1A2CCB8B7000812E45 /* CameraOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOptions.swift; sourceTree = "<group>"; };
 		D1274AFB2CD47BED00D18070 /* CameraManagerFrameWork.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = CameraManagerFrameWork.docc; sourceTree = "<group>"; };
+		D147FB1C2CD8B55700022334 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		D147FB332CD8B73800022334 /* AudioManagerFrameWorkDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManagerFrameWorkDelegate.swift; sourceTree = "<group>"; };
 		D170EDAB2CD5206700EB4FF4 /* LogManager.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = LogManager.xcframework; path = CameraManagerFrameWork/LogManager.xcframework; sourceTree = "<group>"; };
 		D1E69F062CCA34D000F01132 /* CameraMetalShader.metallib */ = {isa = PBXFileReference; lastKnownFileType = "archive.metal-library"; path = CameraMetalShader.metallib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,6 +117,7 @@
 		D101D8452CC9DC2A00D4DDF6 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				D147FB332CD8B73800022334 /* AudioManagerFrameWorkDelegate.swift */,
 				D101D8412CC9DC2A00D4DDF6 /* CameraManagerFrameWorkDelegate.swift */,
 			);
 			path = Protocol;
@@ -134,6 +139,7 @@
 		D101D85C2CC9E86C00D4DDF6 /* CameraMananger */ = {
 			isa = PBXGroup;
 			children = (
+				D147FB1C2CD8B55700022334 /* AudioManager.swift */,
 				D101D83B2CC9DBFD00D4DDF6 /* CameraManager.swift */,
 				D101D85D2CC9E89400D4DDF6 /* CameraInterFace.swift */,
 				D101D8612CC9E91A00D4DDF6 /* CameraDevice.swift */,
@@ -247,8 +253,10 @@
 				D101D84A2CC9DC2A00D4DDF6 /* CameraModeEnum.swift in Sources */,
 				D101D8532CC9DD4E00D4DDF6 /* MultiCameraView.swift in Sources */,
 				D101D8552CC9DD4E00D4DDF6 /* UIKitViewRepresentable.swift in Sources */,
+				D147FB1D2CD8B55700022334 /* AudioManager.swift in Sources */,
 				D101D8562CC9DD4E00D4DDF6 /* Vertex.swift in Sources */,
 				D101D8572CC9DD4E00D4DDF6 /* CameraMetalView.swift in Sources */,
+				D147FB342CD8B73800022334 /* AudioManagerFrameWorkDelegate.swift in Sources */,
 				D1274AFC2CD47BED00D18070 /* CameraManagerFrameWork.docc in Sources */,
 				D101D83C2CC9DBFD00D4DDF6 /* CameraManager.swift in Sources */,
 				D101D89F2CCA1EFC00D4DDF6 /* CameraMetalShader.metal in Sources */,

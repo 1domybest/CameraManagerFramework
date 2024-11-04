@@ -450,6 +450,7 @@ extension CameraManager {
                 }
             }
             self.setShowThumbnail(isShow: false)
+            self.audioManager?.startAudioSession()
         }
     }
     
@@ -470,6 +471,7 @@ extension CameraManager {
             self.frontCaptureSession?.stopRunning()
             self.backCaptureSession?.stopRunning()
             self.dualVideoSession?.stopRunning()
+            self.audioManager?.stopAudioSession()
         }
     }
     
@@ -492,6 +494,8 @@ extension CameraManager {
             if showThumbnail {
                 self.setShowThumbnail(isShow: showThumbnail)
             }
+            
+            self.audioManager?.pauseAudioSession()
         }
     }
     

@@ -74,6 +74,13 @@ public struct CameraOptions {
     public var enAblePinchZoom: Bool
     
     /**
+     if its's `"true"`
+     
+     the microphone will turn on
+     */
+    public var useMicrophone: Bool
+    
+    /**
      Callback when you using ``CameraSessionMode/multiSession``
      
      and the mainCamera View Switch between FrontCamera and BackCamera
@@ -96,6 +103,7 @@ public struct CameraOptions {
                 cameraSessionMode: CameraSessionMode = .singleSession,
                 cameraRenderingMode: CameraRenderingMode = .normal,
                 autoFocusAndExposure: Bool = true,
+                useMicrophone: Bool = true,
                 showAutoFocusAndExposureRoundedRectangle: Bool = true,
                 enAblePinchZoom: Bool = true,
                 onChangeMainScreenPostion: ((AVCaptureDevice.Position) -> Void)? = { _ in },
@@ -105,6 +113,7 @@ public struct CameraOptions {
         self.cameraScreenMode = cameraScreenMode
         self.cameraSessionMode = cameraSessionMode
         self.cameraRenderingMode = cameraRenderingMode
+        self.useMicrophone = useMicrophone
         self.tapAutoFocusAndExposure = autoFocusAndExposure
         self.showTapAutoFocusAndExposureRoundedRectangle = showAutoFocusAndExposureRoundedRectangle
         self.onChangeScreenMode = onChangeScreenMode

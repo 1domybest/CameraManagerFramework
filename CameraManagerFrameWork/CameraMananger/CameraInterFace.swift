@@ -23,6 +23,8 @@ extension CameraManager {
             return
         }
         self.thumbnail = cgImage
+        self.singleCameraView?.setThumbnail(cgImage: cgImage)
+        self.multiCameraView?.mainCameraView?.setThumbnail(cgImage: cgImage)
     }
     
     /**
@@ -31,8 +33,18 @@ extension CameraManager {
      - Parameters:
        - appendQueueCallback: delegate
      */
-    public func setAppendQueueCallback (appendQueueCallback: CameraManagerFrameWorkDelegate) {
-        self.cameraManagerFrameWorkDelegate = appendQueueCallback
+    public func setCameraManagerFrameWorkDelegate (cameraManagerFrameWorkDelegate: CameraManagerFrameWorkDelegate) {
+        self.cameraManagerFrameWorkDelegate = cameraManagerFrameWorkDelegate
+    }
+    
+    /**
+     Sets Audio Output Delegate
+
+     - Parameters:
+       - appendQueueCallback: delegate
+     */
+    public func setAudioManagerFrameWorkDelegate (setAudioManagerFrameWorkDelegate: AudioManagerFrameWorkDelegate) {
+        self.audioManager?.setAudioManagerFrameWorkDelegate(audioManagerFrameWorkDelegate: setAudioManagerFrameWorkDelegate)
     }
     
     /**

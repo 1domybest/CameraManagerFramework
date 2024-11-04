@@ -41,6 +41,7 @@ public class CameraMetalView: MTKView {
     var cameraManagerFrameWorkDelegate: CameraManagerFrameWorkDelegate?
     var showThumbnail: Bool = false
     var thumbnail:MTLTexture?
+    var thumbnailPixelBuffer:CVPixelBuffer?
     private var borderView: UIView?
     init(cameraManagerFrameWorkDelegate: CameraManagerFrameWorkDelegate) {
         super.init(frame: .zero, device: MTLCreateSystemDefaultDevice())
@@ -178,12 +179,59 @@ public class CameraMetalView: MTKView {
                 .SRGB: false
             ]
 
-            let texture = try textureLoader?.newTexture(cgImage: cgImage, options: options)
-            self.thumbnail = texture
+            if let texture = try textureLoader?.newTexture(cgImage: cgImage, options: options) {
+                self.thumbnail = texture
+                self.thumbnailPixelBuffer = self.pixelBuffer(from: texture)
+            }
         } catch {
             
         }
     }
+    
+    func pixelBuffer(from texture: MTLTexture) -> CVPixelBuffer? {
+        let width = texture.width
+        let height = texture.height
+        let pixelFormat = kCVPixelFormatType_32BGRA // 일반적으로 .bgra8Unorm 사용
+
+        var pixelBuffer: CVPixelBuffer?
+        let attributes: [CFString: Any] = [
+            kCVPixelBufferMetalCompatibilityKey: true,
+            kCVPixelBufferWidthKey: width,
+            kCVPixelBufferHeightKey: height,
+            kCVPixelBufferPixelFormatTypeKey: pixelFormat
+        ]
+        
+        CVPixelBufferCreate(kCFAllocatorDefault, width, height, pixelFormat, attributes as CFDictionary, &pixelBuffer)
+
+        guard let buffer = pixelBuffer,
+              let cache = textureCache else { return nil }
+
+        // CVMetalTextureCache를 사용하여 pixelBuffer로부터 Metal Texture 생성
+        var cvMetalTexture: CVMetalTexture?
+        CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault, cache, buffer, nil, .bgra8Unorm, width, height, 0, &cvMetalTexture)
+        
+        guard let pixelBufferTexture = CVMetalTextureGetTexture(cvMetalTexture!) else { return nil }
+
+        // Command Buffer와 Blit Encoder 생성
+        guard let commandBuffer = metalCommandQueue.makeCommandBuffer(),
+              let blitEncoder = commandBuffer.makeBlitCommandEncoder() else {
+            return nil
+        }
+
+        // MTLTexture의 내용을 pixelBufferTexture로 복사
+        blitEncoder.copy(from: texture, sourceSlice: 0, sourceLevel: 0,
+                         sourceOrigin: MTLOrigin(x: 0, y: 0, z: 0),
+                         sourceSize: MTLSize(width: width, height: height, depth: 1),
+                         to: pixelBufferTexture, destinationSlice: 0, destinationLevel: 0,
+                         destinationOrigin: MTLOrigin(x: 0, y: 0, z: 0))
+
+        blitEncoder.endEncoding()
+        commandBuffer.commit()
+        commandBuffer.waitUntilCompleted()
+
+        return buffer
+    }
+
     
     func texture(from pixelBuffer: CVPixelBuffer) -> MTLTexture? {
 
@@ -310,7 +358,14 @@ extension CameraMetalView: MTKViewDelegate {
                 image = processSampleBuffer(pixelBuffer, rotationAngle: ratationAngle)
             }
             
-            cameraManagerFrameWorkDelegate?.videoCaptureOutput?(pixelBuffer: image!, time: time!, position: position)
+            if self.showThumbnail {
+                if let thumbnailPixelBuffer = self.thumbnailPixelBuffer {
+                    cameraManagerFrameWorkDelegate?.videoCaptureOutput?(pixelBuffer: thumbnailPixelBuffer, time: time!, position: position)
+                }
+            } else {
+                cameraManagerFrameWorkDelegate?.videoCaptureOutput?(pixelBuffer: image!, time: time!, position: position)
+            }
+            
             
             if let sampleBuffer = sampleBuffer {
                 cameraManagerFrameWorkDelegate?.videoCaptureOutput?(sampleBuffer: sampleBuffer, position: position)

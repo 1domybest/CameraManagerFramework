@@ -13,6 +13,10 @@ import LogManager
 /// Main Class For CameraManager
 /// Base - [`AVFoundation`](https://developer.apple.com/documentation/avfoundation)
 public class CameraManager: NSObject {
+    /**
+     ``AudioMananger``
+     */
+    public var audioManager: AudioMananger?
     
     /**
      ``CameraMetalView``
@@ -406,7 +410,6 @@ public class CameraManager: NSObject {
         
         self.isMultiCamSupported = AVCaptureMultiCamSession.isMultiCamSupported
         
-        
         self.position = cameraOptions.startPostion
         self.mainCameraPostion = cameraOptions.startPostion
         
@@ -466,6 +469,11 @@ public class CameraManager: NSObject {
             self.setupCaptureSessions()
             self.setupGestureRecognizers()
         }
+        
+        if cameraOptions?.useMicrophone ?? true {
+            self.audioManager = AudioMananger()
+            self.audioManager?.initialize()
+        }
     }
     
     /**
@@ -476,6 +484,9 @@ public class CameraManager: NSObject {
      */
     public func unreference() {
         NotificationCenter.default.removeObserver(self)
+        
+        self.audioManager?.unreference()
+        self.audioManager = nil
         
         self.cameraManagerFrameWorkDelegate = nil
         
