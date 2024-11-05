@@ -433,9 +433,9 @@ extension CameraManager {
      
      only Session will Start
      
-     but it will work after you used pauseCameraSession(showThumbnail: Bool)
+     but it will work after you used ``pauseCameraSession(showThumbnail:)``
      
-     or begin of make instance about CameraManager
+     or begin of make instance about ``CameraManager``
      */
     public func startCameraSession() {
         sessionQueue?.async { [weak self] in

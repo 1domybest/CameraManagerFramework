@@ -7,12 +7,8 @@
 
 import AVFoundation
 
-///
-/// 오디오 매니저
-///
-/// - Parameters:
-/// - Returns:
-///
+/// Main Class For ``AudioMananger``
+/// Base - [`AVFoundation`](https://developer.apple.com/documentation/avfoundation)
 public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate {
     
     public var captureSession: AVCaptureSession?
@@ -26,15 +22,11 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
     
     public var sessionQueue: DispatchQueue?
     public var audioCaptureQueue: DispatchQueue?
-    
-    public var hasMicrophonePermission = false
         
     public var audioManagerFrameWorkDelegate: AudioManagerFrameWorkDelegate?
     
     public override init() {
         super.init()
-        
-        hasMicrophonePermission = false
         
         captureSession = AVCaptureSession()
         
@@ -43,23 +35,17 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
         audioCaptureQueue = DispatchQueue(label: "cc.otis.audioCaptureQueue", attributes: attr)
     }
     
-    ///
-    /// 카메라 deinit 함수
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
+    /**
+     deinitialize ``AudioMananger``
+     */
     deinit {
         print("AudioManager deinit")
         NotificationCenter.default.removeObserver(self)
     }
     
-    ///
-    /// 오디오 세션 시작
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
+    /**
+     initialize ``AudioMananger``
+     */
     public func initialize() {
         checkMicrophonePermission { result in
             if result {
@@ -102,7 +88,7 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
        
     }
     
-    public func unreference() {
+    func unreference() {
         NotificationCenter.default.removeObserver(self)
         
         self.stopAudioSession()
@@ -116,29 +102,23 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
         audioCaptureDevice = nil
     }
     
-    ///
-    /// 오디오 퍼미션 체크 함수
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
+    /**
+     check Audio Permission
+     */
     public func checkMicrophonePermission(completion: @escaping (_ succeed: Bool) -> Void) {
         let mediaType = AVMediaType.audio
         switch AVCaptureDevice.authorizationStatus(for: mediaType) {
         case .authorized:
-            hasMicrophonePermission = true
             completion(true)
         case .notDetermined:
             sessionQueue?.suspend()
             AVCaptureDevice.requestAccess(for: mediaType) { [weak self] granted in
                 guard let self = self else { return }
-                self.hasMicrophonePermission = granted
                 self.sessionQueue?.resume()
                 completion(granted)
             }
             
         case .denied:
-            hasMicrophonePermission = false
             completion(false)
         default:
             break
@@ -147,12 +127,15 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
     
     
     
-    ///
-    /// 오디오 세션 시작함수  단 퍼미션확인후 상수에 등록
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
+    /**
+     start Audio Session
+     
+     only Session will Start
+     
+     but it will work after you used ``pauseAudioSession()``
+     
+     or begin of make instance about ``AudioMananger``
+     */
     @objc
     public func startAudioSession() {
         self.sessionQueue?.async { [weak self] in
@@ -162,6 +145,9 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
         
     }
     
+    /**
+     pause Audio Session
+     */
     public func pauseAudioSession() {
         self.sessionQueue?.async { [weak self] in
             guard let self = self else { return }
@@ -169,12 +155,9 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
         }
     }
     
-    ///
-    /// 오디오 세션 정지 함수
-    ///
-    /// - Parameters:
-    /// - Returns:
-    ///
+    /**
+     stop Audio Session
+     */
     public func stopAudioSession() {
         print("stopAudioInternal")
         sessionQueue?.async { [weak self] in
@@ -206,26 +189,21 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
     
    
     
-    ///
-    /// output 에서 받은 데이터를 넘겨줄 callback함수를 등록하는 함수
-    ///
-    /// - Parameters:
-    ///    - appendQueueCallback ( AppendQueueProtocol ) : 프로토콜로 등록한 클래스를 넘겨줌
-    /// - Returns:
-    ///
+    /**
+     Sets Audio Output Delegate
+
+     - Parameters:
+       - audioManagerFrameWorkDelegate: delegate
+     */
     public func setAudioManagerFrameWorkDelegate(audioManagerFrameWorkDelegate: AudioManagerFrameWorkDelegate) {
         self.audioManagerFrameWorkDelegate = audioManagerFrameWorkDelegate
     }
     
-    ///
-    /// 오디오 세션 실행시 매프레임마다 callback 되는 함수
-    ///
-    /// - Parameters:
-    ///    - _ ( AVCaptureOutput ) : 아웃풋에대한 정보
-    ///    - sampleBuffer ( AVCaptureConnection ) : 카메라에서 받아온 샘플정보
-    ///    - from ( AVCaptureConnection ) :기기정보[카메라 혹은 마이크]
-    /// - Returns:
-    ///
+    /**
+     captureOutput from Audio Delegate
+
+     - Parameters:
+     */
     open func captureOutput(
         _: AVCaptureOutput,
         didOutput sampleBuffer: CMSampleBuffer,

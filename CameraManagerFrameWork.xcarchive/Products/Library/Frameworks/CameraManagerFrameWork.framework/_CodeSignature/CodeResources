@@ -14,7 +14,7 @@
 		</data>
 		<key>Frameworks/LogManager.framework/LogManager</key>
 		<data>
-		ASRcWccn4NdwGrVoYrD2tBLIoUk=
+		HQY1eLgh2tFIbIMe8mzcCo2psgs=
 		</data>
 		<key>Frameworks/LogManager.framework/_CodeSignature/CodeResources</key>
 		<data>
@@ -30,23 +30,23 @@
 		</data>
 		<key>Modules/CameraManagerFrameWork.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		b9pnZ4UIUtVDo4T+sb/cZemsjCM=
+		V2mPmbGy8up/RbXhzyoIV4m45tg=
 		</data>
 		<key>Modules/CameraManagerFrameWork.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		tOc+NTl3OlAXojKRzpLWhseHXOk=
+		FRNpbYgL6od2asjQ9G8hE/Qzn/g=
 		</data>
 		<key>Modules/CameraManagerFrameWork.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		1F0ZcuJRmQWD7JEXtQ47Qsiuzak=
+		nltWr3FDjkwEZ3PM3kix34Q3xWg=
 		</data>
 		<key>Modules/CameraManagerFrameWork.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		tOc+NTl3OlAXojKRzpLWhseHXOk=
+		FRNpbYgL6od2asjQ9G8hE/Qzn/g=
 		</data>
 		<key>Modules/CameraManagerFrameWork.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		ENtS0y/DWajrCxphHXtkll1KOGo=
+		s7m+Uki+/phmmisNHFF4VPX9Iy8=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -77,7 +77,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			gUMBrcB9QwvRI7vs3TRevu7QE0HiglfiUbNtAQiMFMg=
+			PKT5EbeqQFw+N12o0o8akzrE5A87K0NLkMlYQHvuoIQ=
 			</data>
 		</dict>
 		<key>Frameworks/LogManager.framework/_CodeSignature/CodeResources</key>
@@ -98,35 +98,35 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			m7lDy/dDMmgX5GrW8sXFv0EDvBJ9c5stuM+tu0U6pUA=
+			8ey2QyO5JL+JWDmMEtyls/OxtmN5lrgRZuDAo1yCMA8=
 			</data>
 		</dict>
 		<key>Modules/CameraManagerFrameWork.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			yfEerfOHJoPfQNROu0aJ8n16GRUEyfjEAQ539fPw6x8=
+			v7iFr0yqpHYmH1qe5YxUCKFaK51g6X5R6SJqfmdQNio=
 			</data>
 		</dict>
 		<key>Modules/CameraManagerFrameWork.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2/Tukwg/niBAvQ54IfM73CQgn/YzRUV8Clx07SRkfZM=
+			c04ENJ+vC/OgD6l371W3/mfBn6VXYhxajq1AudtOlGQ=
 			</data>
 		</dict>
 		<key>Modules/CameraManagerFrameWork.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			yfEerfOHJoPfQNROu0aJ8n16GRUEyfjEAQ539fPw6x8=
+			v7iFr0yqpHYmH1qe5YxUCKFaK51g6X5R6SJqfmdQNio=
 			</data>
 		</dict>
 		<key>Modules/CameraManagerFrameWork.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			FnlvT6ihRQUxfLPDh8YCt6D2Tdgou05HmRx37/7BNS8=
+			I/DBTAx3Z0QN/StUDjL0YZaMoRmXVKx3RikBzTBqxrg=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

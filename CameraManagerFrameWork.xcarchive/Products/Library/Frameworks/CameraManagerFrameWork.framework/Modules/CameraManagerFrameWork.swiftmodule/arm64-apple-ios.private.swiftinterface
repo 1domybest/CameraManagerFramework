@@ -18,7 +18,8 @@ import _SwiftConcurrencyShims
 import simd
 extension CameraManagerFrameWork.CameraManager {
   public func setThumbnail(image: UIKit.UIImage)
-  public func setAppendQueueCallback(appendQueueCallback: any CameraManagerFrameWork.CameraManagerFrameWorkDelegate)
+  public func setCameraManagerFrameWorkDelegate(cameraManagerFrameWorkDelegate: any CameraManagerFrameWork.CameraManagerFrameWorkDelegate)
+  public func setAudioManagerFrameWorkDelegate(setAudioManagerFrameWorkDelegate: any CameraManagerFrameWork.AudioManagerFrameWorkDelegate)
   public func setPosition(_ position: AVFoundation.AVCaptureDevice.Position)
   public func setMainCameraPostion(mainCameraPostion: AVFoundation.AVCaptureDevice.Position)
   public func setMirrorMode(isMirrorMode: Swift.Bool)
@@ -57,9 +58,10 @@ public struct CameraOptions {
   public var tapAutoFocusAndExposure: Swift.Bool
   public var showTapAutoFocusAndExposureRoundedRectangle: Swift.Bool
   public var enAblePinchZoom: Swift.Bool
+  public var useMicrophone: Swift.Bool
   public var onChangeMainScreenPostion: ((AVFoundation.AVCaptureDevice.Position) -> Swift.Void)?
   public var onChangeScreenMode: ((CameraManagerFrameWork.CameraScreenMode?) -> Swift.Void)?
-  public init(startPostion: AVFoundation.AVCaptureDevice.Position = .back, cameraScreenMode: CameraManagerFrameWork.CameraScreenMode = .singleScreen, cameraSessionMode: CameraManagerFrameWork.CameraSessionMode = .singleSession, cameraRenderingMode: CameraManagerFrameWork.CameraRenderingMode = .normal, autoFocusAndExposure: Swift.Bool = true, showAutoFocusAndExposureRoundedRectangle: Swift.Bool = true, enAblePinchZoom: Swift.Bool = true, onChangeMainScreenPostion: ((AVFoundation.AVCaptureDevice.Position) -> Swift.Void)? = { _ in }, onChangeScreenMode: ((CameraManagerFrameWork.CameraScreenMode?) -> Swift.Void)? = { _ in })
+  public init(startPostion: AVFoundation.AVCaptureDevice.Position = .back, cameraScreenMode: CameraManagerFrameWork.CameraScreenMode = .singleScreen, cameraSessionMode: CameraManagerFrameWork.CameraSessionMode = .singleSession, cameraRenderingMode: CameraManagerFrameWork.CameraRenderingMode = .normal, autoFocusAndExposure: Swift.Bool = true, useMicrophone: Swift.Bool = true, showAutoFocusAndExposureRoundedRectangle: Swift.Bool = true, enAblePinchZoom: Swift.Bool = true, onChangeMainScreenPostion: ((AVFoundation.AVCaptureDevice.Position) -> Swift.Void)? = { _ in }, onChangeScreenMode: ((CameraManagerFrameWork.CameraScreenMode?) -> Swift.Void)? = { _ in })
 }
 extension CameraManagerFrameWork.CameraManager {
   public func setupMultiCaptureSessions()
@@ -124,6 +126,25 @@ extension CameraManagerFrameWork.MultiCameraView : CameraManagerFrameWork.Camera
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func videoCaptureOutput(sampleBuffer: CoreMedia.CMSampleBuffer, position: AVFoundation.AVCaptureDevice.Position)
   @_Concurrency.MainActor @preconcurrency public func appendAudioQueue(sampleBuffer: CoreMedia.CMSampleBuffer)
 }
+@objc @_inheritsConvenienceInitializers public class AudioMananger : ObjectiveC.NSObject, AVFoundation.AVCaptureAudioDataOutputSampleBufferDelegate {
+  public var captureSession: AVFoundation.AVCaptureSession?
+  public var audioCaptureDevice: AVFoundation.AVCaptureDevice?
+  public var audioCaptureInput: AVFoundation.AVCaptureDeviceInput?
+  public var audioOutput: AVFoundation.AVCaptureAudioDataOutput?
+  public var audioConnection: AVFoundation.AVCaptureConnection?
+  public var sessionQueue: Dispatch.DispatchQueue?
+  public var audioCaptureQueue: Dispatch.DispatchQueue?
+  public var audioManagerFrameWorkDelegate: (any CameraManagerFrameWork.AudioManagerFrameWorkDelegate)?
+  @objc override dynamic public init()
+  @objc deinit
+  public func initialize()
+  public func checkMicrophonePermission(completion: @escaping (_ succeed: Swift.Bool) -> Swift.Void)
+  @objc public func startAudioSession()
+  public func pauseAudioSession()
+  public func stopAudioSession()
+  public func setAudioManagerFrameWorkDelegate(audioManagerFrameWorkDelegate: any CameraManagerFrameWork.AudioManagerFrameWorkDelegate)
+  @objc open func captureOutput(_: AVFoundation.AVCaptureOutput, didOutput sampleBuffer: CoreMedia.CMSampleBuffer, from _: AVFoundation.AVCaptureConnection)
+}
 @objc @_hasMissingDesignatedInitializers @_Concurrency.MainActor @preconcurrency public class CameraMetalView : MetalKit.MTKView {
   @_Concurrency.MainActor @preconcurrency public var sampleBuffer: CoreMedia.CMSampleBuffer?
   @_Concurrency.MainActor @preconcurrency public var pixelBuffer: CoreVideo.CVPixelBuffer?
@@ -142,7 +163,11 @@ extension CameraManagerFrameWork.CameraMetalView : MetalKit.MTKViewDelegate {
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func mtkView(_: MetalKit.MTKView, drawableSizeWillChange _: CoreFoundation.CGSize)
   @_Concurrency.MainActor @preconcurrency @objc dynamic public func draw(in view: MetalKit.MTKView)
 }
+@objc public protocol AudioManagerFrameWorkDelegate {
+  @objc optional func audioCaptureOutput(sampleBuffer: CoreMedia.CMSampleBuffer)
+}
 @objc public class CameraManager : ObjectiveC.NSObject {
+  public var audioManager: CameraManagerFrameWork.AudioMananger?
   public var singleCameraView: CameraManagerFrameWork.CameraMetalView?
   public var multiCameraView: CameraManagerFrameWork.MultiCameraView?
   public var cameraOptions: CameraManagerFrameWork.CameraOptions?
@@ -175,7 +200,6 @@ extension CameraManagerFrameWork.CameraMetalView : MetalKit.MTKViewDelegate {
   public var preset: AVFoundation.AVCaptureSession.Preset
   public var sessionQueue: Dispatch.DispatchQueue?
   public var videoDataOutputQueue: Dispatch.DispatchQueue?
-  public var hasCameraPermission: Swift.Bool
   public var backCameraCurrentZoomFactor: CoreFoundation.CGFloat
   public var backCameraDefaultZoomFactor: CoreFoundation.CGFloat
   public var backCameraMinimumZoonFactor: CoreFoundation.CGFloat
@@ -192,7 +216,7 @@ extension CameraManagerFrameWork.CameraMetalView : MetalKit.MTKViewDelegate {
   @objc deinit
   public func initialize()
   public func unreference()
-  public func checkCameraPermission()
+  public func checkCameraPermission(completion: @escaping (_ succeed: Swift.Bool) -> Swift.Void)
 }
 extension CameraManagerFrameWork.CameraRenderingMode : Swift.Equatable {}
 extension CameraManagerFrameWork.CameraRenderingMode : Swift.Hashable {}

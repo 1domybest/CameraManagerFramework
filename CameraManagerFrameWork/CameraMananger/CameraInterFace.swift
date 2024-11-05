@@ -31,7 +31,7 @@ extension CameraManager {
      Sets Camera Output Delegate
 
      - Parameters:
-       - appendQueueCallback: delegate
+       - cameraManagerFrameWorkDelegate: delegate
      */
     public func setCameraManagerFrameWorkDelegate (cameraManagerFrameWorkDelegate: CameraManagerFrameWorkDelegate) {
         self.cameraManagerFrameWorkDelegate = cameraManagerFrameWorkDelegate

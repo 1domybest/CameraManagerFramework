@@ -10,7 +10,7 @@ import AVFoundation
 import UIKit
 import LogManager
 
-/// Main Class For CameraManager
+/// Main Class For ``CameraManager``
 /// Base - [`AVFoundation`](https://developer.apple.com/documentation/avfoundation)
 public class CameraManager: NSObject {
     /**
@@ -292,16 +292,6 @@ public class CameraManager: NSObject {
      */
     public var videoDataOutputQueue: DispatchQueue?
     
-    // 권한
-    
-    /**
-     Bool
-    
-     Camera Permission Bool Value
-     
-     */
-    public var hasCameraPermission:Bool = false
-    
     
     // 줌관련 변수
     /**
@@ -457,23 +447,28 @@ public class CameraManager: NSObject {
      initialize ``CameraMananger``
      */
     public func initialize() {
-        if self.cameraOptions?.cameraSessionMode == .multiSession {
-            self.multiCameraView = MultiCameraView(parent: self, appendQueueCallback: self)
-            self.setupMultiCaptureSessions()
-            if self.cameraOptions?.cameraScreenMode == .singleScreen {
-                self.multiCameraView?.smallCameraView?.isHidden = true
+        checkCameraPermission(completion: { result in
+            if result {
+                if self.cameraOptions?.cameraSessionMode == .multiSession {
+                    self.multiCameraView = MultiCameraView(parent: self, appendQueueCallback: self)
+                    self.setupMultiCaptureSessions()
+                    if self.cameraOptions?.cameraScreenMode == .singleScreen {
+                        self.multiCameraView?.smallCameraView?.isHidden = true
+                    }
+                } else {
+                    self.singleCameraView = CameraMetalView(cameraManagerFrameWorkDelegate: self)
+                    self.maximumFrameRate = 60.0
+                    self.setupCaptureSessions()
+                    self.setupGestureRecognizers()
+                }
+                
+                if self.cameraOptions?.useMicrophone ?? true {
+                    self.audioManager = AudioMananger()
+                    self.audioManager?.initialize()
+                }
             }
-        } else {
-            self.singleCameraView = CameraMetalView(cameraManagerFrameWorkDelegate: self)
-            self.maximumFrameRate = 60.0
-            self.setupCaptureSessions()
-            self.setupGestureRecognizers()
-        }
-        
-        if cameraOptions?.useMicrophone ?? true {
-            self.audioManager = AudioMananger()
-            self.audioManager?.initialize()
-        }
+        })
+       
     }
     
     /**
@@ -549,23 +544,23 @@ public class CameraManager: NSObject {
     /**
      check Camera Permission
      */
-    public func checkCameraPermission() {
+    public func checkCameraPermission(completion: @escaping (_ succeed: Bool) -> Void) {
         let mediaType = AVMediaType.video
         switch AVCaptureDevice.authorizationStatus(for: mediaType) {
         case .authorized:
-            hasCameraPermission = true
-            
+            completion(true)
+            break
         case .notDetermined:
             sessionQueue?.suspend()
             AVCaptureDevice.requestAccess(for: mediaType) { [weak self] granted in
                 guard let self = self else { return }
-                self.hasCameraPermission = granted
+                completion(granted)
                 self.sessionQueue?.resume()
             }
-            
+            break
         case .denied:
-            hasCameraPermission = false
-            
+            completion(false)
+            break
         default:
             break
         }
