@@ -272,6 +272,19 @@ extension CameraManager {
     }
     
     
+    public func appendFrame(
+        pixelBuffer: CVPixelBuffer,
+        sourcePostion: AVCaptureDevice.Position,
+        timestamp: CMTime
+    ) {
+        if self.dualVideoSession?.isRunning ?? false {
+            self.doubleScreenCameraModeRender(sampleBuffer: nil, pixelBuffer: pixelBuffer, time: timestamp, sourceDevicePosition: sourcePostion)
+        } else {
+            self.singleCameraModeRender(sampleBuffer: nil, pixelBuffer: pixelBuffer, time: timestamp, sourceDevicePosition: sourcePostion)
+        }
+    }
+    
+    
     /**
      renderingThumbnailFrame
      
