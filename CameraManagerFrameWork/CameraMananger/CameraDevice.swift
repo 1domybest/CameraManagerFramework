@@ -548,7 +548,6 @@ extension CameraManager {
                 if self.displayLink != nil {
                     
                     if self.dualVideoSession != nil {
-                        self.setCameraScreenMode(cameraScreenMode: .doubleScreen)
                         self.multiCameraView?.mainCameraView?.showThumbnail = false
                     } else {
                         self.singleCameraView?.showThumbnail = false
