@@ -216,7 +216,7 @@ extension CameraManager {
      */
     public func setZoom(position: AVCaptureDevice.Position, zoomFactor: CGFloat) {
         if let device = position == .front ? self.frontCamera : self.backCamera {
-
+            
             if position == .front {
                 self.frontCameraCurrentZoomFactor = zoomFactor
             } else {

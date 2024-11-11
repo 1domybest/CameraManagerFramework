@@ -439,6 +439,9 @@ extension CameraManager {
             if let defaultFrontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) {
                   // 멀티 세션과 호환되는 포맷을 선택합니다.
                 self.setCameraFormat(camera: defaultFrontCamera)
+                self.frontCameraMaximumZoonFactor = defaultFrontCamera.minAvailableVideoZoomFactor
+                self.frontCameraMaximumZoonFactor = defaultFrontCamera.maxAvailableVideoZoomFactor
+                print("노멀 카메라 - 전면 - 최소줌 \(frontCameraMinimumZoonFactor) 최대줌\(frontCameraMaximumZoonFactor) 기본줌 \(frontCameraDefaultZoomFactor)")
                   return defaultFrontCamera
               }
         }

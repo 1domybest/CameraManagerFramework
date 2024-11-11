@@ -165,7 +165,7 @@ public class MultiCameraView: UIView, UIGestureRecognizerDelegate {
     @objc func multiViewHandlePinchGesture(_ gesture: UIPinchGestureRecognizer) {
         guard let parent = self.parent else { return }
         guard gesture.view != nil else { return }
-        if parent.mainCameraPostion == .front { return }
+//        if parent.mainCameraPostion == .front { return }
         print("줌 제스처")
         if gesture.state == .changed {
             let scale = Double(gesture.scale)
