@@ -65,7 +65,7 @@ import Foundation
     ///    - sampleBuffer: sampleBuffer from Camera
     ///    - position: position of camera
     ///
-    @objc optional func videoOffscreenRenderCaptureOutput(CMSampleBuffer: CMSampleBuffer, position: AVCaptureDevice.Position)
+    @objc optional func videoOffscreenRenderCaptureOutput(sampleBuffer: CMSampleBuffer, position: AVCaptureDevice.Position)
     
     ///
     /// videoChangeAbleCaptureOutput for edit frame

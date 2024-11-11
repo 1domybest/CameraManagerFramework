@@ -45,6 +45,7 @@ public class CameraMetalView: MTKView {
     private var borderView: UIView?
     init(cameraManagerFrameWorkDelegate: CameraManagerFrameWorkDelegate) {
         super.init(frame: .zero, device: MTLCreateSystemDefaultDevice())
+        self.awakeFromNib()
         if let metalDevice = MTLCreateSystemDefaultDevice() {
             self.metalDevice = metalDevice
             self.textureLoader = MTKTextureLoader(device: metalDevice)
@@ -55,8 +56,8 @@ public class CameraMetalView: MTKView {
         }
         self.cameraManagerFrameWorkDelegate = cameraManagerFrameWorkDelegate
         
-
-        awakeFromNib()
+        
+        
         self.context = CIContext(mtlDevice: device!)
     }
     
@@ -77,6 +78,7 @@ public class CameraMetalView: MTKView {
         delegate = self
         framebufferOnly = false
         enableSetNeedsDisplay = true
+        isPaused = false
     }
 
     @objc private func updateDisplay() {

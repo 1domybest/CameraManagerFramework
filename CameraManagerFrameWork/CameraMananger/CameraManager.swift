@@ -448,27 +448,26 @@ public class CameraManager: NSObject {
      initialize ``CameraMananger``
      */
     public func initialize() {
-        checkCameraPermission(completion: { result in
-            if result {
-                if self.cameraOptions?.cameraSessionMode == .multiSession {
-                    self.multiCameraView = MultiCameraView(parent: self, appendQueueCallback: self)
-                    self.setupMultiCaptureSessions()
-                    if self.cameraOptions?.cameraScreenMode == .singleScreen {
-                        self.multiCameraView?.smallCameraView?.isHidden = true
-                    }
-                } else {
-                    self.singleCameraView = CameraMetalView(cameraManagerFrameWorkDelegate: self)
-                    self.maximumFrameRate = 60.0
-                    self.setupCaptureSessions()
-                    self.setupGestureRecognizers()
-                }
-                
-                if self.cameraOptions?.useMicrophone ?? true {
-                    self.audioManager = AudioMananger()
-                    self.audioManager?.initialize()
-                }
+
+        if self.cameraOptions?.cameraSessionMode == .multiSession {
+            self.setupMultiCaptureSessions()
+            self.multiCameraView = MultiCameraView(parent: self, appendQueueCallback: self)
+            
+            if self.cameraOptions?.cameraScreenMode == .singleScreen {
+                self.multiCameraView?.smallCameraView?.isHidden = true
             }
-        })
+        } else {
+            self.singleCameraView = CameraMetalView(cameraManagerFrameWorkDelegate: self)
+            self.maximumFrameRate = 60.0
+            self.setupCaptureSessions()
+            self.setupGestureRecognizers()
+        }
+        
+        
+        if self.cameraOptions?.useMicrophone ?? true {
+            self.audioManager = AudioMananger()
+            self.audioManager?.initialize()
+        }
     }
     
     /**
@@ -546,6 +545,12 @@ public class CameraManager: NSObject {
      */
     public func checkCameraPermission(completion: @escaping (_ succeed: Bool) -> Void) {
         let mediaType = AVMediaType.video
+        
+        if AVCaptureDevice.authorizationStatus(for: mediaType) == .authorized {
+            completion(true)
+            return
+        }
+        
         switch AVCaptureDevice.authorizationStatus(for: mediaType) {
         case .authorized:
             completion(true)

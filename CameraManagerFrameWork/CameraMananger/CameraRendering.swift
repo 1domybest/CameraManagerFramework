@@ -247,7 +247,7 @@ extension CameraManager {
         if self.cameraOptions?.cameraRenderingMode == .offScreen {
             
             self.cameraManagerFrameWorkDelegate?.videoOffscreenRenderCaptureOutput?(pixelBuffer: pixelBuffer, time: timestamp, position: sourcePostion)
-            self.cameraManagerFrameWorkDelegate?.videoOffscreenRenderCaptureOutput?(CMSampleBuffer: sampleBuffer, position: sourcePostion)
+            self.cameraManagerFrameWorkDelegate?.videoOffscreenRenderCaptureOutput?(sampleBuffer: sampleBuffer, position: sourcePostion)
             
         } else {
             
@@ -271,6 +271,20 @@ extension CameraManager {
         }
     }
     
+    public func appendFrame(
+        sampleBuffer: CMSampleBuffer,
+        sourcePostion: AVCaptureDevice.Position
+    ) {
+        
+        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+        let timestamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
+        
+        if self.dualVideoSession?.isRunning ?? false {
+            self.doubleScreenCameraModeRender(sampleBuffer: nil, pixelBuffer: pixelBuffer, time: timestamp, sourceDevicePosition: sourcePostion)
+        } else {
+            self.singleCameraModeRender(sampleBuffer: nil, pixelBuffer: pixelBuffer, time: timestamp, sourceDevicePosition: sourcePostion)
+        }
+    }
     
     public func appendFrame(
         pixelBuffer: CVPixelBuffer,

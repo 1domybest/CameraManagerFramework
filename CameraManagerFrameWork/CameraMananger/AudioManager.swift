@@ -47,42 +47,39 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
      initialize ``AudioMananger``
      */
     public func initialize() {
-        checkMicrophonePermission { result in
-            if result {
-                self.captureSession?.beginConfiguration()
-                
-                if let audioCaptureDevice = AVCaptureDevice.default(for: .audio) {
-                    self.audioCaptureInput = try? AVCaptureDeviceInput(device: audioCaptureDevice)
-                    if let audioCaptureInput = self.audioCaptureInput,
-                       self.captureSession?.canAddInput(audioCaptureInput) == true
-                    {
-                        self.captureSession?.addInput(audioCaptureInput)
-                    } else {
-                        print("Unable to add audio input")
-                        self.captureSession?.commitConfiguration()
-                        return
-                    }
-                }
-                
-                let audioOutput = AVCaptureAudioDataOutput()
-                audioOutput.setSampleBufferDelegate(self, queue: self.audioCaptureQueue)
-                if self.captureSession?.canAddOutput(audioOutput) == true {
-                    self.captureSession?.addOutput(audioOutput)
-                    self.audioOutput = audioOutput
-                } else {
-                    print("Unable to add audio output")
-                    self.captureSession?.commitConfiguration()
-                    return
-                }
-                
-                self.audioConnection = audioOutput.connection(with: .audio)
-                
+        
+        self.captureSession?.beginConfiguration()
+        
+        if let audioCaptureDevice = AVCaptureDevice.default(for: .audio) {
+            self.audioCaptureInput = try? AVCaptureDeviceInput(device: audioCaptureDevice)
+            if let audioCaptureInput = self.audioCaptureInput,
+               self.captureSession?.canAddInput(audioCaptureInput) == true
+            {
+                self.captureSession?.addInput(audioCaptureInput)
+            } else {
+                print("Unable to add audio input")
                 self.captureSession?.commitConfiguration()
-                
-                self.sessionQueue?.async {
-                    self.captureSession?.startRunning()
-                }
+                return
             }
+        }
+        
+        let audioOutput = AVCaptureAudioDataOutput()
+        audioOutput.setSampleBufferDelegate(self, queue: self.audioCaptureQueue)
+        if self.captureSession?.canAddOutput(audioOutput) == true {
+            self.captureSession?.addOutput(audioOutput)
+            self.audioOutput = audioOutput
+        } else {
+            print("Unable to add audio output")
+            self.captureSession?.commitConfiguration()
+            return
+        }
+        
+        self.audioConnection = audioOutput.connection(with: .audio)
+        
+        self.captureSession?.commitConfiguration()
+        
+        self.sessionQueue?.async {
+            self.captureSession?.startRunning()
         }
         
        
@@ -107,19 +104,31 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
      */
     public func checkMicrophonePermission(completion: @escaping (_ succeed: Bool) -> Void) {
         let mediaType = AVMediaType.audio
+        
+        if AVCaptureDevice.authorizationStatus(for: mediaType) == .authorized {
+            completion(true)
+            return
+        }
+        
         switch AVCaptureDevice.authorizationStatus(for: mediaType) {
         case .authorized:
-            completion(true)
+            DispatchQueue.main.async {
+                completion(true)
+            }
         case .notDetermined:
             sessionQueue?.suspend()
             AVCaptureDevice.requestAccess(for: mediaType) { [weak self] granted in
                 guard let self = self else { return }
+                DispatchQueue.main.async {
+                    completion(granted)
+                }
                 self.sessionQueue?.resume()
-                completion(granted)
             }
             
         case .denied:
-            completion(false)
+            DispatchQueue.main.async {
+                completion(false)
+            }
         default:
             break
         }

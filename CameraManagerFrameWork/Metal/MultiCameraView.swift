@@ -25,12 +25,7 @@ public class MultiCameraView: UIView, UIGestureRecognizerDelegate {
         super.init(frame: .zero)
         self.parent = parent
         self.cameraManagerFrameWorkDelegate = appendQueueCallback
-        setupView()
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
+        self.setupView()
     }
     
     required init?(coder: NSCoder) {
