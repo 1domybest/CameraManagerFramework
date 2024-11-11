@@ -393,6 +393,7 @@ public class CameraManager: NSObject {
         
      */
     public var displayLink: CADisplayLink?
+
     
     public init(cameraOptions: CameraOptions) {
         let _ = LogManager(projectName: "CameraManager")
@@ -468,7 +469,6 @@ public class CameraManager: NSObject {
                 }
             }
         })
-       
     }
     
     /**

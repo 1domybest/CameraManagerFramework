@@ -280,7 +280,7 @@ extension CameraMetalView: MTKViewDelegate {
         }
         
         guard let texture = texture else {
-            print("no texture")
+            self.completedAfterGpuPixel(imageBuffer: pixelBuffer)
             return
         }
         
@@ -406,4 +406,38 @@ extension CameraMetalView: MTKViewDelegate {
 
         return pixelBuffer
     }
+    
+    func completedAfterGpuPixel(imageBuffer: CVImageBuffer) {
+        guard
+            let context,
+            let currentDrawable = currentDrawable,
+            let commandBuffer = self.metalCommandQueue?.makeCommandBuffer() else {
+            return
+        }
+        
+        let displayImage = CIImage(cvPixelBuffer: imageBuffer)
+            var scaleX: CGFloat = 0
+            var scaleY: CGFloat = 0
+            var translationX: CGFloat = 0
+            var translationY: CGFloat = 0
+        
+            let scale: CGFloat = min(drawableSize.width / displayImage.extent.width, drawableSize.height / displayImage.extent.height)
+            scaleX = scale
+            scaleY = scale
+            translationX = (drawableSize.width - displayImage.extent.width * scale) / scaleX / 2
+            translationY = (drawableSize.height - displayImage.extent.height * scale) / scaleY / 2
+            
+            let bounds = CGRect(origin: .zero, size: drawableSize)
+            var scaledImage: CIImage = displayImage
+
+            scaledImage = scaledImage
+                .transformed(by: CGAffineTransform(translationX: translationX, y: translationY))
+                .transformed(by: CGAffineTransform(scaleX: scaleX, y: scaleY))
+
+            
+            context.render(scaledImage, to: currentDrawable.texture, commandBuffer: commandBuffer, bounds: bounds, colorSpace: CGColorSpaceCreateDeviceRGB())
+            commandBuffer.present(currentDrawable)
+            commandBuffer.commit()
+            return
+        }
 }

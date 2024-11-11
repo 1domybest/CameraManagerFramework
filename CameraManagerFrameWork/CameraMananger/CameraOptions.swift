@@ -98,6 +98,11 @@ public struct CameraOptions {
      */
     public var onChangeScreenMode: ((CameraScreenMode?) -> Void)?
     
+    /**
+     Camera Size ``CGSize``
+     */
+    public var cameraSize: CGSize
+    
     public init(startPostion: AVCaptureDevice.Position = .back,
                 cameraScreenMode: CameraScreenMode = .singleScreen,
                 cameraSessionMode: CameraSessionMode = .singleSession,
@@ -106,10 +111,12 @@ public struct CameraOptions {
                 useMicrophone: Bool = true,
                 showAutoFocusAndExposureRoundedRectangle: Bool = true,
                 enAblePinchZoom: Bool = true,
+                cameraSize:CGSize = CGSize(width: 720, height: 1280),
                 onChangeMainScreenPostion: ((AVCaptureDevice.Position) -> Void)? = { _ in },
                 onChangeScreenMode: ((CameraScreenMode?) -> Void)? = { _ in }
     ) {
         self.startPostion = startPostion
+        self.cameraSize = cameraSize
         self.cameraScreenMode = cameraScreenMode
         self.cameraSessionMode = cameraSessionMode
         self.cameraRenderingMode = cameraRenderingMode

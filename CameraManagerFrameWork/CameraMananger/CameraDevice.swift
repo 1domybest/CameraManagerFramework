@@ -309,6 +309,37 @@ extension CameraManager {
         }
         return AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: position)
     }
+    
+    /**
+     setCamera Format
+
+     - Parameters:
+        - camera: ``AVCaptureDevice``
+     */
+    func setCameraFormat(camera: AVCaptureDevice) {
+        let width = Int32(self.cameraOptions?.cameraSize.height ?? 1280)
+        let height = Int32(self.cameraOptions?.cameraSize.width ?? 720)
+        
+        if let compatibleFormat = camera.formats.first(where: { format in
+              format.isMultiCamSupported &&
+              format.mediaType == .video &&
+              CMVideoFormatDescriptionGetDimensions(format.formatDescription).width == width &&
+              CMVideoFormatDescriptionGetDimensions(format.formatDescription).height == height &&
+            format.videoSupportedFrameRateRanges.contains(where: { $0.maxFrameRate >= self.maximumFrameRate })
+        }) {
+            do {
+                try camera.lockForConfiguration()
+                _ = CMVideoFormatDescriptionGetDimensions(compatibleFormat.formatDescription)
+
+                camera.activeFormat = compatibleFormat
+                camera.activeVideoMinFrameDuration = CMTimeMake(value: 1, timescale: 30)
+                camera.activeVideoMaxFrameDuration = CMTimeMake(value: 1, timescale: 30)
+                camera.unlockForConfiguration()
+            } catch {
+                print("포맷 설정 오류: \(error)")
+            }
+        }
+    }
   
     
     /**
@@ -345,7 +376,11 @@ extension CameraManager {
         if position == .back {
             for device in supportedDeviceSets {
                 // 지원되는 멀티 카메라 세트 내에서 장치 선택
-                if let tripleCamera = device.first(where: { $0.deviceType == .builtInTripleCamera && $0.position == position }) {
+                if let tripleCamera = device.first(where: {
+                    $0.deviceType == .builtInTripleCamera &&
+                    $0.position == position
+                }) {
+                    self.setCameraFormat(camera: tripleCamera)
                     if position == .back {
                         backCameraMinimumZoonFactor = tripleCamera.minAvailableVideoZoomFactor
                         backCameraMaximumZoonFactor = tripleCamera.maxAvailableVideoZoomFactor
@@ -362,6 +397,7 @@ extension CameraManager {
                     }
                     return tripleCamera
                 } else if let dualWideCamera = device.first(where: { $0.deviceType == .builtInDualWideCamera && $0.position == position }) {
+                    self.setCameraFormat(camera: dualWideCamera)
                     if position == .back {
                         // 트리플 카메라가 없으면 듀얼 와이드 카메라 선택
                         backCameraMinimumZoonFactor = dualWideCamera.minAvailableVideoZoomFactor
@@ -379,6 +415,7 @@ extension CameraManager {
                     }
                     return dualWideCamera
                 } else if let normalCamera = device.first(where: { $0.deviceType == .builtInWideAngleCamera && $0.position == position }) {
+                    self.setCameraFormat(camera: normalCamera)
                     if position == .back {
                         // 트리플 카메라가 없으면 듀얼 와이드 카메라 선택
                         backCameraMinimumZoonFactor = normalCamera.minAvailableVideoZoomFactor
@@ -401,25 +438,7 @@ extension CameraManager {
         } else {
             if let defaultFrontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) {
                   // 멀티 세션과 호환되는 포맷을 선택합니다.
-                if let compatibleFormat = defaultFrontCamera.formats.first(where: { format in
-                      format.isMultiCamSupported &&
-                      format.mediaType == .video &&
-                      CMVideoFormatDescriptionGetDimensions(format.formatDescription).width == 1280 &&
-                      CMVideoFormatDescriptionGetDimensions(format.formatDescription).height == 720 &&
-                      format.videoSupportedFrameRateRanges.contains(where: { $0.maxFrameRate >= 30 })
-                  }) {
-                      do {
-                          try defaultFrontCamera.lockForConfiguration()
-                          _ = CMVideoFormatDescriptionGetDimensions(compatibleFormat.formatDescription)
-
-                          defaultFrontCamera.activeFormat = compatibleFormat
-                          defaultFrontCamera.activeVideoMinFrameDuration = CMTimeMake(value: 1, timescale: 30)
-                          defaultFrontCamera.activeVideoMaxFrameDuration = CMTimeMake(value: 1, timescale: 30)
-                          defaultFrontCamera.unlockForConfiguration()
-                      } catch {
-                          print("포맷 설정 오류: \(error)")
-                      }
-                  }
+                self.setCameraFormat(camera: defaultFrontCamera)
                   return defaultFrontCamera
               }
         }
