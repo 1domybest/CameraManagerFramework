@@ -651,6 +651,10 @@ extension CameraManager:CameraManagerFrameWorkDelegate {
     public func videoCaptureOutput(pixelBuffer: CVPixelBuffer, time: CMTime, position: AVCaptureDevice.Position) {
         self.cameraManagerFrameWorkDelegate?.videoCaptureOutput?(pixelBuffer: pixelBuffer, time: time, position: position)
     }
+    
+    public func videoCaptureOutput(sampleBuffer: CMSampleBuffer, position: AVCaptureDevice.Position) {
+        self.cameraManagerFrameWorkDelegate?.videoCaptureOutput?(sampleBuffer: sampleBuffer, position: position)
+    }
 }
 
 extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {

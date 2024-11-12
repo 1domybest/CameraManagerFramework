@@ -77,7 +77,8 @@ public class CameraMetalView: MTKView {
         super.awakeFromNib()
         delegate = self
         framebufferOnly = false
-        enableSetNeedsDisplay = true
+        enableSetNeedsDisplay = false
+        self.preferredFramesPerSecond = 60
         isPaused = false
     }
 
@@ -127,17 +128,21 @@ public class CameraMetalView: MTKView {
        }
     
     public func update(sampleBuffer: CMSampleBuffer? ,pixelBuffer: CVPixelBuffer, time: CMTime, position: AVCaptureDevice.Position) {
-        if Thread.isMainThread {
-            self.position = position
-            self.time = time
-            self.pixelBuffer = pixelBuffer
-            self.sampleBuffer = sampleBuffer
-            setNeedsDisplay()
-        } else {
-            DispatchQueue.main.async {
-                self.update(sampleBuffer: sampleBuffer, pixelBuffer: pixelBuffer, time: time, position: position)
-            }
-        }
+        self.position = position
+        self.time = time
+        self.pixelBuffer = pixelBuffer
+        self.sampleBuffer = sampleBuffer
+//        if Thread.isMainThread {
+//            self.position = position
+//            self.time = time
+//            self.pixelBuffer = pixelBuffer
+//            self.sampleBuffer = sampleBuffer
+//            setNeedsDisplay()
+//        } else {
+//            DispatchQueue.main.async {
+//                self.update(sampleBuffer: sampleBuffer, pixelBuffer: pixelBuffer, time: time, position: position)
+//            }
+//        }
     }
     
     func setupVertices() {
@@ -283,6 +288,7 @@ extension CameraMetalView: MTKViewDelegate {
         
         guard let texture = texture else {
             self.completedAfterGpuPixel(imageBuffer: pixelBuffer)
+            self.cameraManagerFrameWorkDelegate?.videoCaptureOutput?(pixelBuffer: pixelBuffer, time: time!, position: position)
             return
         }
         

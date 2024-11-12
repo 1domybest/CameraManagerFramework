@@ -280,9 +280,9 @@ extension CameraManager {
         let timestamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
         
         if self.dualVideoSession?.isRunning ?? false {
-            self.doubleScreenCameraModeRender(sampleBuffer: nil, pixelBuffer: pixelBuffer, time: timestamp, sourceDevicePosition: sourcePostion)
+            self.doubleScreenCameraModeRender(sampleBuffer: sampleBuffer, pixelBuffer: pixelBuffer, time: timestamp, sourceDevicePosition: sourcePostion)
         } else {
-            self.singleCameraModeRender(sampleBuffer: nil, pixelBuffer: pixelBuffer, time: timestamp, sourceDevicePosition: sourcePostion)
+            self.singleCameraModeRender(sampleBuffer: sampleBuffer, pixelBuffer: pixelBuffer, time: timestamp, sourceDevicePosition: sourcePostion)
         }
     }
     
