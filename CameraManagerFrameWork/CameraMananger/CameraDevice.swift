@@ -459,7 +459,7 @@ extension CameraManager {
      
      or begin of make instance about ``CameraManager``
      */
-    public func startCameraSession() {
+    public func startCameraSession(withAudio: Bool = false) {
         sessionQueue?.async { [weak self] in
             guard let self = self else { return }
             if self.dualVideoSession != nil {
@@ -472,14 +472,18 @@ extension CameraManager {
                 }
             }
             self.setShowThumbnail(isShow: false)
-            self.audioManager?.startAudioSession()
+            
+            if withAudio {
+                self.audioManager?.startAudioSession()
+            }
+            
         }
     }
     
     /**
      stop Camera Session and (displayLink  [for thumbnail])
      */
-    public func stopRunningCameraSession() {
+    public func stopRunningCameraSession(withAudio: Bool = false) {
         sessionQueue?.async { [weak self] in
             guard let self = self else { return }
             
@@ -493,7 +497,11 @@ extension CameraManager {
             self.frontCaptureSession?.stopRunning()
             self.backCaptureSession?.stopRunning()
             self.dualVideoSession?.stopRunning()
-            self.audioManager?.stopAudioSession()
+            
+            if withAudio {
+                self.audioManager?.stopAudioSession()
+            }
+            
         }
     }
     
@@ -505,7 +513,7 @@ extension CameraManager {
      - Parameters:
         - showThumbnail: if it's TRUE the Thumbnail will show if you called setThumbnail(image: UIImage) before
      */
-    public func pauseCameraSession(showThumbnail: Bool) {
+    public func pauseCameraSession(showThumbnail: Bool, withAudio: Bool = false) {
         sessionQueue?.async { [weak self] in
             guard let self = self else { return }
             
@@ -517,7 +525,10 @@ extension CameraManager {
                 self.setShowThumbnail(isShow: showThumbnail)
             }
             
-            self.audioManager?.pauseAudioSession()
+            if withAudio {
+                self.audioManager?.pauseAudioSession()
+            }
+            
         }
     }
     
@@ -529,6 +540,7 @@ extension CameraManager {
      */
     public func setShowThumbnail(isShow: Bool) {
         DispatchQueue.main.async {
+            
             if isShow {
                 if self.dualVideoSession != nil {
                     if let thumbnail = self.thumbnail {
@@ -559,8 +571,9 @@ extension CameraManager {
                     self.stopDisplayLink()
                 }
             }
-           
             
+            self.isShowThumbnail = isShow
+
         }
     }
     
@@ -596,9 +609,9 @@ extension CameraManager {
         // 여기에서 프레임 처리 로직을 실행
         if !(self.frontCaptureSession?.isRunning ?? false && self.backCaptureSession?.isRunning ?? false && self.dualVideoSession?.isRunning ?? false) {
             if self.dualVideoSession != nil {
-                self.multiCameraView?.mainCameraView?.setNeedsDisplay()
+                self.multiCameraView?.mainCameraView?.updateTime(frameRate: self.frameRate)
             } else {
-                self.singleCameraView?.setNeedsDisplay()
+                self.singleCameraView?.updateTime(frameRate: self.frameRate)
             }
         }
     }
@@ -648,12 +661,12 @@ extension CameraManager {
 }
 
 extension CameraManager:CameraManagerFrameWorkDelegate {
-    public func videoCaptureOutput(pixelBuffer: CVPixelBuffer, time: CMTime, position: AVCaptureDevice.Position) {
-        self.cameraManagerFrameWorkDelegate?.videoCaptureOutput?(pixelBuffer: pixelBuffer, time: time, position: position)
+    public func videoCaptureOutput(pixelBuffer: CVPixelBuffer, time: CMTime, position: AVCaptureDevice.Position, isThumbnail: Bool) {
+        self.cameraManagerFrameWorkDelegate?.videoCaptureOutput?(pixelBuffer: pixelBuffer, time: time, position: position, isThumbnail: isThumbnail)
     }
     
-    public func videoCaptureOutput(sampleBuffer: CMSampleBuffer, position: AVCaptureDevice.Position) {
-        self.cameraManagerFrameWorkDelegate?.videoCaptureOutput?(sampleBuffer: sampleBuffer, position: position)
+    public func videoCaptureOutput(sampleBuffer: CMSampleBuffer, position: AVCaptureDevice.Position, isThumbnail: Bool) {
+        self.cameraManagerFrameWorkDelegate?.videoCaptureOutput?(sampleBuffer: sampleBuffer, position: position, isThumbnail: isThumbnail)
     }
 }
 

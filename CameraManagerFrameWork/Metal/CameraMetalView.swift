@@ -39,7 +39,29 @@ public class CameraMetalView: MTKView {
     var currentOrientation: Int = 1
     
     var cameraManagerFrameWorkDelegate: CameraManagerFrameWorkDelegate?
-    var showThumbnail: Bool = false
+    private var _showThumbnail: Bool = false
+    var showThumbnail: Bool {
+        get {
+            return _showThumbnail
+        }
+        set {
+            if newValue {
+                self.enableSetNeedsDisplay = true
+            } else {
+                self.enableSetNeedsDisplay = false
+            }
+            _showThumbnail = newValue
+            
+            if !enableSetNeedsDisplay {
+                framebufferOnly = false
+                enableSetNeedsDisplay = false
+                self.preferredFramesPerSecond = 60
+                isPaused = false
+                self.setNeedsDisplay() // 뷰를 다시 그리도록 요청
+            }
+        }
+    }
+    
     var thumbnail:MTLTexture?
     var thumbnailPixelBuffer:CVPixelBuffer?
     private var borderView: UIView?
@@ -87,6 +109,23 @@ public class CameraMetalView: MTKView {
         self.setNeedsDisplay()
     }
     
+    public func updateTime(frameRate: Double) {
+        if Thread.isMainThread {
+            if time == nil {
+                time = CMTime(value: 0, timescale: CMTimeScale(frameRate)) // 시작 시간, 타임스케일 30fps
+            }
+
+            // 시간 증가 (1프레임씩 증가)
+            let oneFrameTime = CMTime(value: 1, timescale: CMTimeScale(frameRate)) // 30fps에서 1프레임을 나타냄
+            time = CMTimeAdd(time!, oneFrameTime)
+            self.setNeedsDisplay()
+        } else {
+            DispatchQueue.main.async {
+                self.updateTime(frameRate: frameRate)
+            }
+        }
+    }
+    
     // 사각형 보더라인을 보여주는 메서드
     public func showFocusBorder(at point: CGPoint) {
            // 이전 borderView가 존재하면 제거
@@ -132,17 +171,6 @@ public class CameraMetalView: MTKView {
         self.time = time
         self.pixelBuffer = pixelBuffer
         self.sampleBuffer = sampleBuffer
-//        if Thread.isMainThread {
-//            self.position = position
-//            self.time = time
-//            self.pixelBuffer = pixelBuffer
-//            self.sampleBuffer = sampleBuffer
-//            setNeedsDisplay()
-//        } else {
-//            DispatchQueue.main.async {
-//                self.update(sampleBuffer: sampleBuffer, pixelBuffer: pixelBuffer, time: time, position: position)
-//            }
-//        }
     }
     
     func setupVertices() {
@@ -188,7 +216,7 @@ public class CameraMetalView: MTKView {
 
             if let texture = try textureLoader?.newTexture(cgImage: cgImage, options: options) {
                 self.thumbnail = texture
-                self.thumbnailPixelBuffer = self.pixelBuffer(from: texture)
+                self.thumbnailPixelBuffer = self.toPixelBuffer(image: CIImage(cgImage: cgImage))
             }
         } catch {
             
@@ -288,7 +316,7 @@ extension CameraMetalView: MTKViewDelegate {
         
         guard let texture = texture else {
             self.completedAfterGpuPixel(imageBuffer: pixelBuffer)
-            self.cameraManagerFrameWorkDelegate?.videoCaptureOutput?(pixelBuffer: pixelBuffer, time: time!, position: position)
+            self.cameraManagerFrameWorkDelegate?.videoCaptureOutput?(pixelBuffer: pixelBuffer, time: time!, position: position, isThumbnail: self.showThumbnail)
             return
         }
         
@@ -365,19 +393,26 @@ extension CameraMetalView: MTKViewDelegate {
                 ratationAngle = -CGFloat.pi / 2
                 image = processSampleBuffer(pixelBuffer, rotationAngle: ratationAngle)
             }
-            
+        
             if self.showThumbnail {
-                if let thumbnailPixelBuffer = self.thumbnailPixelBuffer {
-                    cameraManagerFrameWorkDelegate?.videoCaptureOutput?(pixelBuffer: thumbnailPixelBuffer, time: time!, position: position)
+                if let thumbnailPixelBuffer = self.thumbnailPixelBuffer
+                {
+                    cameraManagerFrameWorkDelegate?.videoCaptureOutput?(pixelBuffer: thumbnailPixelBuffer, time: time!, position: position, isThumbnail: self.showThumbnail)
+                    
+                    if let thumbnailSampleBuffer = self.sampleBuffer(from: thumbnailPixelBuffer, presentationTime: time!) {
+                        cameraManagerFrameWorkDelegate?.videoCaptureOutput?(sampleBuffer: thumbnailSampleBuffer, position: position, isThumbnail: self.showThumbnail)
+                    }
                 }
             } else {
-                cameraManagerFrameWorkDelegate?.videoCaptureOutput?(pixelBuffer: image!, time: time!, position: position)
+                cameraManagerFrameWorkDelegate?.videoCaptureOutput?(pixelBuffer: image!, time: time!, position: position, isThumbnail: self.showThumbnail)
+                
+                if let sampleBuffer = sampleBuffer {
+                    cameraManagerFrameWorkDelegate?.videoCaptureOutput?(sampleBuffer: sampleBuffer, position: position, isThumbnail: self.showThumbnail)
+                }
             }
             
             
-            if let sampleBuffer = sampleBuffer {
-                cameraManagerFrameWorkDelegate?.videoCaptureOutput?(sampleBuffer: sampleBuffer, position: position)
-            }
+            
             
             
           } catch let error {
@@ -448,4 +483,88 @@ extension CameraMetalView: MTKViewDelegate {
             commandBuffer.commit()
             return
         }
+    
+
+    func toPixelBuffer(image: CIImage) -> CVPixelBuffer? {
+        let attrs = [
+            kCVPixelBufferCGImageCompatibilityKey: kCFBooleanTrue,
+            kCVPixelBufferCGBitmapContextCompatibilityKey: kCFBooleanTrue
+        ] as CFDictionary
+
+        var pixelBuffer: CVPixelBuffer?
+
+        // kCVPixelFormatType_32BGRA 로 변경
+        let status = CVPixelBufferCreate(
+            kCFAllocatorDefault,
+            Int(image.extent.width),
+            Int(image.extent.height),
+            kCVPixelFormatType_32BGRA, // 여기를 BGRA로 변경
+            attrs,
+            &pixelBuffer
+        )
+
+        guard status == kCVReturnSuccess, let pixelBuffer = pixelBuffer else {
+            return nil
+        }
+
+        // CVPixelBuffer에 CIImage의 내용을 쓰기
+        CVPixelBufferLockBaseAddress(pixelBuffer, [])
+        let ciContext = CIContext()
+        ciContext.render(image, to: pixelBuffer, bounds: image.extent, colorSpace: CGColorSpaceCreateDeviceRGB())
+        CVPixelBufferUnlockBaseAddress(pixelBuffer, [])
+
+        return pixelBuffer
+    }
+    
+    // CVPixelBuffer -> CMSampleBuffer 변환
+    func sampleBuffer(from pixelBuffer: CVPixelBuffer, presentationTime: CMTime, frameRate: Int = 30) -> CMSampleBuffer? {
+        var sampleBuffer: CMSampleBuffer?
+        
+        // 프레임의 지속 시간(duration)
+        let frameDuration = CMTime(value: 1, timescale: CMTimeScale(frameRate))
+        
+        // 디코딩 시간(decodeTimeStamp)은 일반적으로 표시 시간(presentationTimeStamp)과 동일하게 설정
+        let decodeTime = presentationTime
+
+        var timingInfo = CMSampleTimingInfo(
+            duration: frameDuration,
+            presentationTimeStamp: presentationTime,
+            decodeTimeStamp: decodeTime
+        )
+        
+        var videoFormatDescription: CMVideoFormatDescription?
+        
+        // 비디오 포맷 설명 생성
+        let status = CMVideoFormatDescriptionCreateForImageBuffer(
+            allocator: kCFAllocatorDefault,
+            imageBuffer: pixelBuffer,
+            formatDescriptionOut: &videoFormatDescription
+        )
+        
+        guard status == noErr, let videoFormatDescription = videoFormatDescription else {
+            print("Error creating CMVideoFormatDescription: \(status)")
+            return nil
+        }
+
+        // CMSampleBuffer 생성
+        let bufferStatus = CMSampleBufferCreateForImageBuffer(
+            allocator: kCFAllocatorDefault,
+            imageBuffer: pixelBuffer,
+            dataReady: true,
+            makeDataReadyCallback: nil,
+            refcon: nil,
+            formatDescription: videoFormatDescription,
+            sampleTiming: &timingInfo,
+            sampleBufferOut: &sampleBuffer
+        )
+
+        guard bufferStatus == noErr else {
+            print("Error creating CMSampleBuffer: \(bufferStatus)")
+            return nil
+        }
+
+        return sampleBuffer
+    }
+
+
 }

@@ -246,9 +246,10 @@ extension CameraManager {
         
         if self.cameraOptions?.cameraRenderingMode == .offScreen {
             
-            self.cameraManagerFrameWorkDelegate?.videoOffscreenRenderCaptureOutput?(pixelBuffer: pixelBuffer, time: timestamp, position: sourcePostion)
-            self.cameraManagerFrameWorkDelegate?.videoOffscreenRenderCaptureOutput?(sampleBuffer: sampleBuffer, position: sourcePostion)
-            
+            if !self.isShowThumbnail {
+                self.cameraManagerFrameWorkDelegate?.videoOffscreenRenderCaptureOutput?(pixelBuffer: pixelBuffer, time: timestamp, position: sourcePostion)
+                self.cameraManagerFrameWorkDelegate?.videoOffscreenRenderCaptureOutput?(sampleBuffer: sampleBuffer, position: sourcePostion)
+            }
         } else {
             
             let newPixelBuffer:CVPixelBuffer? = self.cameraManagerFrameWorkDelegate?.videoChangeAbleCaptureOutput?(pixelBuffer: pixelBuffer, time: timestamp, position: sourcePostion)

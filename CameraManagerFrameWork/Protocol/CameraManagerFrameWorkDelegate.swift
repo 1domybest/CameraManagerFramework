@@ -26,7 +26,7 @@ import Foundation
     ///    - time: time for buffer
     ///    - position: position of camera
     ///
-    @objc optional func videoCaptureOutput(pixelBuffer: CVPixelBuffer, time: CMTime, position: AVCaptureDevice.Position)
+    @objc optional func videoCaptureOutput(pixelBuffer: CVPixelBuffer, time: CMTime, position: AVCaptureDevice.Position, isThumbnail: Bool)
     
     ///
     /// videoCaptureOutput will call after rendering
@@ -37,7 +37,7 @@ import Foundation
     ///    - sampleBuffer: sampleBuffer from Camera
     ///    - position: position of camera
     ///
-    @objc optional func videoCaptureOutput(sampleBuffer: CMSampleBuffer, position: AVCaptureDevice.Position)
+    @objc optional func videoCaptureOutput(sampleBuffer: CMSampleBuffer, position: AVCaptureDevice.Position, isThumbnail: Bool)
     
     
     ///

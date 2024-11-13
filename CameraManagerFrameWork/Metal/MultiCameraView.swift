@@ -34,18 +34,22 @@ public class MultiCameraView: UIView, UIGestureRecognizerDelegate {
     }
     
     deinit {
-        print("MultiCameraView deinit")
+        print("CameraManager MultiCameraView deinit")
     }
     
     public func unreference() {
+        self.removeFromSuperview()
         self.parent = nil
         self.cameraManagerFrameWorkDelegate = nil
         self.mainCameraView?.unreference()
         self.smallCameraView?.unreference()
         
+        self.smallCameraView?.removeFromSuperview()
+        self.mainCameraView?.removeFromSuperview()
+        
+        
         self.mainCameraView = nil
         self.smallCameraView = nil
-    
     }
 
     private func setupView() {
@@ -207,12 +211,12 @@ public class MultiCameraView: UIView, UIGestureRecognizerDelegate {
 }
 
 extension MultiCameraView: CameraManagerFrameWorkDelegate {
-    public func videoCaptureOutput(pixelBuffer: CVPixelBuffer, time: CMTime, position: AVCaptureDevice.Position) {
-        self.cameraManagerFrameWorkDelegate?.videoCaptureOutput?(pixelBuffer: pixelBuffer, time: time, position: position)
+    public func videoCaptureOutput(pixelBuffer: CVPixelBuffer, time: CMTime, position: AVCaptureDevice.Position, isThumbnail: Bool) {
+        self.cameraManagerFrameWorkDelegate?.videoCaptureOutput?(pixelBuffer: pixelBuffer, time: time, position: position, isThumbnail: isThumbnail)
     }
     
-    public func videoCaptureOutput(sampleBuffer: CMSampleBuffer, position: AVCaptureDevice.Position) {
-        self.cameraManagerFrameWorkDelegate?.videoCaptureOutput?(sampleBuffer: sampleBuffer, position: position)
+    public func videoCaptureOutput(sampleBuffer: CMSampleBuffer, position: AVCaptureDevice.Position, isThumbnail: Bool) {
+        self.cameraManagerFrameWorkDelegate?.videoCaptureOutput?(sampleBuffer: sampleBuffer, position: position, isThumbnail: isThumbnail)
     }
     
     public func appendAudioQueue(sampleBuffer: CMSampleBuffer) {

@@ -395,6 +395,9 @@ public class CameraManager: NSObject {
     public var displayLink: CADisplayLink?
 
     
+    var isShowThumbnail: Bool = false
+    
+    
     public init(cameraOptions: CameraOptions) {
         let _ = LogManager(projectName: "CameraManager")
         self.cameraOptions = cameraOptions
@@ -482,16 +485,17 @@ public class CameraManager: NSObject {
         self.audioManager?.unreference()
         self.audioManager = nil
         
-        self.cameraManagerFrameWorkDelegate = nil
-        
         self.multiCameraView?.unreference()
         self.multiCameraView = nil
+        
+        self.cameraManagerFrameWorkDelegate = nil
+        
+        
         self.singleCameraView?.unreference()
         self.singleCameraView = nil
         
         self.sessionQueue = nil
         self.videoDataOutputQueue = nil
-        self.cameraManagerFrameWorkDelegate = nil
         self.cameraOptions = nil
         self.thumbnail = nil
         
