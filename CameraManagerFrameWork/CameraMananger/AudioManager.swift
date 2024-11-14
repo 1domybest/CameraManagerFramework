@@ -26,20 +26,12 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
         
     public var audioManagerFrameWorkDelegate: AudioManagerFrameWorkDelegate?
     
-    // 세션 유실 복구를 위한 변수
-    private var abaleToStartSession: Bool = true
-    private var audioRestartWorkItem: DispatchWorkItem?
-    private let audioQueue = DispatchQueue(label: "com.yourapp.audioQueue") // Serial queue for thread safety
-    private var isRestartingAudioSession = false // Flag to prevent re-entrant calls
-    
     public override init() {
         super.init()
 
         let attr = DispatchQueue.Attributes()
         sessionQueue = DispatchQueue(label: "cc.otis.audioSessionqueue", attributes: attr)
         audioCaptureQueue = DispatchQueue(label: "cc.otis.audioCaptureQueue", attributes: attr)
-        
-        self.setupNotifications()
     }
     
     /**
@@ -95,9 +87,6 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
         NotificationCenter.default.removeObserver(self)
         self.stopAudioSession()
         
-        self.audioRestartWorkItem?.cancel()
-        self.audioRestartWorkItem = nil
-        
         self.audioManagerFrameWorkDelegate = nil
         audioCaptureDevice = nil
         audioOutput = nil
@@ -108,37 +97,11 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
         audioCaptureDevice = nil
     }
     
-    private func setupNotifications() {
-         NotificationCenter.default.addObserver(self, selector: #selector(handleSessionInterruption), name: .AVCaptureSessionWasInterrupted, object: captureSession)
-         NotificationCenter.default.addObserver(self, selector: #selector(handleSessionInterruptionEnded), name: .AVCaptureSessionInterruptionEnded, object: captureSession)
-     }
-    
-    
-    // 세션이 중단될 때 호출되는 메서드
-    @objc private func handleSessionInterruption(notification: Notification) {
-        print("Session interrupted. Likely due to incoming call or system event.")
-        // 중단 시 UI 업데이트 또는 세션 상태 처리
-        self.abaleToStartSession = false
-    }
 
-    // 세션이 재개될 때 호출되는 메서드
-    @objc private func handleSessionInterruptionEnded(notification: Notification) {
-        print("Session interruption ended. Ready to resume capture session.")
-        // 세션이 중단에서 복구되었을 때 재시작
-        self.abaleToStartSession = true
-        self.restartAudioSession()
-    }
-    
     public func restartAudioSession() {
         self.initialize()
     }
-    
-    
-    public func cancelRestartAudioSession() {
-        self.audioRestartWorkItem?.cancel()
-        self.audioRestartWorkItem = nil
-    }
-    
+
     /**
      check Audio Permission
      */

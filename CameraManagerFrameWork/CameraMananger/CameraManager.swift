@@ -425,36 +425,6 @@ public class CameraManager: NSObject {
         videoDataOutputQueue = DispatchQueue(label: "camera.single.videoDataOutputQueue")
     }
     
-    func setupNotifications() {
-        if self.cameraOptions?.cameraSessionMode == .multiSession {
-            NotificationCenter.default.addObserver(self, selector: #selector(handleSessionInterruption), name: .AVCaptureSessionWasInterrupted, object: self.dualVideoSession)
-             NotificationCenter.default.addObserver(self, selector: #selector(handleSessionInterruptionEnded), name: .AVCaptureSessionInterruptionEnded, object: self.dualVideoSession)
-        } else {
-            NotificationCenter.default.addObserver(self, selector: #selector(handleSessionInterruption), name: .AVCaptureSessionWasInterrupted, object: self.backCaptureSession)
-            NotificationCenter.default.addObserver(self, selector: #selector(handleSessionInterruption), name: .AVCaptureSessionWasInterrupted, object: self.frontCaptureSession)
-            
-            NotificationCenter.default.addObserver(self, selector: #selector(handleSessionInterruptionEnded), name: .AVCaptureSessionWasInterrupted, object: self.backCaptureSession)
-            NotificationCenter.default.addObserver(self, selector: #selector(handleSessionInterruptionEnded), name: .AVCaptureSessionWasInterrupted, object: self.frontCaptureSession)
-        }
-        
-     }
-    
-    
-    // 세션이 중단될 때 호출되는 메서드
-    @objc private func handleSessionInterruption(notification: Notification) {
-        print("Session interrupted. Likely due to incoming call or system event.")
-        abaleToStartSession = false
-    }
-
-    // 세션이 재개될 때 호출되는 메서드
-    @objc private func handleSessionInterruptionEnded(notification: Notification) {
-        print("Session interruption ended. Ready to resume capture session.")
-        // 세션이 중단에서 복구되었을 때 재시작
-        abaleToStartSession = true
-        self.restartCameraSession()
-    }
-
-    
     /**
      ``CameraManager`` Deinit
      */
@@ -507,20 +477,6 @@ public class CameraManager: NSObject {
         if withAudio {
             self.audioManager?.restartAudioSession()
         }
-    }
-    
-    public func cancelRestartDeviceSession (withAudio: Bool = false) {
-        
-        self.cancelRestartCameraSession()
-        
-        if withAudio {
-            self.audioManager?.cancelRestartAudioSession()
-        }
-    }
-    
-    public func cancelRestartCameraSession () {
-        cameraRestartWorkItem?.cancel()
-        cameraRestartWorkItem = nil
     }
     
     /**

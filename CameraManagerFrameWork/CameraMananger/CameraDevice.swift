@@ -70,8 +70,6 @@ extension CameraManager {
                 }
             }
         }
-       
-        self.setupNotifications()
     }
     
     /**
@@ -102,8 +100,6 @@ extension CameraManager {
             self.sessionQueue?.async {
                 self.dualVideoSession?.startRunning()
             }
-            
-            self.setupNotifications()
         }
     }
     
