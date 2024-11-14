@@ -247,7 +247,7 @@ public class CameraManager: NSObject {
      
      basiclly each device has own value of mirrorMode
      */
-    public var mirrorFrontCamera:Bool = false
+    public var mirrorFrontCamera:Bool = true
     
     // 단일 디바이스 상태 변수
     

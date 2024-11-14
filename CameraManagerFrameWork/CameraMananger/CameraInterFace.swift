@@ -137,16 +137,13 @@ extension CameraManager {
     public func setMainCameraPostion (mainCameraPostion: AVCaptureDevice.Position) {
         self.mainCameraPostion = mainCameraPostion
         self.cameraOptions?.onChangeMainScreenPostion?(self.mainCameraPostion)
-        if self.dualVideoSession != nil {
-            self.setMirrorMode(isMirrorMode: mainCameraPostion == .front ? self.mirrorFrontCamera : self.mirrorBackCamera)
-        } else {
-            self.setMirrorMode(isMirrorMode: mainCameraPostion == .front ? self.mirrorFrontCamera : self.mirrorBackCamera)
-        }
+        self.setMirrorMode(isMirrorMode: mainCameraPostion == .front ? self.mirrorFrontCamera : self.mirrorBackCamera)
     }
     
     /**
      Sets Camera Mirror Mode
      
+     this function will work with current posisition
      - Parameters:
        - isMirrorMode: mirror mode
 
@@ -157,26 +154,77 @@ extension CameraManager {
             if self.mainCameraPostion == .front {
                 self.mirrorFrontCamera = isMirrorMode
                 self.sessionQueue?.async {
+                    if self.multiFrontCameraConnection?.isVideoMirrored != self.mirrorFrontCamera {
+                        self.multiFrontCameraConnection?.isVideoMirrored = self.mirrorFrontCamera
+                        self.cameraOptions?.onChangeMirrorMode?(self.mirrorFrontCamera , self.mainCameraPostion)
+                    }
+                }
+            } else {
+                self.mirrorBackCamera = isMirrorMode
+                self.sessionQueue?.async {
+                    if self.multiBackCameraConnection?.isVideoMirrored != self.mirrorBackCamera {
+                        self.multiBackCameraConnection?.isVideoMirrored = self.mirrorBackCamera
+                        self.cameraOptions?.onChangeMirrorMode?(self.mirrorBackCamera , self.mainCameraPostion)
+                    }
+                }
+            }
+        } else {
+            if self.position == .front {
+                self.mirrorFrontCamera = isMirrorMode
+                if self.frontCameraConnection?.isVideoMirrored != self.mirrorFrontCamera {
+                    self.frontCameraConnection?.isVideoMirrored = self.mirrorFrontCamera
+                    self.cameraOptions?.onChangeMirrorMode?(self.mirrorBackCamera , self.position)
+                }
+            } else {
+                self.mirrorBackCamera = isMirrorMode
+                if self.backCameraConnection?.isVideoMirrored != self.mirrorBackCamera {
+                    self.backCameraConnection?.isVideoMirrored = self.mirrorBackCamera
+                    self.cameraOptions?.onChangeMirrorMode?(self.mirrorBackCamera , self.position)
+                }
+            }
+        }
+    }
+    
+    /**
+     Sets Camera Mirror Mode
+    
+     
+     - Parameters:
+       - isMirrorMode: mirror mode
+       - position: ``AVCaptureDevice.Position``
+
+     */
+    public func setMirrorMode (isMirrorMode: Bool, position: AVCaptureDevice.Position) {
+        
+        if self.dualVideoSession?.isRunning ?? false {
+            if position == .front {
+                self.mirrorFrontCamera = isMirrorMode
+                if self.multiFrontCameraConnection?.isVideoMirrored != self.mirrorFrontCamera {
                     self.multiFrontCameraConnection?.isVideoMirrored = self.mirrorFrontCamera
                     self.cameraOptions?.onChangeMirrorMode?(self.mirrorFrontCamera , self.mainCameraPostion)
                 }
             } else {
                 self.mirrorBackCamera = isMirrorMode
                 self.sessionQueue?.async {
-                    self.multiBackCameraConnection?.automaticallyAdjustsVideoMirroring
-                    self.multiBackCameraConnection?.isVideoMirrored = self.mirrorBackCamera
-                    self.cameraOptions?.onChangeMirrorMode?(self.mirrorBackCamera , self.mainCameraPostion)
+                    if self.multiBackCameraConnection?.isVideoMirrored != self.mirrorBackCamera {
+                        self.multiBackCameraConnection?.isVideoMirrored = self.mirrorBackCamera
+                        self.cameraOptions?.onChangeMirrorMode?(self.mirrorBackCamera , self.mainCameraPostion)
+                    }
                 }
             }
         } else {
-            if self.position == .front {
+            if position == .front {
                 self.mirrorFrontCamera = isMirrorMode
-                self.frontCameraConnection?.isVideoMirrored = self.mirrorFrontCamera
-                self.cameraOptions?.onChangeMirrorMode?(self.mirrorBackCamera , self.position)
+                if self.frontCameraConnection?.isVideoMirrored != self.mirrorFrontCamera {
+                    self.frontCameraConnection?.isVideoMirrored = self.mirrorFrontCamera
+                    self.cameraOptions?.onChangeMirrorMode?(self.mirrorBackCamera , self.position)
+                }
             } else {
                 self.mirrorBackCamera = isMirrorMode
-                self.backCameraConnection?.isVideoMirrored = self.mirrorBackCamera
-                self.cameraOptions?.onChangeMirrorMode?(self.mirrorBackCamera , self.position)
+                if self.backCameraConnection?.isVideoMirrored != self.mirrorBackCamera {
+                    self.backCameraConnection?.isVideoMirrored = self.mirrorBackCamera
+                    self.cameraOptions?.onChangeMirrorMode?(self.mirrorBackCamera , self.position)
+                }
             }
         }
     }
