@@ -6,6 +6,7 @@
 //
 
 import AVFoundation
+import UIKit
 
 /// Main Class For ``AudioMananger``
 /// Base - [`AVFoundation`](https://developer.apple.com/documentation/avfoundation)
@@ -25,11 +26,15 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
         
     public var audioManagerFrameWorkDelegate: AudioManagerFrameWorkDelegate?
     
+    // 세션 유실 복구를 위한 변수
+    private var abaleToStartSession: Bool = true
+    private var audioRestartWorkItem: DispatchWorkItem?
+    private let audioQueue = DispatchQueue(label: "com.yourapp.audioQueue") // Serial queue for thread safety
+    private var isRestartingAudioSession = false // Flag to prevent re-entrant calls
+    
     public override init() {
         super.init()
-        
-        captureSession = AVCaptureSession()
-        
+
         let attr = DispatchQueue.Attributes()
         sessionQueue = DispatchQueue(label: "cc.otis.audioSessionqueue", attributes: attr)
         audioCaptureQueue = DispatchQueue(label: "cc.otis.audioCaptureQueue", attributes: attr)
@@ -47,6 +52,7 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
      initialize ``AudioMananger``
      */
     public func initialize() {
+        self.captureSession = AVCaptureSession()
         
         self.captureSession?.beginConfiguration()
         
@@ -87,8 +93,11 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
     
     func unreference() {
         NotificationCenter.default.removeObserver(self)
-        
         self.stopAudioSession()
+        
+        self.audioRestartWorkItem?.cancel()
+        self.audioRestartWorkItem = nil
+        
         self.audioManagerFrameWorkDelegate = nil
         audioCaptureDevice = nil
         audioOutput = nil
@@ -97,6 +106,83 @@ public class AudioMananger: NSObject, AVCaptureAudioDataOutputSampleBufferDelega
         sessionQueue = nil
         audioCaptureQueue = nil
         audioCaptureDevice = nil
+    }
+    
+    private func setupNotifications() {
+         NotificationCenter.default.addObserver(self, selector: #selector(handleSessionInterruption), name: .AVCaptureSessionWasInterrupted, object: captureSession)
+         NotificationCenter.default.addObserver(self, selector: #selector(handleSessionInterruptionEnded), name: .AVCaptureSessionInterruptionEnded, object: captureSession)
+     }
+    
+    
+    // 세션이 중단될 때 호출되는 메서드
+    @objc private func handleSessionInterruption(notification: Notification) {
+        print("Session interrupted. Likely due to incoming call or system event.")
+        // 중단 시 UI 업데이트 또는 세션 상태 처리
+        self.abaleToStartSession = false
+    }
+
+    // 세션이 재개될 때 호출되는 메서드
+    @objc private func handleSessionInterruptionEnded(notification: Notification) {
+        print("Session interruption ended. Ready to resume capture session.")
+        // 세션이 중단에서 복구되었을 때 재시작
+        self.abaleToStartSession = true
+    }
+    
+    public func restartAudioSession() {
+        // 기존 작업이 있으면 취소
+        audioRestartWorkItem?.cancel()
+        
+        // 새로운 작업 정의
+        let workItem = DispatchWorkItem { [weak self] in
+            guard let self = self else { return }
+            
+            self.audioQueue.sync { // Ensure thread-safety by syncing on the audio queue
+                if self.isRestartingAudioSession {
+                    return // Prevent re-entrant calls
+                }
+                self.isRestartingAudioSession = true // Set flag to indicate session is restarting
+            }
+            
+            if self.abaleToStartSession {
+                DispatchQueue.main.async {
+                    print("audio 1 - initializing audio session")
+                    self.initialize()
+                    
+                    // Reset the flag after initialization completes
+                    self.audioQueue.sync {
+                        self.isRestartingAudioSession = false
+                    }
+                }
+            } else {
+                print("audio 2 - retrying...")
+                
+                // Delay before retrying to avoid rapid recursion
+                DispatchQueue.global().asyncAfter(deadline: .now() + 0.3) {
+                    self.restartAudioSession()
+                    
+                    // Reset the flag to allow retry
+                    self.audioQueue.sync {
+                        self.isRestartingAudioSession = false
+                    }
+                }
+            }
+        }
+        
+        // 작업을 변수에 저장
+        audioRestartWorkItem = workItem
+        
+        // 메인 스레드에서 작업 실행
+        if Thread.isMainThread {
+            workItem.perform()
+        } else {
+            DispatchQueue.main.async(execute: workItem)
+        }
+    }
+    
+    
+    public func cancelRestartAudioSession() {
+        self.audioRestartWorkItem?.cancel()
+        self.audioRestartWorkItem = nil
     }
     
     /**

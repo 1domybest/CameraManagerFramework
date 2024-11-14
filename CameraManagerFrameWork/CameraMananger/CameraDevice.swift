@@ -171,7 +171,7 @@ extension CameraManager {
                 
                 dualVideoSession?.addConnection(frontOutputConnection)
                 frontOutputConnection.videoOrientation = .portrait
-                frontOutputConnection.isVideoMirrored = true
+                frontOutputConnection.isVideoMirrored = self.mirrorFrontCamera
                 self.multiFrontCameraConnection = frontOutputConnection
                 
             } else {
@@ -191,7 +191,7 @@ extension CameraManager {
                 
                 dualVideoSession?.addConnection(backOutputConnection)
                 backOutputConnection.videoOrientation = .portrait
-                backOutputConnection.isVideoMirrored = false
+                backOutputConnection.isVideoMirrored = self.mirrorBackCamera
                 self.multiBackCameraConnection = backOutputConnection
             }
         } else {
@@ -212,11 +212,11 @@ extension CameraManager {
             if position == .front {
                 self.frontCameravideoOutput = videoOutput
                 self.frontCameraConnection = videoOutput.connection(with: .video)
-                self.frontCameraConnection?.isVideoMirrored = true
+                self.frontCameraConnection?.isVideoMirrored = self.mirrorFrontCamera
             } else {
                 self.backCameravideoOutput = videoOutput
                 self.backCameraConnection = videoOutput.connection(with: .video)
-                self.backCameraConnection?.isVideoMirrored = false
+                self.backCameraConnection?.isVideoMirrored = self.mirrorBackCamera
             }
         }
     }

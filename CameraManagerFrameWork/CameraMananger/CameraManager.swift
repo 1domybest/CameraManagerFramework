@@ -397,7 +397,12 @@ public class CameraManager: NSObject {
     
     var isShowThumbnail: Bool = false
     
+    // 세션 복구를 위한 변수
     private var torchObservation: NSKeyValueObservation?
+    private var abaleToStartSession: Bool = true
+    private var cameraRestartWorkItem: DispatchWorkItem?
+    private let cameraQueue = DispatchQueue(label: "com.yourapp.cameraQueue") // Serial queue for thread safety
+    private var isRestartingCameraSession = false // Flag to prevent re-entrant calls
     
     public init(cameraOptions: CameraOptions) {
         let _ = LogManager(projectName: "CameraManager")
@@ -419,31 +424,35 @@ public class CameraManager: NSObject {
         sessionQueue = DispatchQueue(label: "camera.single.sessionqueue", attributes: attr)
         videoDataOutputQueue = DispatchQueue(label: "camera.single.videoDataOutputQueue")
         
-       
-        NotificationCenter.default.addObserver(self, selector: #selector(handleSessionRuntimeError), name: .AVCaptureSessionRuntimeError, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(sessionDidStopRunning(_:)), name: .AVCaptureSessionDidStopRunning, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(sessionDidStartRunning(_:)), name: .AVCaptureSessionDidStartRunning, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(sessionDidStartRunning(_:)),
-                                               name: .AVCaptureSessionInterruptionEnded, object: nil)
+        self.setupNotifications()
     }
-
-    @objc func handleSessionRuntimeError(notification: Notification) {
-        if let error = notification.userInfo?[AVCaptureSessionErrorKey] as? NSError {
-            print("Session Runtime Error: \(error)")
+    
+    private func setupNotifications() {
+        if self.cameraOptions?.cameraSessionMode == .multiSession {
+            NotificationCenter.default.addObserver(self, selector: #selector(handleSessionInterruption), name: .AVCaptureSessionWasInterrupted, object: self.dualVideoSession)
+             NotificationCenter.default.addObserver(self, selector: #selector(handleSessionInterruptionEnded), name: .AVCaptureSessionInterruptionEnded, object: self.dualVideoSession)
+        } else {
+            NotificationCenter.default.addObserver(self, selector: #selector(handleSessionInterruption), name: .AVCaptureSessionWasInterrupted, object: self.backCaptureSession)
+            NotificationCenter.default.addObserver(self, selector: #selector(handleSessionInterruption), name: .AVCaptureSessionWasInterrupted, object: self.frontCaptureSession)
+            
+            NotificationCenter.default.addObserver(self, selector: #selector(handleSessionInterruptionEnded), name: .AVCaptureSessionWasInterrupted, object: self.backCaptureSession)
+            NotificationCenter.default.addObserver(self, selector: #selector(handleSessionInterruptionEnded), name: .AVCaptureSessionWasInterrupted, object: self.frontCaptureSession)
         }
-    }
+        
+     }
     
-    @objc private func sessionInterruptionEnded(_ notification: Notification) {
-        print("Session sessionInterruptionEnded : \(String(describing: notification.object))")
-    }
     
+    // 세션이 중단될 때 호출되는 메서드
+    @objc private func handleSessionInterruption(notification: Notification) {
+        print("Session interrupted. Likely due to incoming call or system event.")
+        abaleToStartSession = false
+    }
 
-    @objc private func sessionDidStopRunning(_ notification: Notification) {
-        print("Session stopped running: \(String(describing: notification.object))")
-    }
-    
-    @objc private func sessionDidStartRunning(_ notification: Notification) {
-        print("Session started running: \(String(describing: notification.object))")
+    // 세션이 재개될 때 호출되는 메서드
+    @objc private func handleSessionInterruptionEnded(notification: Notification) {
+        print("Session interruption ended. Ready to resume capture session.")
+        // 세션이 중단에서 복구되었을 때 재시작
+        abaleToStartSession = true
     }
 
     
@@ -493,14 +502,70 @@ public class CameraManager: NSObject {
      restartSession ``AVCaptrueDevice``
      */
     public func restartCameraSession() {
-
-        if self.cameraOptions?.cameraSessionMode == .multiSession {
-            self.setupMultiCaptureSessions()
-        } else {
-            if self.singleCameraView == nil {
-                self.singleCameraView = CameraMetalView(cameraManagerFrameWorkDelegate: self)
-            }
-        }
+         // Cancel any existing work item
+         cameraRestartWorkItem?.cancel()
+         
+         // Define a new work item
+         let workItem = DispatchWorkItem { [weak self] in
+             guard let self = self else { return }
+             
+             self.cameraQueue.sync { // Ensure this block is thread-safe
+                 if self.isRestartingCameraSession {
+                     return // Prevent re-entrant calls
+                 }
+                 self.isRestartingCameraSession = true // Set flag to indicate session is restarting
+             }
+             
+             if self.abaleToStartSession {
+                 print("camera 1 - setting up session")
+                 
+                 DispatchQueue.main.async {
+                     if self.cameraOptions?.cameraSessionMode == .multiSession {
+                         print("camera 1 - starting multi-session setup")
+                         self.setupMultiCaptureSessions()
+                     } else {
+                         print("camera 1 - starting single-session setup")
+                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                             self.setupCaptureSessions()
+                         }
+                     }
+                     
+                     // Reset flag after setup completes
+                     self.cameraQueue.sync {
+                         self.isRestartingCameraSession = false
+                     }
+                 }
+                 
+             } else {
+                 print("camera 2 - retrying...")
+                 
+                 // Delay before retrying to avoid rapid recursion
+                 DispatchQueue.global().asyncAfter(deadline: .now() + 0.3) {
+                     self.restartCameraSession()
+                     
+                     // Reset flag to allow retry
+                     self.cameraQueue.sync {
+                         self.isRestartingCameraSession = false
+                     }
+                 }
+             }
+         }
+         
+         // Store the work item
+         cameraRestartWorkItem = workItem
+         
+         // Execute on the main thread or the camera queue if not already on the main thread
+         if Thread.isMainThread {
+             workItem.perform()
+         } else {
+             DispatchQueue.main.async(execute: workItem)
+         }
+     }
+    
+    
+    public func cancelRestartCameraSession () {
+        cameraRestartWorkItem?.cancel()
+        cameraRestartWorkItem = nil
     }
     
     /**
@@ -514,6 +579,9 @@ public class CameraManager: NSObject {
         
         torchObservation?.invalidate()
         torchObservation = nil
+        
+        cameraRestartWorkItem?.cancel()
+        cameraRestartWorkItem = nil
         
         self.audioManager?.unreference()
         self.audioManager = nil
