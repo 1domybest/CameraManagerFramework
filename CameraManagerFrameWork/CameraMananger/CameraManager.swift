@@ -247,7 +247,7 @@ public class CameraManager: NSObject {
      
      basiclly each device has own value of mirrorMode
      */
-    public var mirrorFrontCamera:Bool = true
+    public var mirrorFrontCamera:Bool = false
     
     // 단일 디바이스 상태 변수
     
@@ -397,6 +397,7 @@ public class CameraManager: NSObject {
     
     var isShowThumbnail: Bool = false
     
+    private var torchObservation: NSKeyValueObservation?
     
     public init(cameraOptions: CameraOptions) {
         let _ = LogManager(projectName: "CameraManager")
@@ -413,7 +414,7 @@ public class CameraManager: NSObject {
         
         super.init()
         
-        
+        self.observeTorchState()
         let attr = DispatchQueue.Attributes()
         sessionQueue = DispatchQueue(label: "camera.single.sessionqueue", attributes: attr)
         videoDataOutputQueue = DispatchQueue(label: "camera.single.videoDataOutputQueue")
@@ -422,12 +423,18 @@ public class CameraManager: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(handleSessionRuntimeError), name: .AVCaptureSessionRuntimeError, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sessionDidStopRunning(_:)), name: .AVCaptureSessionDidStopRunning, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sessionDidStartRunning(_:)), name: .AVCaptureSessionDidStartRunning, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(sessionDidStartRunning(_:)),
+                                               name: .AVCaptureSessionInterruptionEnded, object: nil)
     }
 
     @objc func handleSessionRuntimeError(notification: Notification) {
         if let error = notification.userInfo?[AVCaptureSessionErrorKey] as? NSError {
             print("Session Runtime Error: \(error)")
         }
+    }
+    
+    @objc private func sessionInterruptionEnded(_ notification: Notification) {
+        print("Session sessionInterruptionEnded : \(String(describing: notification.object))")
     }
     
 
@@ -454,22 +461,45 @@ public class CameraManager: NSObject {
 
         if self.cameraOptions?.cameraSessionMode == .multiSession {
             self.setupMultiCaptureSessions()
-            self.multiCameraView = MultiCameraView(parent: self, appendQueueCallback: self)
+            
+            if self.multiCameraView == nil {
+                self.multiCameraView = MultiCameraView(parent: self, appendQueueCallback: self)
+            }
             
             if self.cameraOptions?.cameraScreenMode == .singleScreen {
                 self.multiCameraView?.smallCameraView?.isHidden = true
             }
         } else {
-            self.singleCameraView = CameraMetalView(cameraManagerFrameWorkDelegate: self)
+            if self.singleCameraView == nil {
+                self.singleCameraView = CameraMetalView(cameraManagerFrameWorkDelegate: self)
+            }
+            
             self.maximumFrameRate = 60.0
             self.setupCaptureSessions()
             self.setupGestureRecognizers()
         }
         
-        
         if self.cameraOptions?.useMicrophone ?? true {
-            self.audioManager = AudioMananger()
-            self.audioManager?.initialize()
+            if self.audioManager == nil {
+                self.audioManager = AudioMananger()
+                self.audioManager?.initialize()
+            }
+        }
+        
+        
+    }
+    
+    /**
+     restartSession ``AVCaptrueDevice``
+     */
+    public func restartCameraSession() {
+
+        if self.cameraOptions?.cameraSessionMode == .multiSession {
+            self.setupMultiCaptureSessions()
+        } else {
+            if self.singleCameraView == nil {
+                self.singleCameraView = CameraMetalView(cameraManagerFrameWorkDelegate: self)
+            }
         }
     }
     
@@ -481,6 +511,9 @@ public class CameraManager: NSObject {
      */
     public func unreference() {
         NotificationCenter.default.removeObserver(self)
+        
+        torchObservation?.invalidate()
+        torchObservation = nil
         
         self.audioManager?.unreference()
         self.audioManager = nil
@@ -572,6 +605,18 @@ public class CameraManager: NSObject {
             break
         default:
             break
+        }
+    }
+    
+    /**
+     callback For TorchState
+     */
+    func observeTorchState() {
+        // KVO를 사용하여 isTorchActive 속성 감시
+        torchObservation = backCamera?.observe(\.isTorchActive, options: [.new, .old]) { [weak self] (device, change) in
+            guard let isTorchActive = change.newValue else { return }
+            
+            self?.cameraOptions?.onChangeTorchState?(isTorchActive)
         }
     }
 

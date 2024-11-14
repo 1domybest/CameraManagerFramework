@@ -103,6 +103,26 @@ public struct CameraOptions {
      */
     public var cameraSize: CGSize
     
+    
+    /**
+     Callback when you using ``CameraSessionMode/singleSession``
+     
+     this will call when camera position changed
+     */
+    public var onChangeCameraPostion: ((AVCaptureDevice.Position) -> Void)?
+    
+    /**
+     Callback when you using ``CameraSessionMode/singleSession``
+     
+     this will call when camera position changed
+     */
+    public var onChangeMirrorMode: ((Bool ,AVCaptureDevice.Position) -> Void)?
+    
+    /**
+     Callback when Torch state change
+     */
+    public var onChangeTorchState: ((Bool) -> Void)?
+    
     public init(startPostion: AVCaptureDevice.Position = .back,
                 cameraScreenMode: CameraScreenMode = .singleScreen,
                 cameraSessionMode: CameraSessionMode = .singleSession,
@@ -113,7 +133,10 @@ public struct CameraOptions {
                 enAblePinchZoom: Bool = true,
                 cameraSize:CGSize = CGSize(width: 720, height: 1280),
                 onChangeMainScreenPostion: ((AVCaptureDevice.Position) -> Void)? = { _ in },
-                onChangeScreenMode: ((CameraScreenMode?) -> Void)? = { _ in }
+                onChangeScreenMode: ((CameraScreenMode?) -> Void)? = { _ in },
+                onChangeCameraPostion: ((AVCaptureDevice.Position) -> Void)? = { _ in},
+                onChangeMirrorMode: ((Bool ,AVCaptureDevice.Position) -> Void)? = { _, _ in},
+                onChangeTorchState: ((Bool) -> Void)? = { _ in }
     ) {
         self.startPostion = startPostion
         self.cameraSize = cameraSize
@@ -125,5 +148,8 @@ public struct CameraOptions {
         self.showTapAutoFocusAndExposureRoundedRectangle = showAutoFocusAndExposureRoundedRectangle
         self.onChangeScreenMode = onChangeScreenMode
         self.enAblePinchZoom = enAblePinchZoom
+        self.onChangeCameraPostion = onChangeCameraPostion
+        self.onChangeMirrorMode = onChangeMirrorMode
+        self.onChangeTorchState = onChangeTorchState
     }
 }

@@ -319,8 +319,8 @@ extension CameraMetalView: MTKViewDelegate {
             self.cameraManagerFrameWorkDelegate?.videoCaptureOutput?(pixelBuffer: pixelBuffer, time: time!, position: position, isThumbnail: self.showThumbnail)
             return
         }
-        
-        var mirrorModeValue: Int32 = isMirrorMode ? 0 : 1
+
+        var mirrorModeValue: Int32 = self.showThumbnail ? 1 : isMirrorMode ? 0 : 1
         isMirrorModeBuffer = metalDevice.makeBuffer(bytes: &mirrorModeValue, length: MemoryLayout<Int32>.size, options: [])
 
         do {
@@ -410,11 +410,7 @@ extension CameraMetalView: MTKViewDelegate {
                     cameraManagerFrameWorkDelegate?.videoCaptureOutput?(sampleBuffer: sampleBuffer, position: position, isThumbnail: self.showThumbnail)
                 }
             }
-            
-            
-            
-            
-            
+
           } catch let error {
               print("Failed to create pipeline state, error: \(error)")
           }
@@ -449,6 +445,7 @@ extension CameraMetalView: MTKViewDelegate {
 
         return pixelBuffer
     }
+ 
     
     func completedAfterGpuPixel(imageBuffer: CVImageBuffer) {
         guard
@@ -459,30 +456,41 @@ extension CameraMetalView: MTKViewDelegate {
         }
         
         let displayImage = CIImage(cvPixelBuffer: imageBuffer)
-            var scaleX: CGFloat = 0
-            var scaleY: CGFloat = 0
-            var translationX: CGFloat = 0
-            var translationY: CGFloat = 0
-        
-            let scale: CGFloat = min(drawableSize.width / displayImage.extent.width, drawableSize.height / displayImage.extent.height)
-            scaleX = scale
-            scaleY = scale
-            translationX = (drawableSize.width - displayImage.extent.width * scale) / scaleX / 2
-            translationY = (drawableSize.height - displayImage.extent.height * scale) / scaleY / 2
-            
-            let bounds = CGRect(origin: .zero, size: drawableSize)
-            var scaledImage: CIImage = displayImage
+        var scaleX: CGFloat = 0
+        var scaleY: CGFloat = 0
+        var translationX: CGFloat = 0
+        var translationY: CGFloat = 0
 
+        let scale: CGFloat = min(drawableSize.width / displayImage.extent.width, drawableSize.height / displayImage.extent.height)
+        scaleX = scale
+        scaleY = scale
+        translationX = (drawableSize.width - displayImage.extent.width * scale) / scaleX / 2
+        translationY = (drawableSize.height - displayImage.extent.height * scale) / scaleY / 2
+        
+        // 좌우 반전 적용
+        let mirrorTransform = CGAffineTransform(scaleX: -1, y: 1) // X 축을 -1로 설정하여 좌우 반전
+            .translatedBy(x: -displayImage.extent.width, y: 0) // 반전 후 원래 위치로 이동
+        
+        let bounds = CGRect(origin: .zero, size: drawableSize)
+        var scaledImage: CIImage = displayImage
+        
+        if self.isMirrorMode {
+            scaledImage = scaledImage
+                .transformed(by: mirrorTransform) // 좌우 반전 적용
+                .transformed(by: CGAffineTransform(translationX: translationX, y: translationY))
+                .transformed(by: CGAffineTransform(scaleX: scaleX, y: scaleY))
+        } else {
             scaledImage = scaledImage
                 .transformed(by: CGAffineTransform(translationX: translationX, y: translationY))
                 .transformed(by: CGAffineTransform(scaleX: scaleX, y: scaleY))
-
-            
-            context.render(scaledImage, to: currentDrawable.texture, commandBuffer: commandBuffer, bounds: bounds, colorSpace: CGColorSpaceCreateDeviceRGB())
-            commandBuffer.present(currentDrawable)
-            commandBuffer.commit()
-            return
         }
+        
+
+        context.render(scaledImage, to: currentDrawable.texture, commandBuffer: commandBuffer, bounds: bounds, colorSpace: CGColorSpaceCreateDeviceRGB())
+        commandBuffer.present(currentDrawable)
+        commandBuffer.commit()
+        return
+    }
     
 
     func toPixelBuffer(image: CIImage) -> CVPixelBuffer? {
