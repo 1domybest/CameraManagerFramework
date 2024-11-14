@@ -71,6 +71,7 @@ extension CameraManager {
             }
         }
        
+        self.setupNotifications()
     }
     
     /**
@@ -101,6 +102,8 @@ extension CameraManager {
             self.sessionQueue?.async {
                 self.dualVideoSession?.startRunning()
             }
+            
+            self.setupNotifications()
         }
     }
     
@@ -471,6 +474,7 @@ extension CameraManager {
                     self.backCaptureSession?.startRunning()
                 }
             }
+            
             self.setShowThumbnail(isShow: false)
             
             if withAudio {

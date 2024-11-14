@@ -423,11 +423,9 @@ public class CameraManager: NSObject {
         let attr = DispatchQueue.Attributes()
         sessionQueue = DispatchQueue(label: "camera.single.sessionqueue", attributes: attr)
         videoDataOutputQueue = DispatchQueue(label: "camera.single.videoDataOutputQueue")
-        
-        self.setupNotifications()
     }
     
-    private func setupNotifications() {
+    func setupNotifications() {
         if self.cameraOptions?.cameraSessionMode == .multiSession {
             NotificationCenter.default.addObserver(self, selector: #selector(handleSessionInterruption), name: .AVCaptureSessionWasInterrupted, object: self.dualVideoSession)
              NotificationCenter.default.addObserver(self, selector: #selector(handleSessionInterruptionEnded), name: .AVCaptureSessionInterruptionEnded, object: self.dualVideoSession)
@@ -453,6 +451,7 @@ public class CameraManager: NSObject {
         print("Session interruption ended. Ready to resume capture session.")
         // 세션이 중단에서 복구되었을 때 재시작
         abaleToStartSession = true
+        self.restartCameraSession()
     }
 
     
@@ -498,70 +497,26 @@ public class CameraManager: NSObject {
         
     }
     
-    /**
-     restartSession ``AVCaptrueDevice``
-     */
-    public func restartCameraSession() {
-         // Cancel any existing work item
-         cameraRestartWorkItem?.cancel()
-         
-         // Define a new work item
-         let workItem = DispatchWorkItem { [weak self] in
-             guard let self = self else { return }
-             
-             self.cameraQueue.sync { // Ensure this block is thread-safe
-                 if self.isRestartingCameraSession {
-                     return // Prevent re-entrant calls
-                 }
-                 self.isRestartingCameraSession = true // Set flag to indicate session is restarting
-             }
-             
-             if self.abaleToStartSession {
-                 print("camera 1 - setting up session")
-                 
-                 DispatchQueue.main.async {
-                     if self.cameraOptions?.cameraSessionMode == .multiSession {
-                         print("camera 1 - starting multi-session setup")
-                         self.setupMultiCaptureSessions()
-                     } else {
-                         print("camera 1 - starting single-session setup")
-                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                             self.setupCaptureSessions()
-                         }
-                     }
-                     
-                     // Reset flag after setup completes
-                     self.cameraQueue.sync {
-                         self.isRestartingCameraSession = false
-                     }
-                 }
-                 
-             } else {
-                 print("camera 2 - retrying...")
-                 
-                 // Delay before retrying to avoid rapid recursion
-                 DispatchQueue.global().asyncAfter(deadline: .now() + 0.3) {
-                     self.restartCameraSession()
-                     
-                     // Reset flag to allow retry
-                     self.cameraQueue.sync {
-                         self.isRestartingCameraSession = false
-                     }
-                 }
-             }
-         }
-         
-         // Store the work item
-         cameraRestartWorkItem = workItem
-         
-         // Execute on the main thread or the camera queue if not already on the main thread
-         if Thread.isMainThread {
-             workItem.perform()
-         } else {
-             DispatchQueue.main.async(execute: workItem)
-         }
-     }
+    public func restartDeviceSession (withAudio: Bool = false) {
+        if self.cameraOptions?.cameraSessionMode == .multiSession {
+            self.setupMultiCaptureSessions()
+        } else {
+            self.setupCaptureSessions()
+        }
+        
+        if withAudio {
+            self.audioManager?.restartAudioSession()
+        }
+    }
     
+    public func cancelRestartDeviceSession (withAudio: Bool = false) {
+        
+        self.cancelRestartCameraSession()
+        
+        if withAudio {
+            self.audioManager?.cancelRestartAudioSession()
+        }
+    }
     
     public func cancelRestartCameraSession () {
         cameraRestartWorkItem?.cancel()
