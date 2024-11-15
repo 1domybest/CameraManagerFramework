@@ -438,7 +438,7 @@ public class CameraManager: NSObject {
     public func initialize() {
 
         if self.cameraOptions?.cameraSessionMode == .multiSession {
-            self.setupMultiCaptureSessions()
+            self.setupMultiCaptureSessions(setDefaultZoom: true)
             
             if self.multiCameraView == nil {
                 self.multiCameraView = MultiCameraView(parent: self, appendQueueCallback: self)
@@ -453,7 +453,7 @@ public class CameraManager: NSObject {
             }
             
             self.maximumFrameRate = 60.0
-            self.setupCaptureSessions()
+            self.setupCaptureSessions(setDefaultZoom: true)
             self.setupGestureRecognizers()
         }
         
@@ -468,11 +468,17 @@ public class CameraManager: NSObject {
     }
     
     public func restartDeviceSession (withAudio: Bool = false) {
+        let lastBackZoom = self.backCameraCurrentZoomFactor
+        let lastFrontZoom = self.frontCameraCurrentZoomFactor
+        
         if self.cameraOptions?.cameraSessionMode == .multiSession {
-            self.setupMultiCaptureSessions()
+            self.setupMultiCaptureSessions(setDefaultZoom: false)
         } else {
-            self.setupCaptureSessions()
+            self.setupCaptureSessions(setDefaultZoom: false)
         }
+        
+        self.setZoom(position: .back, zoomFactor: lastBackZoom)
+        self.setZoom(position: .front, zoomFactor: lastFrontZoom)
         
         if withAudio {
             self.audioManager?.restartAudioSession()

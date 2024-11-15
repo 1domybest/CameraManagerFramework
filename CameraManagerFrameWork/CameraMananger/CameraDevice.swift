@@ -19,9 +19,13 @@ extension CameraManager {
 
      - Returns:
      */
-    func setupCaptureSessions() {
+    func setupCaptureSessions(setDefaultZoom: Bool) {
         self.backCamera = self.findDevice(withPosition: .back)
         self.frontCamera = self.findDevice(withPosition: .front)
+        
+        if setDefaultZoom {
+            self.setZoom(position: .back, zoomFactor: self.backCameraDefaultZoomFactor)
+        }
         
         guard let backCamera = backCamera else { return }
         guard let frontCamera = frontCamera else { return }
@@ -78,10 +82,12 @@ extension CameraManager {
      - Parameters:
 
      */
-    public func setupMultiCaptureSessions() {
+    public func setupMultiCaptureSessions(setDefaultZoom: Bool) {
         self.backCamera = self.findDeviceForMultiSession(withPosition: .back)
         self.frontCamera = self.findDeviceForMultiSession(withPosition: .front)
-        self.setZoom(position: .back, zoomFactor: self.backCameraDefaultZoomFactor)
+        if setDefaultZoom {
+            self.setZoom(position: .back, zoomFactor: self.backCameraDefaultZoomFactor)
+        }
         DispatchQueue.main.async {
             self.dualVideoSession = AVCaptureMultiCamSession()
             if let dualVideoSession = self.dualVideoSession {
