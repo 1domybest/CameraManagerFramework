@@ -81,7 +81,7 @@ extension CameraManager {
     public func setupMultiCaptureSessions() {
         self.backCamera = self.findDeviceForMultiSession(withPosition: .back)
         self.frontCamera = self.findDeviceForMultiSession(withPosition: .front)
-        
+        self.setZoom(position: .back, zoomFactor: self.backCameraDefaultZoomFactor)
         DispatchQueue.main.async {
             self.dualVideoSession = AVCaptureMultiCamSession()
             if let dualVideoSession = self.dualVideoSession {
@@ -92,7 +92,6 @@ extension CameraManager {
                 
                 self.setupOutput(for: dualVideoSession, position: .front, isMultiSession: true)
                 self.setupOutput(for: dualVideoSession, position: .back, isMultiSession: true)
-                
                 dualVideoSession.commitConfiguration()
             }
             
@@ -401,9 +400,8 @@ extension CameraManager {
                         // 트리플 카메라가 없으면 듀얼 와이드 카메라 선택
                         backCameraMinimumZoonFactor = dualWideCamera.minAvailableVideoZoomFactor
                         backCameraMaximumZoonFactor = dualWideCamera.maxAvailableVideoZoomFactor
-                        backCameraDefaultZoomFactor = 2.0
+                        backCameraDefaultZoomFactor = 1.5
                         backCameraCurrentZoomFactor = backCameraDefaultZoomFactor
-                        
                         print("듀얼 카메라 - 후면 - 최소줌 \(backCameraMinimumZoonFactor) 최대줌\(backCameraMaximumZoonFactor) 기본줌 \(backCameraDefaultZoomFactor)")
                     } else {
                         frontCameraMinimumZoonFactor = dualWideCamera.minAvailableVideoZoomFactor

@@ -300,7 +300,7 @@ public class CameraManager: NSObject {
      BackCamera Current ZoomFactor
      
      */
-    public var backCameraCurrentZoomFactor: CGFloat = 1.0
+    public var backCameraCurrentZoomFactor: CGFloat = 2.0
     
     /**
      CGFloat
@@ -308,7 +308,7 @@ public class CameraManager: NSObject {
      BackCamera Default ZoomFactor
      
      */
-    public var backCameraDefaultZoomFactor: CGFloat = 1.0
+    public var backCameraDefaultZoomFactor: CGFloat = 2.0
     
     /**
      CGFloat
