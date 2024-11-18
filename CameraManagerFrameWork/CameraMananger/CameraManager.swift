@@ -467,14 +467,14 @@ public class CameraManager: NSObject {
         
     }
     
-    public func restartDeviceSession (withAudio: Bool = false) {
+    public func restartDeviceSession (withAudio: Bool = false, startSession: Bool = true) {
         let lastBackZoom = self.backCameraCurrentZoomFactor
         let lastFrontZoom = self.frontCameraCurrentZoomFactor
         
         if self.cameraOptions?.cameraSessionMode == .multiSession {
-            self.setupMultiCaptureSessions(setDefaultZoom: false)
+            self.setupMultiCaptureSessions(setDefaultZoom: false, startSession: startSession)
         } else {
-            self.setupCaptureSessions(setDefaultZoom: false)
+            self.setupCaptureSessions(setDefaultZoom: false, startSession: startSession)
         }
         
         self.setZoom(position: .back, zoomFactor: lastBackZoom)

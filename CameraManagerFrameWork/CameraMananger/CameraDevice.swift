@@ -19,7 +19,7 @@ extension CameraManager {
 
      - Returns:
      */
-    func setupCaptureSessions(setDefaultZoom: Bool) {
+    func setupCaptureSessions(setDefaultZoom: Bool, startSession: Bool = true) {
         self.backCamera = self.findDevice(withPosition: .back)
         self.frontCamera = self.findDevice(withPosition: .front)
         
@@ -66,13 +66,16 @@ extension CameraManager {
                 frontCaptureSession.commitConfiguration()
             }
             
-            self.sessionQueue?.async {
-                if self.position == .back {
-                    self.backCaptureSession?.startRunning()
-                } else {
-                    self.frontCaptureSession?.startRunning()
+            if startSession {
+                self.sessionQueue?.async {
+                    if self.position == .back {
+                        self.backCaptureSession?.startRunning()
+                    } else {
+                        self.frontCaptureSession?.startRunning()
+                    }
                 }
             }
+            
         }
     }
     
@@ -82,7 +85,7 @@ extension CameraManager {
      - Parameters:
 
      */
-    public func setupMultiCaptureSessions(setDefaultZoom: Bool) {
+    public func setupMultiCaptureSessions(setDefaultZoom: Bool, startSession: Bool = true) {
         self.backCamera = self.findDeviceForMultiSession(withPosition: .back)
         self.frontCamera = self.findDeviceForMultiSession(withPosition: .front)
         
@@ -105,8 +108,10 @@ extension CameraManager {
             }
             
             
-            self.sessionQueue?.async {
-                self.dualVideoSession?.startRunning()
+            if startSession {
+                self.sessionQueue?.async {
+                    self.dualVideoSession?.startRunning()
+                }
             }
         }
     }
