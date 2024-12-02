@@ -496,7 +496,10 @@ extension CameraManager {
                 }
             }
             
-            self.setShowThumbnail(isShow: false)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                self.setShowThumbnail(isShow: false)
+            }
+            
             
             if withAudio {
                 self.audioManager?.startAudioSession()
