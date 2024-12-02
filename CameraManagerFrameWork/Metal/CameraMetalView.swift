@@ -37,7 +37,7 @@ public class CameraMetalView: MTKView {
     var isRecording: Bool = false
     var isMirrorModeBuffer: MTLBuffer?
     var currentOrientation: Int = 1
-    
+    var pipelineDescriptor:MTLRenderPipelineDescriptor?
     var cameraManagerFrameWorkDelegate: CameraManagerFrameWorkDelegate?
     private var _showThumbnail: Bool = false
     var showThumbnail: Bool {
@@ -75,6 +75,8 @@ public class CameraMetalView: MTKView {
             self.createTextureCache()
             self.setupSampler()
             self.setupVertices()
+            self.setPipelineDescriptor()
+           
         }
         self.cameraManagerFrameWorkDelegate = cameraManagerFrameWorkDelegate
         
@@ -123,6 +125,41 @@ public class CameraMetalView: MTKView {
             DispatchQueue.main.async {
                 self.updateTime(frameRate: frameRate)
             }
+        }
+    }
+    
+    public func setPipelineDescriptor() {
+        do {
+            pipelineDescriptor = MTLRenderPipelineDescriptor()
+            
+            // 현재 클래스의 번들을 가져옵니다.
+            let frameworkBundle = Bundle(for: type(of: self))
+            
+            // 메탈 기본 라이브러리를 생성합니다.
+            try metalDevice.makeDefaultLibrary(bundle: frameworkBundle)
+            
+            // 메탈 라이브러리 경로를 찾습니다.
+            if let libraryPath = frameworkBundle.path(forResource: "CameraMetalShader", ofType: "metallib") {
+                // 해당 경로에서 라이브러리를 생성합니다.
+                let library = try metalDevice.makeLibrary(filepath: libraryPath)
+                
+                // 정점 및 프래그먼트 셰이더 함수 가져오기
+                if let vertexFunction = library.makeFunction(name: "vertexShader"),
+                   let fragmentFunction = library.makeFunction(name: "fragmentShader") {
+                    // 파이프라인 상태 설정
+                    pipelineDescriptor?.vertexFunction = vertexFunction
+                    pipelineDescriptor?.fragmentFunction = fragmentFunction
+                    pipelineDescriptor?.colorAttachments[0].pixelFormat = .bgra8Unorm
+                } else {
+                    print("셰이더 함수를 찾을 수 없음")
+                    return
+                }
+            } else {
+                print("메탈 라이브러리 경로를 찾을 수 없음")
+                return
+            }
+        } catch {
+            
         }
     }
     
@@ -324,32 +361,7 @@ extension CameraMetalView: MTKViewDelegate {
         isMirrorModeBuffer = metalDevice.makeBuffer(bytes: &mirrorModeValue, length: MemoryLayout<Int32>.size, options: [])
 
         do {
-            let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
-            
-            // 현재 클래스의 번들을 가져옵니다.
-            let frameworkBundle = Bundle(for: type(of: self))
-            
-            // 메탈 기본 라이브러리를 생성합니다.
-            _ = try device?.makeDefaultLibrary(bundle: frameworkBundle)
-
-            // 메탈 라이브러리 경로를 찾습니다.
-            if let libraryPath = frameworkBundle.path(forResource: "CameraMetalShader", ofType: "metallib") {
-                // 해당 경로에서 라이브러리를 생성합니다.
-                let library = try metalDevice.makeLibrary(filepath: libraryPath)
-
-                // 정점 및 프래그먼트 셰이더 함수 가져오기
-                if let vertexFunction = library.makeFunction(name: "vertexShader"),
-                   let fragmentFunction = library.makeFunction(name: "fragmentShader") {
-                    // 파이프라인 상태 설정
-                    pipelineStateDescriptor.vertexFunction = vertexFunction
-                    pipelineStateDescriptor.fragmentFunction = fragmentFunction
-                    pipelineStateDescriptor.colorAttachments[0].pixelFormat = view.colorPixelFormat
-                } else {
-                    print("셰이더 함수를 찾을 수 없음")
-                    return
-                }
-            } else {
-                print("메탈 라이브러리 경로를 찾을 수 없음")
+            guard let pipelineStateDescriptor = pipelineDescriptor else {
                 return
             }
             
