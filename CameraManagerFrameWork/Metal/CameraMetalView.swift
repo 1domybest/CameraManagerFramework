@@ -244,19 +244,37 @@ public class CameraMetalView: MTKView {
         }
     }
     
+    func convertToCompatibleImage(_ cgImage: CGImage) -> CGImage? {
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo = CGImageAlphaInfo.premultipliedLast.rawValue
+        guard let context = CGContext(data: nil,
+                                       width: cgImage.width,
+                                       height: cgImage.height,
+                                       bitsPerComponent: 8,
+                                       bytesPerRow: cgImage.width * 4,
+                                       space: colorSpace,
+                                       bitmapInfo: bitmapInfo) else {
+            return nil
+        }
+        context.draw(cgImage, in: CGRect(x: 0, y: 0, width: cgImage.width, height: cgImage.height))
+        return context.makeImage()
+    }
+    
     func setThumbnail(cgImage: CGImage) {
+        guard let newImage = self.convertToCompatibleImage(cgImage) else { return }
+        
         do {
             let options: [MTKTextureLoader.Option: Any] = [
                 .origin: MTKTextureLoader.Origin.topLeft, // 기본 설정으로 변경
                 .SRGB: false
             ]
 
-            if let texture = try textureLoader?.newTexture(cgImage: cgImage, options: options) {
+            if let texture = try textureLoader?.newTexture(cgImage: newImage, options: options) {
                 self.thumbnail = texture
-                self.thumbnailPixelBuffer = self.toPixelBuffer(image: CIImage(cgImage: cgImage))
+                self.thumbnailPixelBuffer = self.toPixelBuffer(image: CIImage(cgImage: newImage))
             }
-        } catch {
-            
+        } catch let error {
+            print(error.localizedDescription)
         }
     }
     

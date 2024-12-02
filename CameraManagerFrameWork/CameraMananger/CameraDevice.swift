@@ -542,13 +542,13 @@ extension CameraManager {
         sessionQueue?.async { [weak self] in
             guard let self = self else { return }
             
-            self.frontCaptureSession?.stopRunning()
-            self.backCaptureSession?.stopRunning()
-            self.dualVideoSession?.stopRunning()
-            
             if showThumbnail {
                 self.setShowThumbnail(isShow: showThumbnail)
             }
+            
+            self.frontCaptureSession?.stopRunning()
+            self.backCaptureSession?.stopRunning()
+            self.dualVideoSession?.stopRunning()
             
             if withAudio {
                 self.audioManager?.pauseAudioSession()
@@ -568,18 +568,9 @@ extension CameraManager {
             
             if isShow {
                 if self.dualVideoSession != nil {
-                    if let thumbnail = self.thumbnail {
-                        self.multiCameraView?.mainCameraView?.setThumbnail(cgImage: thumbnail)
-                    }
-                    
                     self.setCameraScreenMode(cameraScreenMode: .singleScreen)
                     self.multiCameraView?.mainCameraView?.showThumbnail = true
                 } else {
-                    
-                    if let thumbnail = self.thumbnail {
-                        self.singleCameraView?.setThumbnail(cgImage: thumbnail)
-                    }
-                    
                     self.singleCameraView?.showThumbnail = true
                 }
                 
