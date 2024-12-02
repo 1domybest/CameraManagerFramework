@@ -8,7 +8,6 @@
 import Foundation
 import AVFoundation
 import UIKit
-import LogManager
 
 /// Main Class For ``CameraManager``
 /// Base - [`AVFoundation`](https://developer.apple.com/documentation/avfoundation)
@@ -405,7 +404,7 @@ public class CameraManager: NSObject {
     private var isRestartingCameraSession = false // Flag to prevent re-entrant calls
     
     public init(cameraOptions: CameraOptions) {
-        let _ = LogManager(projectName: "CameraManager")
+
         self.cameraOptions = cameraOptions
         
         self.isMultiCamSupported = AVCaptureMultiCamSession.isMultiCamSupported
