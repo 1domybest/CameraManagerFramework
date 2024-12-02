@@ -277,8 +277,14 @@ extension CameraManager {
         if let device = position == .front ? self.frontCamera : self.backCamera {
             
             if position == .front {
+                if zoomFactor < self.frontCameraMinimumZoonFactor {
+                    return
+                }
                 self.frontCameraCurrentZoomFactor = zoomFactor
             } else {
+                if zoomFactor < self.backCameraMinimumZoonFactor {
+                    return
+                }
                 self.backCameraCurrentZoomFactor = zoomFactor
             }
             
