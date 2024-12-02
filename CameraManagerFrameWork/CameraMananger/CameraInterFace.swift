@@ -112,7 +112,7 @@ extension CameraManager {
                         self.backCaptureSession?.stopRunning()
                         self.frontCaptureSession?.startRunning()
                         self.setZoom(position: .front, zoomFactor: self.frontCameraCurrentZoomFactor)
-                        self.setMirrorMode(isMirrorMode: self.mirrorBackCamera)
+                        self.setMirrorMode(isMirrorMode: self.mirrorFrontCamera)
                     } else {
                         self.frontCaptureSession?.stopRunning()
                         self.backCaptureSession?.startRunning()
