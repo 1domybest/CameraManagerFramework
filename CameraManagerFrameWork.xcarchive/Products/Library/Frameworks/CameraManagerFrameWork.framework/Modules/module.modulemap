@@ -1,0 +1,6 @@
+framework module CameraManagerFrameWork {
+  umbrella header "CameraManagerFrameWork.h"
+  export *
+
+  module * { export * }
+}
