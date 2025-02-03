@@ -5,10 +5,6 @@
 
 [![Documentation](https://img.shields.io/badge/library-documentation-orange)](https://1domybest.github.io/CameraManagerLibrary/documentation/cameramanagerframework/)
 
-
-[![Demo](https://img.shields.io/badge/library-documentation-orange)](https://github.com/1domybest/OTIS_CameraManager_Example)
-
-
 <p align="center">
   
 A camera manager library that makes it easy to use and customize all camera features.
@@ -16,6 +12,8 @@ A camera manager library that makes it easy to use and customize all camera feat
 Libarary: https://github.com/1domybest/CameraManagerLibrary
 
 documentation : https://1domybest.github.io/CameraManagerLibrary/documentation/cameramanagerframework/
+
+demo : https://github.com/1domybest/OTIS_CameraManager_Example
 
 > If you're interested in learning more about me, feel free to visit my profile [here!](https://github.com/1domybest)"😻
 </p>
