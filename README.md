@@ -1,9 +1,12 @@
 
-# OTIS_CameraManager_Example
+# OTIS_CameraManagerFramework
 
-# CameraManagerLibrary
+# CameraManagerFramework
 
 [![Documentation](https://img.shields.io/badge/library-documentation-orange)](https://1domybest.github.io/CameraManagerLibrary/documentation/cameramanagerframework/)
+
+
+[![Demo](https://img.shields.io/badge/library-documentation-orange)](https://github.com/1domybest/OTIS_CameraManager_Example)
 
 
 <p align="center">
